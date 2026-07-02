@@ -19,12 +19,32 @@
     header{padding:10px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}
     h1{font-size:24px;margin:0 0 6px}
     .sub{color:var(--muted);font-size:14px}
-    .toc{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;padding:0;list-style:none}
+    .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0 12px 12px;list-style:none}
     .toc a{
-      display:inline-block;padding:6px 10px;border:1px solid var(--line);
+      display:inline-block;padding:5px 10px;font-size:13px;border:1px solid var(--line);
       border-radius:999px;color:var(--text);text-decoration:none;background:rgba(255,255,255,.03)
     }
     .toc a:hover{border-color:rgba(125,211,252,.6)}
+
+    .nav-toolbar{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:14px 0 10px}
+    .nav-toolbar button{
+      font:inherit;font-size:12px;padding:5px 10px;border-radius:999px;cursor:pointer;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)
+    }
+    .nav-toolbar button:hover{color:var(--text);border-color:rgba(125,211,252,.6)}
+    .nav{display:grid;grid-template-columns:1fr;gap:10px}
+    @media (min-width:720px){.nav{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:1100px){.nav{grid-template-columns:repeat(3,1fr)}}
+    .nav-group{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);overflow:hidden;height:fit-content}
+    .nav-group summary{
+      cursor:pointer;list-style:none;padding:12px 14px;font-weight:700;font-size:14px;
+      display:flex;align-items:center;justify-content:space-between;gap:8px;user-select:none
+    }
+    .nav-group summary::-webkit-details-marker{display:none}
+    .nav-group summary .arrow{color:var(--accent);font-size:11px;transition:transform .2s;flex-shrink:0}
+    .nav-group[open] summary .arrow{transform:rotate(180deg)}
+    .nav-group summary:hover{background:rgba(255,255,255,.05)}
+    .nav-part{color:var(--accent);margin-right:6px}
     section{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03)}
     h2{margin:0 0 8px;font-size:18px}
     .hint{color:var(--muted);font-size:13px;margin:0 0 10px}
@@ -33,7 +53,48 @@
     .badge{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid rgba(125,211,252,.45);color:var(--accent)}
     .jp{font-weight:700}
     .cn{color:var(--muted)}
-    pre{margin:8px 0 0;padding:10px 12px;background:var(--codebg);border:1px solid rgba(255,255,255,.10);border-radius:12px;overflow:auto}
+    pre{position:relative;margin:8px 0 0;padding:10px 44px 10px 12px;background:var(--codebg);border:1px solid rgba(255,255,255,.10);border-radius:12px;overflow:auto}
+
+    /* 🔊 例句朗读按钮 */
+    .speak-btn{
+      position:absolute;top:8px;right:8px;width:28px;height:28px;flex-shrink:0;
+      border-radius:50%;border:1px solid rgba(125,211,252,.45);background:rgba(255,255,255,.06);
+      color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:13px;line-height:1;padding:0;transition:background .15s, transform .15s
+    }
+    .speak-btn:hover{background:rgba(125,211,252,.18)}
+    .speak-btn:active{transform:scale(.92)}
+    .speak-btn.playing{animation:speakPulse 1s ease-in-out infinite;background:rgba(125,211,252,.28)}
+    @keyframes speakPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+    /* ☰ 滑动后出现的悬浮汉堡按钮 */
+    .hamburger-btn{
+      position:fixed;top:16px;right:16px;z-index:80;width:46px;height:46px;border-radius:12px;
+      background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.35);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+      cursor:pointer;opacity:0;transform:translateY(-10px);pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease
+    }
+    .hamburger-btn.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+    .hamburger-btn span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s ease, opacity .25s ease}
+    .hamburger-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger-btn.open span:nth-child(2){opacity:0}
+    .hamburger-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    /* 抽屉式目录 */
+    .nav-backdrop{position:fixed;inset:0;background:rgba(3,8,18,.6);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:75}
+    .nav-backdrop.open{opacity:1;pointer-events:auto}
+    .nav-drawer{
+      position:fixed;top:0;right:0;height:100%;width:min(86vw,340px);
+      background:linear-gradient(180deg,#0d1730,#0b1220);border-left:1px solid var(--line);
+      box-shadow:-10px 0 30px rgba(0,0,0,.45);transform:translateX(100%);
+      transition:transform .3s ease;z-index:78;overflow-y:auto;padding:18px
+    }
+    .nav-drawer.open{transform:translateX(0)}
+    .nav-drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .nav-drawer-header span{font-weight:700;font-size:15px}
+    .nav-drawer-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;font-size:15px;line-height:1}
+    .nav-drawer .nav{display:flex;flex-direction:column;grid-template-columns:none}
     code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
     ul{margin:8px 0 0 18px}
     .grid{display:grid;grid-template-columns:1fr;gap:10px}
@@ -50,55 +111,108 @@
   <div class="wrap">
     <header>
       <h1>JLPT Grammar Mind Map 2.0</h1>
-      <div class="sub">已收录：PART 1（N3 上+下）＋ PART 2（N2 上）＋ PART 3（N2 下）＋ PART 4（N1 上）＋ PART 5（N1 下）。</div>
-      <ul class="toc">
-        <li><a href="#habit">🌱 N3 习惯</a></li>
-        <li><a href="#time">🕒 N3 时间</a></li>
-        <li><a href="#guess">🤔 N3 推测</a></li>
-        <li><a href="#purpose">🎯 N3 目的</a></li>
-        <li><a href="#condition">🔀 N3 条件</a></li>
-        <li><a href="#give">❤️ N3 授受</a></li>
-        <li><a href="#hearsay">📣 N3 传闻</a></li>
-        <li><a href="#state">🚶 N3 状态</a></li>
-        <li><a href="#explain">💬 N3 解释</a></li>
-        <li><a href="#emotion">😭 N3 感情</a></li>
-        <li><a href="#mustnot">🚫 N3 禁止义务</a></li>
-        <li><a href="#keigo">🎓 N3 敬语</a></li>
-        <li><a href="#top15">🔥 N3 Top15</a></li>
+      <div class="sub">PART 1 N3 生活宇宙 ＋ PART 2-3 N2 逻辑宇宙（上/下）＋ PART 4-5 N1 书面宇宙（上/下）＋ PART 6 终极易混表＋索引。</div>
 
-        <li><a href="#n2-part2">PART 2：N2（上）</a></li>
-        <li><a href="#n2-emotion">😭 N2 情绪失控</a></li>
-        <li><a href="#n2-forced">🚨 N2 人生被逼</a></li>
-        <li><a href="#n2-detective">🔥 N2 推理侦探</a></li>
-        <li><a href="#n2-time">⏳ N2 时间瞬间</a></li>
-        <li><a href="#n2-growth">📈 N2 变化成长</a></li>
+      <div class="nav-toolbar">
+        <button type="button" id="navExpand">展开全部</button>
+        <button type="button" id="navCollapse">收起全部</button>
+      </div>
 
-        <li><a href="#n2-part3">PART 3：N2（下）</a></li>
-        <li><a href="#n2-contrast">⚔️ N2 虽然但是</a></li>
-        <li><a href="#n2-dream">🎯 N2 梦想实现</a></li>
-        <li><a href="#n2-regret">💥 N2 后悔结果</a></li>
-        <li><a href="#n2-limit">🔒 N2 限定强调</a></li>
-        <li><a href="#n2-iu">📣 N2 という宇宙</a></li>
-        <li><a href="#n2-seq">🌧️ N2 不先A就不能B</a></li>
-        <li><a href="#n2-top20">🔥 N2 Top20</a></li>
+      <nav class="nav" id="mainNav">
+        <details class="nav-group" open>
+          <summary><span><span class="nav-part">PART 1</span>N3 生活宇宙</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#n3-part1a">📖（上）总览</a></li>
+            <li><a href="#habit">🌱 习惯</a></li>
+            <li><a href="#time">🕒 时间</a></li>
+            <li><a href="#guess">🤔 推测</a></li>
+            <li><a href="#purpose">🎯 目的</a></li>
+            <li><a href="#condition">🔀 条件</a></li>
+            <li><a href="#give">❤️ 授受</a></li>
+            <li><a href="#hearsay">📣 传闻</a></li>
+            <li><a href="#n3-part1b">📖（下）总览</a></li>
+            <li><a href="#state">🚶 状态</a></li>
+            <li><a href="#explain">💬 解释</a></li>
+            <li><a href="#emotion">😭 感情</a></li>
+            <li><a href="#mustnot">🚫 禁止义务</a></li>
+            <li><a href="#keigo">🎓 敬语</a></li>
+          </ul>
+        </details>
 
-        <li><a href="#n1-part4">PART 4：N1（上）</a></li>
-        <li><a href="#n1-author">👑 N1 作者评论</a></li>
-        <li><a href="#n1-news">📰 N1 新闻报道</a></li>
-        <li><a href="#n1-eval">⚖️ N1 客观评价</a></li>
-        <li><a href="#n1-cause">🔍 N1 因果分析</a></li>
-        <li><a href="#n1-forced">🚧 N1 无奈被迫</a></li>
+        <details class="nav-group">
+          <summary><span><span class="nav-part">PART 2</span>N2 逻辑宇宙（上）</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#n2-emotion">😭 情绪失控</a></li>
+            <li><a href="#n2-forced">🚨 人生被逼</a></li>
+            <li><a href="#n2-detective">🔥 推理侦探</a></li>
+            <li><a href="#n2-time">⏳ 时间瞬间</a></li>
+            <li><a href="#n2-growth">📈 变化成长</a></li>
+          </ul>
+        </details>
 
-        <li><a href="#n1-part5">PART 5：N1（下）</a></li>
-        <li><a href="#n1-extreme">🌪️ N1 极端表达</a></li>
-        <li><a href="#n1-literary">🎭 N1 文学书面</a></li>
-        <li><a href="#n1-politics">🏛️ N1 政治经济</a></li>
-        <li><a href="#n1-limitplus">🔒 N1 限定强化</a></li>
-        <li><a href="#n1-top20">🔥 N1 Top20</a></li>
-      </ul>
+        <details class="nav-group">
+          <summary><span><span class="nav-part">PART 3</span>N2 逻辑宇宙（下）</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#n2-contrast">⚔️ 虽然但是</a></li>
+            <li><a href="#n2-dream">🎯 梦想实现</a></li>
+            <li><a href="#n2-regret">💥 后悔结果</a></li>
+            <li><a href="#n2-limit">🔒 限定强调</a></li>
+            <li><a href="#n2-iu">📣 という宇宙</a></li>
+            <li><a href="#n2-seq">🌧️ 不先A就不能B</a></li>
+          </ul>
+        </details>
+
+        <details class="nav-group">
+          <summary><span><span class="nav-part">PART 4</span>N1 书面宇宙（上）</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#n1-author">👑 作者评论</a></li>
+            <li><a href="#n1-news">📰 新闻报道</a></li>
+            <li><a href="#n1-eval">⚖️ 客观评价</a></li>
+            <li><a href="#n1-cause">🔍 因果分析</a></li>
+            <li><a href="#n1-forced">🚧 无奈被迫</a></li>
+          </ul>
+        </details>
+
+        <details class="nav-group">
+          <summary><span><span class="nav-part">PART 5</span>N1 书面宇宙（下）</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#n1-extreme">🌪️ 极端表达</a></li>
+            <li><a href="#n1-literary">🎭 文学书面</a></li>
+            <li><a href="#n1-politics">🏛️ 政治经济</a></li>
+            <li><a href="#n1-limitplus">🔒 限定强化</a></li>
+          </ul>
+        </details>
+
+        <details class="nav-group">
+          <summary><span><span class="nav-part">PART 6</span>终极易混表＋索引</span><span class="arrow">▾</span></summary>
+          <ul class="toc">
+            <li><a href="#top15">🔥 N3 Top15</a></li>
+            <li><a href="#n2-top20">🔥 N2 Top20</a></li>
+            <li><a href="#n1-top20">🔥 N1 Top20</a></li>
+          </ul>
+        </details>
+      </nav>
     </header>
 
+    <!-- 滑动后出现的悬浮目录入口 -->
+    <button type="button" id="hamburgerBtn" class="hamburger-btn" aria-label="打开目录" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="navBackdrop" class="nav-backdrop"></div>
+    <aside id="navDrawer" class="nav-drawer" aria-hidden="true">
+      <div class="nav-drawer-header">
+        <span>📖 目录</span>
+        <button type="button" id="navDrawerClose" class="nav-drawer-close" aria-label="关闭目录">✕</button>
+      </div>
+      <div id="navDrawerContent"></div>
+    </aside>
+
     <!-- ===================== PART 1：N3（上） ===================== -->
+    <section id="n3-part1a">
+      <h2>PART 1：N3 生活宇宙（上）</h2>
+      <p class="hint">习惯养成 / 时间顺序 / 推测 / 目的愿望 / 条件 / 授受请求 / 传闻表达。</p>
+    </section>
+
     <section id="habit">
       <h2>🌱【习惯养成宇宙】（N3）</h2>
       <p class="hint">核心问题：这是自己努力？自然变化？个人决定？规则/环境决定？</p>
@@ -240,6 +354,11 @@
     <div class="divider"></div>
 
     <!-- ===================== PART 1：N3（下） ===================== -->
+    <section id="n3-part1b">
+      <h2>PART 1：N3 生活宇宙（下）</h2>
+      <p class="hint">状态变化 / 解释说明 / 感情表达 / 禁止义务 / 敬语 / N3 终极易混表。</p>
+    </section>
+
     <section id="state">
       <h2>🚶【状态变化宇宙】（N3）</h2>
       <p class="hint">核心问题：开始变化？越来越……？保持状态？放着不管？</p>
@@ -803,5 +922,150 @@ A不代表B：からといって
       文件已保存为 <code>JLPT_Grammar_MindMap.html</code>。下次继续发内容，我会把新内容补进同一个文件。
     </footer>
   </div>
+
+  <script>
+    (function(){
+      /* ---------- 1. 顶部目录：展开全部 / 收起全部 ---------- */
+      var groups = Array.prototype.slice.call(document.querySelectorAll('#mainNav .nav-group'));
+      var expandBtn = document.getElementById('navExpand');
+      var collapseBtn = document.getElementById('navCollapse');
+
+      expandBtn.addEventListener('click', function(){
+        groups.forEach(function(g){ g.open = true; });
+      });
+      collapseBtn.addEventListener('click', function(){
+        groups.forEach(function(g){ g.open = false; });
+      });
+
+      // 点击链接后自动打开对应分组（防止链接被折叠隐藏后无法跳转）
+      document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('.nav a[href^="#"]');
+        if (!a) return;
+        var group = a.closest('.nav-group');
+        if (group) group.open = true;
+      });
+
+      /* ---------- 2. 滑动后出现的悬浮汉堡目录 ---------- */
+      var mainNav = document.getElementById('mainNav');
+      var header = document.querySelector('header');
+      var hamburgerBtn = document.getElementById('hamburgerBtn');
+      var navDrawer = document.getElementById('navDrawer');
+      var navBackdrop = document.getElementById('navBackdrop');
+      var navDrawerClose = document.getElementById('navDrawerClose');
+      var navDrawerContent = document.getElementById('navDrawerContent');
+
+      // 把顶部目录复制一份放进抽屉，保持两处目录内容一致
+      if (mainNav && navDrawerContent) {
+        var clone = mainNav.cloneNode(true);
+        clone.removeAttribute('id');
+        navDrawerContent.appendChild(clone);
+      }
+
+      function openDrawer(){
+        navDrawer.classList.add('open');
+        navBackdrop.classList.add('open');
+        hamburgerBtn.classList.add('open');
+        navDrawer.setAttribute('aria-hidden', 'false');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+      }
+      function closeDrawer(){
+        navDrawer.classList.remove('open');
+        navBackdrop.classList.remove('open');
+        hamburgerBtn.classList.remove('open');
+        navDrawer.setAttribute('aria-hidden', 'true');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
+      hamburgerBtn.addEventListener('click', function(){
+        navDrawer.classList.contains('open') ? closeDrawer() : openDrawer();
+      });
+      navBackdrop.addEventListener('click', closeDrawer);
+      navDrawerClose.addEventListener('click', closeDrawer);
+      navDrawer.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (a) setTimeout(closeDrawer, 150);
+      });
+
+      // 页面滑过顶部目录后，才显示悬浮汉堡按钮
+      if (header && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if (entry.isIntersecting) {
+              hamburgerBtn.classList.remove('visible');
+              closeDrawer();
+            } else {
+              hamburgerBtn.classList.add('visible');
+            }
+          });
+        }, { threshold: 0 });
+        io.observe(header);
+      } else {
+        // 兼容旧浏览器：用滚动位置判断
+        window.addEventListener('scroll', function(){
+          if (window.scrollY > 260) hamburgerBtn.classList.add('visible');
+          else { hamburgerBtn.classList.remove('visible'); closeDrawer(); }
+        });
+      }
+
+      /* ---------- 3. 例句朗读（Web Speech API） ---------- */
+      var supportsTTS = 'speechSynthesis' in window;
+      var jaVoice = null;
+
+      function pickJaVoice(){
+        if (!supportsTTS) return null;
+        var voices = speechSynthesis.getVoices();
+        return voices.find(function(v){ return v.lang === 'ja-JP' && /Google|Kyoko|O-Ren|Otoya/i.test(v.name); })
+            || voices.find(function(v){ return v.lang === 'ja-JP'; })
+            || voices.find(function(v){ return v.lang && v.lang.indexOf('ja') === 0; })
+            || null;
+      }
+      if (supportsTTS) {
+        jaVoice = pickJaVoice();
+        speechSynthesis.onvoiceschanged = function(){ jaVoice = pickJaVoice(); };
+      }
+
+      function stopAllSpeaking(){
+        if (supportsTTS) speechSynthesis.cancel();
+        document.querySelectorAll('.speak-btn.playing').forEach(function(b){ b.classList.remove('playing'); });
+      }
+
+      function speak(text, btn){
+        if (!supportsTTS) { alert('当前浏览器不支持朗读功能'); return; }
+        var wasPlaying = btn.classList.contains('playing');
+        stopAllSpeaking();
+        if (wasPlaying) return; // 点了正在播放的按钮 = 停止
+
+        var utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'ja-JP';
+        utter.rate = 0.88;
+        utter.pitch = 1;
+        if (jaVoice) utter.voice = jaVoice;
+        utter.onstart = function(){ btn.classList.add('playing'); };
+        utter.onend = function(){ btn.classList.remove('playing'); };
+        utter.onerror = function(){ btn.classList.remove('playing'); };
+        speechSynthesis.speak(utter);
+      }
+
+      function injectSpeakButtons(){
+        document.querySelectorAll('pre > code').forEach(function(code){
+          var pre = code.parentElement;
+          if (pre.querySelector('.speak-btn')) return;
+          var text = code.textContent.trim();
+          if (!text) return;
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'speak-btn';
+          btn.setAttribute('aria-label', '朗读例句');
+          btn.textContent = '🔊';
+          btn.addEventListener('click', function(e){
+            e.preventDefault();
+            speak(text, btn);
+          });
+          pre.appendChild(btn);
+        });
+      }
+      injectSpeakButtons();
+    })();
+  </script>
 </body>
 </html>
