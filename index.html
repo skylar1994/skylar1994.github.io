@@ -67,6 +67,54 @@
     .speak-btn.playing{animation:speakPulse 1s ease-in-out infinite;background:rgba(125,211,252,.28)}
     @keyframes speakPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 
+    /* ⭐ 收藏星标按钮（每个语法卡片） */
+    .fav-btn{
+      appearance:none;border:none;background:none;padding:0;margin-left:auto;
+      color:var(--muted);font-size:18px;line-height:1;cursor:pointer;
+      transition:transform .15s, color .15s;flex-shrink:0
+    }
+    .fav-btn:hover{color:#facc15;transform:scale(1.12)}
+    .fav-btn.active{color:#facc15}
+    .fav-btn:active{transform:scale(.88)}
+    .item .item-title{position:relative}
+
+    /* ⭐ 收藏夹入口按钮（工具栏 + 悬浮） */
+    .fav-toolbar-btn{position:relative}
+    .fav-badge{
+      display:inline-block;min-width:16px;height:16px;padding:0 4px;margin-left:6px;
+      border-radius:999px;background:#facc15;color:#0b1220;font-size:11px;font-weight:700;
+      line-height:16px;text-align:center;vertical-align:middle
+    }
+    .fav-badge.zero{background:rgba(255,255,255,.14);color:var(--muted)}
+
+    .fav-toggle-btn{
+      position:fixed;top:16px;right:70px;z-index:80;height:46px;min-width:46px;padding:0 12px;
+      border-radius:12px;background:var(--card);border:1px solid var(--line);
+      box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;gap:5px;
+      cursor:pointer;color:#facc15;font-size:18px
+    }
+    .fav-toggle-btn:hover{border-color:rgba(250,204,21,.5)}
+    #favToggleCount{
+      display:inline-block;min-width:18px;height:18px;padding:0 4px;border-radius:999px;
+      background:#facc15;color:#0b1220;font-size:11px;font-weight:700;line-height:18px
+    }
+
+    /* 收藏卡片高亮闪烁（跳转定位时） */
+    @keyframes favHighlight{
+      0%,100%{box-shadow:none}
+      50%{box-shadow:0 0 0 2px rgba(250,204,21,.65)}
+    }
+    .fav-highlight{animation:favHighlight 1.5s ease-in-out 0s 1}
+
+    .fav-item-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .fav-item-actions button{
+      font:inherit;font-size:12px;padding:5px 10px;border-radius:999px;cursor:pointer;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)
+    }
+    .fav-item-actions button:hover{color:var(--text);border-color:rgba(125,211,252,.6)}
+    .fav-item-actions .fav-remove-btn:hover{color:#f87171;border-color:rgba(248,113,113,.5)}
+    .fav-drawer-empty{color:var(--muted);font-size:13px;line-height:1.7}
+
     /* ☰ 滑动后出现的悬浮汉堡按钮 */
     .hamburger-btn{
       position:fixed;top:16px;right:16px;z-index:80;width:46px;height:46px;border-radius:12px;
@@ -116,6 +164,7 @@
       <div class="nav-toolbar">
         <button type="button" id="navExpand">展开全部</button>
         <button type="button" id="navCollapse">收起全部</button>
+        <button type="button" id="favOpenToolbar" class="fav-toolbar-btn">⭐ 收藏夹<span id="favBadge" class="fav-badge zero">0</span></button>
       </div>
 
       <nav class="nav" id="mainNav">
@@ -205,6 +254,21 @@
         <button type="button" id="navDrawerClose" class="nav-drawer-close" aria-label="关闭目录">✕</button>
       </div>
       <div id="navDrawerContent"></div>
+    </aside>
+
+    <!-- ⭐ 常驻悬浮收藏夹入口 -->
+    <button type="button" id="favToggleBtn" class="fav-toggle-btn" aria-label="打开收藏夹">
+      ⭐<span id="favToggleCount">0</span>
+    </button>
+    <div id="favBackdrop" class="nav-backdrop"></div>
+    <aside id="favDrawer" class="nav-drawer" aria-hidden="true">
+      <div class="nav-drawer-header">
+        <span>⭐ 收藏夹（<span id="favDrawerCount">0</span>）</span>
+        <button type="button" id="favDrawerClose" class="nav-drawer-close" aria-label="关闭收藏夹">✕</button>
+      </div>
+      <p class="hint">点每个语法卡片右上角的 ☆ 即可收藏，重点语法可以反复回来这里集中复习，不用再翻页面找。</p>
+      <div id="favEmptyHint" class="fav-drawer-empty">还没有收藏任何语法点，快去挑几个容易记混的加个星标吧 ⭐</div>
+      <div id="favList"></div>
     </aside>
 
     <!-- ===================== PART 1：N3（上） ===================== -->
@@ -1065,6 +1129,187 @@ A不代表B：からといって
         });
       }
       injectSpeakButtons();
+
+      /* ---------- 4. 语法收藏功能（可反复查看，加强记忆） ---------- */
+      var FAV_KEY = 'jlpt-grammar-favorites-v1';
+
+      function loadFavorites(){
+        try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+        catch(e){ return {}; }
+      }
+      function saveFavorites(favs){
+        try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch(e){}
+      }
+      function isFavorited(id, favs){
+        favs = favs || loadFavorites();
+        return !!favs[id];
+      }
+      function escapeHtml(str){
+        return String(str || '').replace(/[&<>"']/g, function(c){
+          return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+        });
+      }
+
+      var favToggleBtn = document.getElementById('favToggleBtn');
+      var favOpenToolbar = document.getElementById('favOpenToolbar');
+      var favDrawer = document.getElementById('favDrawer');
+      var favBackdrop = document.getElementById('favBackdrop');
+      var favDrawerClose = document.getElementById('favDrawerClose');
+      var favList = document.getElementById('favList');
+      var favEmptyHint = document.getElementById('favEmptyHint');
+      var favBadge = document.getElementById('favBadge');
+      var favToggleCount = document.getElementById('favToggleCount');
+      var favDrawerCount = document.getElementById('favDrawerCount');
+
+      function openFavDrawer(){
+        renderFavDrawer();
+        favDrawer.classList.add('open');
+        favBackdrop.classList.add('open');
+        favDrawer.setAttribute('aria-hidden', 'false');
+      }
+      function closeFavDrawer(){
+        favDrawer.classList.remove('open');
+        favBackdrop.classList.remove('open');
+        favDrawer.setAttribute('aria-hidden', 'true');
+      }
+      favToggleBtn.addEventListener('click', function(){
+        favDrawer.classList.contains('open') ? closeFavDrawer() : openFavDrawer();
+      });
+      favOpenToolbar.addEventListener('click', openFavDrawer);
+      favBackdrop.addEventListener('click', closeFavDrawer);
+      favDrawerClose.addEventListener('click', closeFavDrawer);
+
+      function updateFavCounters(){
+        var count = Object.keys(loadFavorites()).length;
+        [favBadge, favToggleCount, favDrawerCount].forEach(function(el){
+          if (el) el.textContent = count;
+        });
+        if (favBadge) favBadge.classList.toggle('zero', count === 0);
+      }
+
+      function toggleFavorite(id, data){
+        var favs = loadFavorites();
+        if (favs[id]) delete favs[id];
+        else favs[id] = data;
+        saveFavorites(favs);
+        updateFavCounters();
+      }
+
+      function injectFavButtons(){
+        // 只处理主内容区域里的语法卡片（不包含收藏夹抽屉里克隆出来的卡片）
+        document.querySelectorAll('section .item').forEach(function(item, idx){
+          if (item.closest('#favDrawer')) return;
+          if (item.querySelector('.fav-btn')) return;
+          var titleRow = item.querySelector('.item-title');
+          if (!titleRow) return;
+
+          var id = 'item-' + idx;
+          item.setAttribute('data-fav-id', id);
+
+          var jpEl = item.querySelector('.jp');
+          var cnEl = item.querySelector('.cn');
+          var codeEl = item.querySelector('pre > code');
+          var section = item.closest('section');
+          var data = {
+            jp: jpEl ? jpEl.textContent.trim() : '',
+            cn: cnEl ? cnEl.textContent.trim() : '',
+            example: codeEl ? codeEl.textContent.trim() : '',
+            sectionId: section ? section.id : '',
+            sectionTitle: section && section.querySelector('h2') ? section.querySelector('h2').textContent.trim() : ''
+          };
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fav-btn';
+          btn.setAttribute('aria-label', '收藏这个语法点');
+          var favs = loadFavorites();
+          var active = isFavorited(id, favs);
+          btn.textContent = active ? '★' : '☆';
+          if (active) btn.classList.add('active');
+
+          btn.addEventListener('click', function(e){
+            e.preventDefault();
+            toggleFavorite(id, data);
+            var nowActive = isFavorited(id);
+            btn.textContent = nowActive ? '★' : '☆';
+            btn.classList.toggle('active', nowActive);
+            if (favDrawer.classList.contains('open')) renderFavDrawer();
+          });
+
+          titleRow.appendChild(btn);
+        });
+      }
+
+      function jumpToItem(id){
+        closeFavDrawer();
+        setTimeout(function(){
+          var target = document.querySelector('.item[data-fav-id="' + id + '"]');
+          if (!target) return;
+          target.scrollIntoView({ behavior:'smooth', block:'center' });
+          target.classList.remove('fav-highlight');
+          void target.offsetWidth; // 触发重排以便重新播放动画
+          target.classList.add('fav-highlight');
+          setTimeout(function(){ target.classList.remove('fav-highlight'); }, 1600);
+        }, 280);
+      }
+
+      function renderFavDrawer(){
+        var favs = loadFavorites();
+        var ids = Object.keys(favs);
+        updateFavCounters();
+        favList.innerHTML = '';
+
+        if (ids.length === 0) {
+          favEmptyHint.style.display = 'block';
+          return;
+        }
+        favEmptyHint.style.display = 'none';
+
+        ids.forEach(function(id){
+          var d = favs[id];
+          var card = document.createElement('div');
+          card.className = 'item';
+          var exampleHtml = d.example
+            ? '<pre><code>' + escapeHtml(d.example) + '</code></pre>'
+            : '';
+          var sectionHtml = d.sectionTitle
+            ? '<p class="hint" style="margin:6px 0 0">来自：' + escapeHtml(d.sectionTitle) + '</p>'
+            : '';
+          card.innerHTML =
+            '<div class="item-title">' +
+              '<span class="jp">' + escapeHtml(d.jp) + '</span>' +
+              '<span class="cn">' + escapeHtml(d.cn) + '</span>' +
+            '</div>' +
+            sectionHtml +
+            exampleHtml +
+            '<div class="fav-item-actions">' +
+              '<button type="button" class="fav-jump-btn" data-id="' + id + '">↳ 查看原文位置</button>' +
+              '<button type="button" class="fav-remove-btn" data-id="' + id + '">移除收藏</button>' +
+            '</div>';
+          favList.appendChild(card);
+        });
+
+        // 给收藏夹里新出现的例句加朗读按钮
+        injectSpeakButtons();
+
+        favList.querySelectorAll('.fav-jump-btn').forEach(function(btn){
+          btn.addEventListener('click', function(){ jumpToItem(btn.getAttribute('data-id')); });
+        });
+        favList.querySelectorAll('.fav-remove-btn').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var id = btn.getAttribute('data-id');
+            var favs2 = loadFavorites();
+            delete favs2[id];
+            saveFavorites(favs2);
+            var mainBtn = document.querySelector('.item[data-fav-id="' + id + '"] .fav-btn');
+            if (mainBtn) { mainBtn.textContent = '☆'; mainBtn.classList.remove('active'); }
+            renderFavDrawer();
+          });
+        });
+      }
+
+      injectFavButtons();
+      updateFavCounters();
     })();
   </script>
 </body>
