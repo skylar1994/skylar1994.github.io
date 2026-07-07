@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>日本語聴解 場面別語彙集</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#f5f4f0;
+  --bg2:#ffffff;
+  --bg3:#f0eeea;
+  --bg4:#e8e5df;
+  --card:#ffffff;
+  --border:#e2ddd6;
+  --border2:#ccc7be;
+  --text:#1a1814;
+  --text2:#6b6560;
+  --text3:#a8a29c;
+  --radius:12px;
+  --radius2:18px;
+
+  --c-purple:#5b4fcf;
+  --c-purple-bg:#f0eeff;
+  --c-purple-mid:#ddd9ff;
+  --c-gold:#b07d10;
+  --c-gold-bg:#fdf6e3;
+  --c-gold-mid:#f5e0a0;
+  --c-teal:#0e7c68;
+  --c-teal-bg:#eafaf6;
+  --c-teal-mid:#b8ede4;
+  --c-red:#c0392b;
+  --c-red-bg:#fdf0ef;
+  --c-red-mid:#f5c5c2;
+  --c-blue:#1a5fa8;
+  --c-blue-bg:#eef4fd;
+  --c-blue-mid:#bcd6f5;
+  --c-green:#2a7a3b;
+  --c-green-bg:#eef8f1;
+  --c-green-mid:#b8e5c2;
+  --c-pink:#a83070;
+  --c-pink-bg:#fceef6;
+  --c-pink-mid:#f0c0de;
+  --c-orange:#bf5b10;
+  --c-orange-bg:#fdf3ec;
+  --c-orange-mid:#f5c9a0;
+}
+
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:88px}
+
+/* HEADER */
+header{
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  padding:18px 18px 14px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 8px rgba(0,0,0,0.06)
+}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.header-title{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:600;color:var(--text);letter-spacing:.03em}
+.header-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.stats-row{display:flex;gap:6px;flex-wrap:wrap}
+.stat-chip{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);background:var(--bg3)}
+.stat-chip b{color:var(--c-purple)}
+.progress-bar{height:3px;background:var(--bg4);border-radius:3px;margin-top:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c-purple),var(--c-teal));border-radius:3px;transition:width .4s ease;width:0%}
+
+/* SCENE TABS */
+.tabs-wrap{
+  overflow-x:auto;padding:0 18px;
+  background:var(--bg2);border-bottom:2px solid var(--border);
+  position:sticky;top:100px;z-index:90;
+  scrollbar-width:none
+}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tabs{display:flex;gap:2px;min-width:max-content;padding:8px 0 0}
+.tab-btn{
+  padding:8px 13px 9px;border-radius:10px 10px 0 0;
+  border:1.5px solid transparent;border-bottom:none;
+  background:transparent;color:var(--text3);
+  font-size:12px;font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;white-space:nowrap;transition:all .18s;
+  display:flex;align-items:center;gap:4px
+}
+.tab-btn:hover{color:var(--text2);background:var(--bg3)}
+.tab-btn.active{
+  background:var(--bg);color:var(--text);
+  border-color:var(--border);
+  border-bottom:2px solid var(--bg);
+  margin-bottom:-2px;font-weight:500
+}
+.tab-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* CONTENT */
+.content{padding:16px 18px}
+
+/* SCENE HEADER */
+.scene-header{margin-bottom:16px}
+.scene-title{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.scene-icon{font-size:22px}
+.scene-desc{font-size:12px;color:var(--text2);line-height:1.7;background:var(--bg3);padding:10px 14px;border-radius:10px;border-left:3px solid}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:0;margin-bottom:14px;background:var(--bg3);padding:3px;border-radius:10px;border:1px solid var(--border)}
+.view-btn{flex:1;padding:7px 10px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s}
+.view-btn.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.1);font-weight:500}
+
+/* SEARCH */
+.search-bar{margin-bottom:14px}
+.search-input{width:100%;padding:9px 14px;background:var(--bg2);border:1.5px solid var(--border2);border-radius:10px;color:var(--text);font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border .18s}
+.search-input::placeholder{color:var(--text3)}
+.search-input:focus{border-color:var(--c-purple)}
+
+/* SECTION LABEL */
+.section-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:14px 0 8px;padding-left:2px;display:flex;align-items:center;gap:6px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* WORD CARD */
+.word-list{display:flex;flex-direction:column;gap:8px}
+.word-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:13px 15px;
+  cursor:pointer;transition:all .18s;position:relative;overflow:hidden
+}
+.word-card:hover{border-color:var(--border2);box-shadow:0 2px 10px rgba(0,0,0,0.06)}
+.word-card.expanded{box-shadow:0 3px 16px rgba(0,0,0,0.09)}
+.word-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3.5px;border-radius:3px 0 0 3px}
+.word-card.lv-core::before{background:var(--c-purple)}
+.word-card.lv-high::before{background:var(--c-gold)}
+.word-card.lv-key::before{background:var(--c-teal)}
+.word-card.lv-n1::before{background:var(--c-red)}
+.word-card.lv-basic::before{background:var(--c-blue)}
+
+.word-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.word-left{flex:1;min-width:0}
+.word-ja{font-size:19px;font-weight:700;font-family:'Noto Serif JP',serif;color:var(--text);line-height:1.2}
+.word-read{font-size:11px;color:var(--text3);margin-top:2px}
+.word-right{display:flex;align-items:center;gap:5px;flex-shrink:0;margin-left:8px;margin-top:3px}
+.word-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.badge-core{background:var(--c-purple-bg);color:var(--c-purple);border:1px solid var(--c-purple-mid)}
+.badge-high{background:var(--c-gold-bg);color:var(--c-gold);border:1px solid var(--c-gold-mid)}
+.badge-key{background:var(--c-teal-bg);color:var(--c-teal);border:1px solid var(--c-teal-mid)}
+.badge-n1{background:var(--c-red-bg);color:var(--c-red);border:1px solid var(--c-red-mid)}
+.badge-basic{background:var(--c-blue-bg);color:var(--c-blue);border:1px solid var(--c-blue-mid)}
+.word-cn{font-size:14px;color:var(--text2)}
+.expand-hint{font-size:11px;color:var(--text3);text-align:right;margin-top:3px}
+.word-extra{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.word-card.expanded .word-extra{display:block}
+.word-example{font-size:13px;line-height:1.7;padding:9px 12px;background:var(--bg3);border-radius:9px;margin-bottom:8px}
+.word-example .ja{display:block;color:var(--text);margin-bottom:3px}
+.word-example .cn{display:block;font-size:12px;color:var(--text3)}
+.mark-btn{width:100%;padding:8px;border-radius:8px;border:1.5px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s}
+.mark-btn.done{background:var(--c-green-bg);color:var(--c-green);border-color:var(--c-green-mid);font-weight:500}
+.mark-btn:active{transform:scale(.97)}
+.learned-check{font-size:16px;line-height:1}
+
+/* FLASHCARD */
+.fc-tap-hint{font-size:12px;color:var(--text3);text-align:center;margin-bottom:12px}
+.flashcard{
+  background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius2);
+  min-height:250px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:28px 24px;cursor:pointer;
+  transition:all .2s;text-align:center;position:relative;margin-bottom:12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07)
+}
+.flashcard:active{transform:scale(.99)}
+.fc-corner{position:absolute;top:13px;right:13px;font-size:10px;color:var(--text3);padding:2px 8px;border:1px solid var(--border2);border-radius:20px;background:var(--bg3)}
+.fc-badge-wrap{margin-bottom:10px}
+.fc-word{font-size:44px;font-weight:700;font-family:'Noto Serif JP',serif;color:var(--text);margin-bottom:6px;line-height:1.1}
+.fc-read{font-size:14px;color:var(--text3);margin-bottom:4px}
+.fc-answer{display:none;width:100%;text-align:center}
+.flashcard.flipped .fc-answer{display:block}
+.fc-cn{font-size:22px;font-weight:500;color:var(--c-purple);margin-bottom:12px}
+.fc-example{font-size:12px;color:var(--text2);line-height:1.7;background:var(--bg3);padding:10px 14px;border-radius:10px;text-align:left}
+.fc-example .ja{display:block;color:var(--text);margin-bottom:3px}
+.fc-example .cn{display:block;color:var(--text3)}
+.fc-controls{display:none;gap:10px;margin-bottom:12px}
+.fc-controls.visible{display:flex}
+.fc-btn{flex:1;padding:12px;border-radius:11px;border:1.5px solid;font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s;font-weight:500}
+.fc-btn:active{transform:scale(.96)}
+.fc-btn.wrong{background:var(--c-red-bg);color:var(--c-red);border-color:var(--c-red-mid)}
+.fc-btn.right{background:var(--c-green-bg);color:var(--c-green);border-color:var(--c-green-mid)}
+.fc-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px}
+.fc-nav-btn{padding:8px 18px;border-radius:9px;border:1.5px solid var(--border2);background:var(--bg2);color:var(--text);font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s}
+.fc-nav-btn:hover{background:var(--bg3)}
+.fc-nav-btn:active{transform:scale(.95)}
+.fc-counter{font-size:13px;color:var(--text2);min-width:70px;text-align:center}
+.count-label{font-size:12px;color:var(--text3);margin-bottom:8px;text-align:right}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;padding:8px 14px 18px;gap:8px;z-index:200;box-shadow:0 -2px 12px rgba(0,0,0,0.07)}
+.nav-action{flex:1;padding:10px 8px;border-radius:11px;border:1.5px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:4px}
+.nav-action.primary{background:var(--c-purple-bg);color:var(--c-purple);border-color:var(--c-purple-mid);font-weight:500}
+.nav-action:active{transform:scale(.96)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-title">日本語聴解 場面別語彙集</div>
+      <div class="header-sub">場面別・全レベル対応 — タップして詳細・例文を確認</div>
+    </div>
+    <button type="button" class="stat-chip" style="cursor:pointer;background:var(--bg2)" onclick="location.href='index.html'">← 目次へ</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat-chip">習得済 <b id="learnedCount">0</b></div>
+    <div class="stat-chip">総語数 <b id="totalCount">0</b></div>
+    <div class="stat-chip">正解率 <b id="accuracy">—</b></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs" id="tabsContainer"></div>
+</div>
+
+<div class="content" id="contentArea"></div>
+
+<div class="bottom-nav">
+  <button class="nav-action" onclick="resetProgress()">🔄 リセット</button>
+  <button class="nav-action primary" onclick="toggleView()">📇 フラッシュカード</button>
+  <button class="nav-action" onclick="shuffleWords()">🔀 シャッフル</button>
+</div>
+
+<script>
+const BADGE_LABELS = {core:'最重要', high:'高頻出', key:'キー', n1:'N1級', basic:'基礎'};
+
+const SCENES = [
+{
+  id:'business', icon:'💼', name:'職場・ビジネス',
+  color:'#5b4fcf', desc:'会議・報告・交渉・電話対応・指示伝達など、職場全般で必須の語彙。敬語・謙譲語も含む。',
+  descColor:'#5b4fcf',
+  words:[
+    {ja:'承認',read:'しょうにん',cn:'批准、同意',badge:'core',ex:{ja:'この企画、部長の承認を得てから進めてください。',cn:'这个企划，请在得到部长批准后再推进。'}},
+    {ja:'却下',read:'きゃっか',cn:'否决、驳回',badge:'core',ex:{ja:'予算オーバーで企画が却下された。',cn:'因超预算，企划被否决了。'}},
+    {ja:'業務',read:'ぎょうむ',cn:'业务、工作',badge:'core',ex:{ja:'日常業務に支障をきたさないよう注意した。',cn:'注意不要影响日常业务。'}},
+    {ja:'取り組む',read:'とりくむ',cn:'努力应对、致力于',badge:'core',ex:{ja:'新しい課題に積極的に取り組んでいます。',cn:'正在积极应对新课题。'}},
+    {ja:'手配',read:'てはい',cn:'安排、准备',badge:'core',ex:{ja:'会場の手配はすでに済んでいます。',cn:'会场已经安排好了。'}},
+    {ja:'見込み',read:'みこみ',cn:'预期、展望、希望',badge:'high',ex:{ja:'今期の売上は好調な見込みです。',cn:'预计本期销售额表现良好。'}},
+    {ja:'対応',read:'たいおう',cn:'应对、处理',badge:'core',ex:{ja:'クレームへの迅速な対応が求められる。',cn:'需要迅速处理投诉。'}},
+    {ja:'報告書',read:'ほうこくしょ',cn:'报告书',badge:'core',ex:{ja:'週末までに報告書を提出してください。',cn:'请在周末前提交报告书。'}},
+    {ja:'納期',read:'のうき',cn:'交货期、提交期限',badge:'high',ex:{ja:'納期を守ることが最優先事項です。',cn:'遵守交货期是首要任务。'}},
+    {ja:'提案',read:'ていあん',cn:'提案、建议',badge:'core',ex:{ja:'会議で新しい企画を提案しました。',cn:'在会议上提出了新企划。'}},
+    {ja:'調整',read:'ちょうせい',cn:'调整、协调',badge:'core',ex:{ja:'スケジュールの調整をお願いします。',cn:'请帮忙调整一下日程。'}},
+    {ja:'確認',read:'かくにん',cn:'确认',badge:'core',ex:{ja:'内容を確認してからサインしてください。',cn:'确认内容后再签字。'}},
+    {ja:'検討',read:'けんとう',cn:'研究、考虑',badge:'core',ex:{ja:'ご提案の件、検討いたします。',cn:'您的提案，我们会研究考虑。'}},
+    {ja:'差し支え',read:'さしつかえ',cn:'妨碍、不方便',badge:'key',ex:{ja:'差し支えなければ、理由を教えてください。',cn:'如果方便的话，请告诉我原因。'}},
+    {ja:'伺う',read:'うかがう',cn:'（谦让语）拜访/聆听/询问',badge:'key',ex:{ja:'明日お宅に伺ってもよろしいでしょうか。',cn:'明天可以去您府上拜访吗？'}},
+    {ja:'折り返す',read:'おりかえす',cn:'（电话）回拨',badge:'high',ex:{ja:'担当者から折り返しご連絡します。',cn:'负责人会回拨您的电话。'}},
+    {ja:'承る',read:'うけたまわる',cn:'（谦让语）接受、受理',badge:'key',ex:{ja:'ご注文を承りました。',cn:'已受理您的订单。'}},
+    {ja:'申し伝える',read:'もうしつたえる',cn:'（谦让语）转达、转告',badge:'key',ex:{ja:'担当者に申し伝えます。',cn:'我会转告负责人。'}},
+    {ja:'手を打つ',read:'てをうつ',cn:'采取措施、想办法',badge:'high',ex:{ja:'早急に手を打たないと間に合わない。',cn:'不尽早采取措施就来不及了。'}},
+    {ja:'段取り',read:'だんどり',cn:'安排、程序、步骤',badge:'high',ex:{ja:'プロジェクトの段取りを確認した。',cn:'确认了项目的推进步骤。'}},
+    {ja:'根回し',read:'ねまわし',cn:'事先疏通、提前打招呼',badge:'n1',ex:{ja:'会議の前に関係者への根回しが必要だ。',cn:'开会前需要提前向相关人员打招呼。'}},
+    {ja:'折衷案',read:'せっちゅうあん',cn:'折中方案',badge:'n1',ex:{ja:'両者が納得できる折衷案を出した。',cn:'提出了双方都能接受的折中方案。'}},
+    {ja:'割り振る',read:'わりふる',cn:'分配、分派（任务）',badge:'high',ex:{ja:'タスクをチームメンバーに割り振った。',cn:'把任务分配给了团队成员。'}},
+    {ja:'進捗',read:'しんちょく',cn:'进展、进度',badge:'core',ex:{ja:'プロジェクトの進捗を報告してください。',cn:'请汇报项目的进展情况。'}},
+    {ja:'議事録',read:'ぎじろく',cn:'会议记录',badge:'high',ex:{ja:'議事録を明日中に共有します。',cn:'明天之内会共享会议记录。'}},
+    {ja:'経費',read:'けいひ',cn:'经费、费用',badge:'core',ex:{ja:'出張の経費は会社が負担します。',cn:'出差的费用由公司承担。'}},
+    {ja:'見積もり',read:'みつもり',cn:'估价、报价',badge:'core',ex:{ja:'まず見積もりを出してもらえますか。',cn:'能先给我报个价吗？'}},
+    {ja:'契約',read:'けいやく',cn:'合同、合约',badge:'core',ex:{ja:'来月、新しい契約を結ぶ予定です。',cn:'预计下个月签订新合同。'}},
+    {ja:'締め切り',read:'しめきり',cn:'截止日期',badge:'core',ex:{ja:'締め切りは今週の金曜日です。',cn:'截止日期是本周五。'}},
+    {ja:'欠勤',read:'けっきん',cn:'缺勤、缺席',badge:'high',ex:{ja:'体調不良のため欠勤します。',cn:'因身体不适缺勤。'}},
+    {ja:'打診',read:'だしん',cn:'试探性询问、探口风',badge:'n1',ex:{ja:'先方に価格交渉の余地があるか打診してみます。',cn:'试着向对方探探价格谈判是否还有余地。'}},
+    {ja:'忖度',read:'そんたく',cn:'揣度、体谅（他人心意）',badge:'n1',ex:{ja:'上司の意向を忖度して資料を準備した。',cn:'揣摩上司的意图准备了资料。'}},
+    {ja:'難色を示す',read:'なんしょくをしめす',cn:'表示为难、面露难色',badge:'n1',ex:{ja:'値上げの提案に取引先が難色を示した。',cn:'客户对涨价提案表示了为难。'}},
+    {ja:'折り合いをつける',read:'おりあいをつける',cn:'达成妥协、找到平衡点',badge:'n1',ex:{ja:'双方が折り合いをつけ、契約を更新した。',cn:'双方达成妥协，更新了合同。'}},
+    {ja:'采配を振る',read:'さいはいをふるう',cn:'指挥、发号施令',badge:'n1',ex:{ja:'プロジェクト全体の采配を振っている。',cn:'正在指挥整个项目。'}},
+    {ja:'是正',read:'ぜせい',cn:'纠正、矫正',badge:'n1',ex:{ja:'不適切な処理を是正するよう求められた。',cn:'被要求纠正不当的处理方式。'}},
+    {ja:'稟議',read:'りんぎ',cn:'（企业内部）呈批审议制度',badge:'n1',ex:{ja:'この件は稟議を通してから実行します。',cn:'这件事要经过内部呈批后再执行。'}},
+  ]
+},
+{
+  id:'daily', icon:'🏠', name:'日常生活',
+  color:'#0e7c68', desc:'买い物・役所手続き・近所付き合い・電話・各種サービス利用など、暮らしの全場面。',
+  descColor:'#0e7c68',
+  words:[
+    {ja:'申し込む',read:'もうしこむ',cn:'申请、报名',badge:'core',ex:{ja:'市民講座に申し込みました。',cn:'报名参加了市民讲座。'}},
+    {ja:'手続き',read:'てつづき',cn:'手续、办理',badge:'core',ex:{ja:'銀行でローンの手続きをしてきた。',cn:'去银行办理了贷款手续。'}},
+    {ja:'更新',read:'こうしん',cn:'更新、续签',badge:'core',ex:{ja:'免許証の更新に行かなければならない。',cn:'必须去更新驾照。'}},
+    {ja:'解約',read:'かいやく',cn:'解约、取消',badge:'core',ex:{ja:'携帯の契約を解約しました。',cn:'解约了手机合同。'}},
+    {ja:'振り込む',read:'ふりこむ',cn:'汇款、转账',badge:'core',ex:{ja:'家賃を口座に振り込んでください。',cn:'请把房租转到账户。'}},
+    {ja:'引き落とし',read:'ひきおとし',cn:'自动扣款',badge:'high',ex:{ja:'口座から毎月自動で引き落とされます。',cn:'每月自动从账户扣款。'}},
+    {ja:'期限',read:'きげん',cn:'期限',badge:'core',ex:{ja:'申請の期限は今月末です。',cn:'申请的期限是本月底。'}},
+    {ja:'光熱費',read:'こうねつひ',cn:'水电燃气费',badge:'high',ex:{ja:'冬は光熱費がかなり高くなります。',cn:'冬天水电费会相当高。'}},
+    {ja:'粗大ゴミ',read:'そだいごみ',cn:'大件垃圾',badge:'high',ex:{ja:'粗大ゴミは事前に申し込みが必要です。',cn:'大件垃圾需要提前申请。'}},
+    {ja:'分別',read:'ぶんべつ',cn:'垃圾分类',badge:'core',ex:{ja:'ゴミの分別をしっかりしてください。',cn:'请认真做好垃圾分类。'}},
+    {ja:'回覧板',read:'かいらんばん',cn:'传阅板（邻里通知）',badge:'key',ex:{ja:'回覧板を次の家に回してください。',cn:'请把传阅板传给下一家。'}},
+    {ja:'管理組合',read:'かんりくみあい',cn:'管理组合（公寓业主委员会）',badge:'key',ex:{ja:'管理組合の会議が月一回あります。',cn:'管理组合的会议每月开一次。'}},
+    {ja:'仲介',read:'ちゅうかい',cn:'中介、代理',badge:'high',ex:{ja:'不動産仲介を通して物件を借りた。',cn:'通过房产中介租了房子。'}},
+    {ja:'敷金',read:'しききん',cn:'押金（房屋租赁）',badge:'high',ex:{ja:'敷金は退去時に返還されます。',cn:'押金在退租时退还。'}},
+    {ja:'礼金',read:'れいきん',cn:'礼金（房东收取的谢礼金）',badge:'high',ex:{ja:'礼金は1ヶ月分でした。',cn:'礼金是一个月的租金。'}},
+    {ja:'引っ越し',read:'ひっこし',cn:'搬家',badge:'core',ex:{ja:'来月引っ越しの予定があります。',cn:'下个月有搬家的计划。'}},
+    {ja:'転入届',read:'てんにゅうとどけ',cn:'迁入登记',badge:'key',ex:{ja:'転入届を市役所に提出しました。',cn:'向市役所提交了迁入登记。'}},
+    {ja:'住民票',read:'じゅうみんひょう',cn:'住民登记证明',badge:'high',ex:{ja:'住民票を一通取ってきてください。',cn:'请去取一份住民登记证明。'}},
+    {ja:'マイナンバー',read:'まいなんばー',cn:'个人编号（身份证号码）',badge:'high',ex:{ja:'マイナンバーカードが必要です。',cn:'需要个人编号卡。'}},
+    {ja:'口座',read:'こうざ',cn:'账户',badge:'core',ex:{ja:'給与振込用の口座を開設しました。',cn:'开设了工资转账用账户。'}},
+    {ja:'ATM',read:'えーてぃーえむ',cn:'自动取款机',badge:'basic',ex:{ja:'近くのATMでお引き出しください。',cn:'请在附近的自动取款机取款。'}},
+    {ja:'定期預金',read:'ていきよきん',cn:'定期存款',badge:'high',ex:{ja:'定期預金の満期が来ました。',cn:'定期存款到期了。'}},
+    {ja:'保険',read:'ほけん',cn:'保险',badge:'core',ex:{ja:'火災保険に入っておいた方がいいです。',cn:'最好加入火灾保险。'}},
+    {ja:'なるべく',read:'なるべく',cn:'尽量、尽可能',badge:'core',ex:{ja:'なるべく早くご連絡ください。',cn:'请尽量早点联系。'}},
+    {ja:'そのまま',read:'そのまま',cn:'就那样、原封不动',badge:'core',ex:{ja:'書類はそのまま持ってきてください。',cn:'请原封不动地把文件带来。'}},
+    {ja:'手頃',read:'てごろ',cn:'价格适中、实惠',badge:'high',ex:{ja:'手頃な価格で質の良い商品が見つかった。',cn:'找到了价格实惠、质量好的商品。'}},
+    {ja:'お裾分け',read:'おすそわけ',cn:'分享（把得到的东西分给别人）',badge:'key',ex:{ja:'旅行のお土産をお裾分けします。',cn:'把旅行的伴手礼分享给你。'}},
+    {ja:'自治会',read:'じちかい',cn:'居委会、自治会',badge:'key',ex:{ja:'自治会の清掃活動に参加しました。',cn:'参加了居委会的清扫活动。'}},
+    {ja:'手間暇',read:'てまひま',cn:'花费的时间和精力',badge:'n1',ex:{ja:'手続きに手間暇がかかって疲れた。',cn:'办手续花费了不少时间和精力，累坏了。'}},
+    {ja:'侭ならない',read:'ままならない',cn:'不如意、不能随心所欲',badge:'n1',ex:{ja:'一人暮らしは何かと侭ならないことが多い。',cn:'一个人生活总有很多不如意的事。'}},
+    {ja:'億劫',read:'おっくう',cn:'懒得做、嫌麻烦',badge:'n1',ex:{ja:'寒い日は外出が億劫になる。',cn:'寒冷的日子里出门就变得懒得动。'}},
+    {ja:'手を焼く',read:'てをやく',cn:'感到棘手、难以应付',badge:'n1',ex:{ja:'近所とのトラブルに手を焼いている。',cn:'为邻里纠纷感到棘手。'}},
+    {ja:'埒が明かない',read:'らちがあかない',cn:'没有进展、僵持不下',badge:'n1',ex:{ja:'窓口でいくら説明しても埒が明かない。',cn:'在窗口怎么解释都没有进展。'}},
+    {ja:'世知辛い',read:'せちがらい',cn:'世道艰难、人情淡薄',badge:'n1',ex:{ja:'物価が上がって世知辛い世の中になった。',cn:'物价上涨，世道变得艰难了。'}},
+  ]
+},
+{
+  id:'transport', icon:'🚆', name:'交通・移動',
+  color:'#b07d10', desc:'駅アナウンス・路線案内・飛行機・バス・タクシー・道案内など交通全般の語彙。',
+  descColor:'#b07d10',
+  words:[
+    {ja:'乗り換え',read:'のりかえ',cn:'换乘、转乘',badge:'core',ex:{ja:'新宿で中央線に乗り換えてください。',cn:'请在新宿换乘中央线。'}},
+    {ja:'遅延',read:'ちえん',cn:'延误、晚点',badge:'core',ex:{ja:'電車が20分遅延しております。',cn:'电车晚点20分钟。'}},
+    {ja:'振替輸送',read:'ふりかえゆそう',cn:'替代交通（因故障提供的免费换乘）',badge:'key',ex:{ja:'振替輸送をご利用ください。',cn:'请使用替代交通服务。'}},
+    {ja:'折り返し運転',read:'おりかえしうんてん',cn:'折返运行',badge:'key',ex:{ja:'この電車は次の駅で折り返し運転となります。',cn:'此列车将在下一站折返运行。'}},
+    {ja:'優先席',read:'ゆうせんせき',cn:'优先座',badge:'core',ex:{ja:'優先席付近では携帯の電源をお切りください。',cn:'请在优先座附近关闭手机电源。'}},
+    {ja:'終点',read:'しゅうてん',cn:'终点站',badge:'core',ex:{ja:'この電車の終点は博多です。',cn:'这列电车的终点是博多。'}},
+    {ja:'一時停止',read:'いちじていし',cn:'暂时停驶',badge:'high',ex:{ja:'強風のため運転を一時停止します。',cn:'因强风暂时停止运行。'}},
+    {ja:'満席',read:'まんせき',cn:'满座',badge:'core',ex:{ja:'ご希望の便は満席となっております。',cn:'您所希望的航班已满座。'}},
+    {ja:'経由',read:'けいゆ',cn:'经由、途经',badge:'high',ex:{ja:'大阪経由で広島に行きます。',cn:'经由大阪前往广岛。'}},
+    {ja:'指定席',read:'していせき',cn:'对号座',badge:'core',ex:{ja:'新幹線の指定席を予約しました。',cn:'预约了新干线对号座。'}},
+    {ja:'自由席',read:'じゆうせき',cn:'自由座（不指定座位）',badge:'core',ex:{ja:'自由席は後ろの車両です。',cn:'自由座在后面的车厢。'}},
+    {ja:'グリーン車',read:'ぐりーんしゃ',cn:'绿色车厢（头等车厢）',badge:'high',ex:{ja:'グリーン車には別料金が必要です。',cn:'乘坐绿色车厢需要额外费用。'}},
+    {ja:'精算機',read:'せいさんき',cn:'补票机',badge:'key',ex:{ja:'精算機でお求めください。',cn:'请在补票机处购买。'}},
+    {ja:'徒歩',read:'とほ',cn:'步行',badge:'core',ex:{ja:'駅から徒歩5分のところにあります。',cn:'在距车站步行5分钟的地方。'}},
+    {ja:'回送',read:'かいそう',cn:'回送（空车行驶）',badge:'key',ex:{ja:'この電車は回送のため乗車できません。',cn:'这列电车是回送，不能乘坐。'}},
+    {ja:'乗車券',read:'じょうしゃけん',cn:'乘车票',badge:'core',ex:{ja:'乗車券と特急券が必要です。',cn:'需要乘车票和特急票。'}},
+    {ja:'定期券',read:'ていきけん',cn:'通勤/通学月票',badge:'core',ex:{ja:'定期券をSuicaにチャージしました。',cn:'在Suica上充值了月票。'}},
+    {ja:'IC乗車券',read:'あいしーじょうしゃけん',cn:'IC卡乘车票（如Suica/ICOCA）',badge:'high',ex:{ja:'IC乗車券で乗り降りできます。',cn:'可以用IC乘车票上下车。'}},
+    {ja:'運賃',read:'うんちん',cn:'票价、运费',badge:'core',ex:{ja:'区間によって運賃が異なります。',cn:'票价因区间不同而不同。'}},
+    {ja:'車内',read:'しゃない',cn:'车内',badge:'basic',ex:{ja:'車内でのお食事はご遠慮ください。',cn:'请不要在车内用餐。'}},
+    {ja:'ホーム',read:'ほーむ',cn:'站台',badge:'basic',ex:{ja:'3番ホームに電車が参ります。',cn:'电车即将到达3号站台。'}},
+    {ja:'発車',read:'はっしゃ',cn:'发车',badge:'core',ex:{ja:'まもなく発車いたします。',cn:'即将发车。'}},
+    {ja:'渋滞',read:'じゅうたい',cn:'交通堵塞',badge:'core',ex:{ja:'高速道路で渋滞が発生しています。',cn:'高速公路发生了交通堵塞。'}},
+    {ja:'う回路',read:'うかいろ',cn:'绕行路线',badge:'key',ex:{ja:'工事のためう回路をご利用ください。',cn:'因施工请使用绕行路线。'}},
+    {ja:'搭乗',read:'とうじょう',cn:'登机',badge:'high',ex:{ja:'搭乗口でパスポートをご提示ください。',cn:'请在登机口出示护照。'}},
+    {ja:'手荷物',read:'てにもつ',cn:'手提行李',badge:'high',ex:{ja:'手荷物は頭上の棚に置いてください。',cn:'请把手提行李放在头顶行李架上。'}},
+    {ja:'預け入れ',read:'あずけいれ',cn:'托运（行李）',badge:'high',ex:{ja:'スーツケースは預け入れをお願いします。',cn:'请托运行李箱。'}},
+    {ja:'欠航',read:'けっこう',cn:'停航',badge:'high',ex:{ja:'台風の影響で欠航になりました。',cn:'受台风影响停航了。'}},
+    {ja:'停滞',read:'ていたい',cn:'停滞不前、堵塞不动',badge:'n1',ex:{ja:'事故の影響で車の流れが停滞している。',cn:'受事故影响，车流停滞不前。'}},
+    {ja:'逼迫',read:'ひっぱく',cn:'紧张、吃紧',badge:'n1',ex:{ja:'連休中は空港の駐車場が逼迫する。',cn:'连休期间机场停车场会非常紧张。'}},
+    {ja:'難儀',read:'なんぎ',cn:'困难、吃苦头',badge:'n1',ex:{ja:'大雪で帰宅が難儀した。',cn:'因大雪回家吃了不少苦头。'}},
+    {ja:'誘導',read:'ゆうどう',cn:'引导、疏导',badge:'n1',ex:{ja:'係員の誘導に従って避難してください。',cn:'请按照工作人员的引导进行避难。'}},
+    {ja:'規制',read:'きせい',cn:'管制、限制',badge:'n1',ex:{ja:'事故処理のため車線規制が行われている。',cn:'因事故处理正在进行车道管制。'}},
+    {ja:'迂回',read:'うかい',cn:'绕行',badge:'n1',ex:{ja:'工事区間は迂回していただきます。',cn:'施工路段请绕行。'}},
+  ]
+},
+{
+  id:'medical', icon:'🏥', name:'医療・健康',
+  color:'#c0392b', desc:'病院受診・症状説明・薬局・健康診断・救急など、医療場面で使われる語彙を網羅。',
+  descColor:'#c0392b',
+  words:[
+    {ja:'症状',read:'しょうじょう',cn:'症状',badge:'core',ex:{ja:'どのような症状がありますか。',cn:'有什么症状？'}},
+    {ja:'処方箋',read:'しょほうせん',cn:'处方笺',badge:'core',ex:{ja:'処方箋を薬局に持って行ってください。',cn:'请把处方笺带到药店去。'}},
+    {ja:'問診票',read:'もんしんひょう',cn:'问诊表',badge:'key',ex:{ja:'問診票にご記入お願いします。',cn:'请填写问诊表。'}},
+    {ja:'副作用',read:'ふくさよう',cn:'副作用',badge:'high',ex:{ja:'この薬には眠気の副作用があります。',cn:'这种药有嗜睡的副作用。'}},
+    {ja:'検査',read:'けんさ',cn:'检查',badge:'core',ex:{ja:'血液検査の結果が出ました。',cn:'血液检查的结果出来了。'}},
+    {ja:'予防接種',read:'よぼうせっしゅ',cn:'预防接种',badge:'high',ex:{ja:'インフルエンザの予防接種を受けた。',cn:'接种了流感预防疫苗。'}},
+    {ja:'安静',read:'あんせい',cn:'静养',badge:'core',ex:{ja:'しばらく安静にしてください。',cn:'请静养一段时间。'}},
+    {ja:'空腹時',read:'くうふくじ',cn:'空腹时',badge:'key',ex:{ja:'この薬は空腹時に飲まないでください。',cn:'这种药请不要空腹时服用。'}},
+    {ja:'初診',read:'しょしん',cn:'初诊',badge:'core',ex:{ja:'初診の方はこちらでお受け付けします。',cn:'初诊的患者请在这里受理。'}},
+    {ja:'再診',read:'さいしん',cn:'复诊',badge:'high',ex:{ja:'再診の場合はこちらの窓口へどうぞ。',cn:'复诊的话请到这个窗口。'}},
+    {ja:'絶食',read:'ぜっしょく',cn:'禁食',badge:'high',ex:{ja:'検査前は絶食が必要です。',cn:'检查前需要禁食。'}},
+    {ja:'経過',read:'けいか',cn:'经过、进展',badge:'high',ex:{ja:'術後の経過は良好です。',cn:'术后进展良好。'}},
+    {ja:'麻酔',read:'ますい',cn:'麻醉',badge:'high',ex:{ja:'全身麻酔で手術します。',cn:'进行全身麻醉手术。'}},
+    {ja:'入院',read:'にゅういん',cn:'住院',badge:'core',ex:{ja:'1週間の入院が必要です。',cn:'需要住院一周。'}},
+    {ja:'退院',read:'たいいん',cn:'出院',badge:'core',ex:{ja:'明日退院できそうです。',cn:'明天好像可以出院了。'}},
+    {ja:'診察',read:'しんさつ',cn:'诊察、就诊',badge:'core',ex:{ja:'診察室にお入りください。',cn:'请进入诊室。'}},
+    {ja:'投薬',read:'とうやく',cn:'投药、用药',badge:'key',ex:{ja:'しばらく投薬治療を続けましょう。',cn:'继续药物治疗一段时间。'}},
+    {ja:'点滴',read:'てんてき',cn:'输液、打点滴',badge:'high',ex:{ja:'点滴を30分ほど打ちます。',cn:'打大约30分钟点滴。'}},
+    {ja:'アレルギー',read:'あれるぎー',cn:'过敏',badge:'core',ex:{ja:'ペニシリンにアレルギーがあります。',cn:'对青霉素过敏。'}},
+    {ja:'慢性',read:'まんせい',cn:'慢性',badge:'high',ex:{ja:'慢性的な腰痛に悩まされている。',cn:'为慢性腰痛所苦恼。'}},
+    {ja:'急性',read:'きゅうせい',cn:'急性',badge:'high',ex:{ja:'急性胃炎と診断されました。',cn:'被诊断为急性胃炎。'}},
+    {ja:'救急車',read:'きゅうきゅうしゃ',cn:'救护车',badge:'core',ex:{ja:'すぐに救急車を呼んでください。',cn:'请立即叫救护车。'}},
+    {ja:'お薬手帳',read:'おくすりてちょう',cn:'服药记录本',badge:'key',ex:{ja:'お薬手帳を持っていますか。',cn:'您有服药记录本吗？'}},
+    {ja:'湿布',read:'しっぷ',cn:'贴布、膏药',badge:'high',ex:{ja:'痛いところに湿布を貼ってください。',cn:'请在疼痛处贴上膏药。'}},
+    {ja:'禁煙',read:'きんえん',cn:'禁烟',badge:'core',ex:{ja:'術前から禁煙するよう言われました。',cn:'被告知手术前要戒烟。'}},
+    {ja:'食欲',read:'しょくよく',cn:'食欲',badge:'core',ex:{ja:'最近食欲がありません。',cn:'最近没有食欲。'}},
+    {ja:'めまい',read:'めまい',cn:'头晕、眩晕',badge:'core',ex:{ja:'起き上がるとめまいがします。',cn:'起身时会感到头晕。'}},
+    {ja:'吐き気',read:'はきけ',cn:'恶心',badge:'core',ex:{ja:'吐き気と頭痛が続いています。',cn:'恶心和头痛持续着。'}},
+    {ja:'予後',read:'よご',cn:'预后',badge:'n1',ex:{ja:'手術後の予後は比較的良好です。',cn:'手术后的预后相对良好。'}},
+    {ja:'罹患',read:'りかん',cn:'患病、罹患',badge:'n1',ex:{ja:'この病気に罹患する人が増えている。',cn:'患这种病的人正在增加。'}},
+    {ja:'容体',read:'ようだい',cn:'病情、病况',badge:'n1',ex:{ja:'患者の容体が急変した。',cn:'患者的病情突然恶化了。'}},
+    {ja:'兆候',read:'ちょうこう',cn:'征兆、迹象',badge:'n1',ex:{ja:'回復の兆候が見られる。',cn:'可以看到恢复的迹象。'}},
+    {ja:'蔓延',read:'まんえん',cn:'蔓延',badge:'n1',ex:{ja:'感染症が急速に蔓延している。',cn:'传染病正在急速蔓延。'}},
+    {ja:'快方に向かう',read:'かいほうにむかう',cn:'病情好转',badge:'n1',ex:{ja:'幸い病状は快方に向かっている。',cn:'幸好病情正在好转。'}},
+  ]
+},
+{
+  id:'education', icon:'📚', name:'学校・教育',
+  color:'#2a7a3b', desc:'学校案内・授業登録・試験・進学・就活・留学手続きなど、教育場面全般の語彙。',
+  descColor:'#2a7a3b',
+  words:[
+    {ja:'履修',read:'りしゅう',cn:'修读（课程）',badge:'core',ex:{ja:'今学期は6科目履修しています。',cn:'本学期修读了6门课程。'}},
+    {ja:'単位',read:'たんい',cn:'学分',badge:'core',ex:{ja:'卒業には124単位必要です。',cn:'毕业需要124学分。'}},
+    {ja:'レポート',read:'れぽーと',cn:'报告、论文',badge:'core',ex:{ja:'来週までにレポートを提出してください。',cn:'请在下周前提交报告。'}},
+    {ja:'奨学金',read:'しょうがくきん',cn:'奖学金',badge:'high',ex:{ja:'奨学金の申請書類を集めています。',cn:'正在收集奖学金的申请材料。'}},
+    {ja:'出席率',read:'しゅっせきりつ',cn:'出席率',badge:'high',ex:{ja:'出席率が70%を下回ると単位を失います。',cn:'出席率低于70%会失去学分。'}},
+    {ja:'就職活動',read:'しゅうしょくかつどう',cn:'求职活动（就活）',badge:'core',ex:{ja:'3年生から就職活動を始めました。',cn:'从大三开始了求职活动。'}},
+    {ja:'論文',read:'ろんぶん',cn:'论文',badge:'core',ex:{ja:'卒業論文のテーマを決めました。',cn:'决定了毕业论文的主题。'}},
+    {ja:'補講',read:'ほこう',cn:'补课',badge:'high',ex:{ja:'休講の代わりに補講があります。',cn:'有补课代替停课。'}},
+    {ja:'抽選',read:'ちゅうせん',cn:'抽签',badge:'high',ex:{ja:'この授業は抽選で受講者を決めます。',cn:'这门课通过抽签决定听课者。'}},
+    {ja:'ゼミ',read:'ぜみ',cn:'研讨会（Seminar）',badge:'core',ex:{ja:'来年度のゼミの希望を出してください。',cn:'请提交下学年研讨会的希望。'}},
+    {ja:'インターン',read:'いんたーん',cn:'实习',badge:'high',ex:{ja:'夏休みにインターンシップに参加した。',cn:'暑假期间参加了实习。'}},
+    {ja:'欠席届',read:'けっせきとどけ',cn:'缺席申请书',badge:'key',ex:{ja:'欠席する場合は事前に欠席届を出してください。',cn:'缺席时请提前提交缺席申请。'}},
+    {ja:'学籍番号',read:'がくせきばんごう',cn:'学号',badge:'basic',ex:{ja:'学籍番号と氏名を記入してください。',cn:'请填写学号和姓名。'}},
+    {ja:'休学',read:'きゅうがく',cn:'休学',badge:'high',ex:{ja:'病気で一学期間休学しました。',cn:'因生病休学了一学期。'}},
+    {ja:'留年',read:'りゅうねん',cn:'留级、延迟毕业',badge:'high',ex:{ja:'単位が足りなくて留年した。',cn:'因学分不足留级了。'}},
+    {ja:'転学部',read:'てんがくぶ',cn:'转学院',badge:'key',ex:{ja:'2年生で文学部に転学部しました。',cn:'大二转到了文学院。'}},
+    {ja:'履歴書',read:'りれきしょ',cn:'履历书、简历',badge:'core',ex:{ja:'履歴書はA4サイズで用意してください。',cn:'请用A4尺寸准备履历书。'}},
+    {ja:'面接',read:'めんせつ',cn:'面试',badge:'core',ex:{ja:'来週、最終面接があります。',cn:'下周有最终面试。'}},
+    {ja:'内定',read:'ないてい',cn:'录用内定',badge:'high',ex:{ja:'第一志望から内定をもらいました。',cn:'收到了第一志愿公司的录用通知。'}},
+    {ja:'エントリーシート',read:'えんとりーしーと',cn:'求职申请表（ES）',badge:'high',ex:{ja:'エントリーシートの締め切りは来月です。',cn:'求职申请表的截止日期是下个月。'}},
+    {ja:'GPA',read:'じーぴーえー',cn:'成绩绩点',badge:'key',ex:{ja:'GPAが3.5以上必要です。',cn:'需要GPA在3.5以上。'}},
+    {ja:'試験監督',read:'しけんかんとく',cn:'考场监督',badge:'key',ex:{ja:'試験監督の指示に従ってください。',cn:'请遵从考场监督的指示。'}},
+    {ja:'シラバス',read:'しらばす',cn:'课程大纲（Syllabus）',badge:'high',ex:{ja:'シラバスで授業の内容を確認してください。',cn:'请通过课程大纲确认授业内容。'}},
+    {ja:'オリエンテーション',read:'おりえんてーしょん',cn:'入学说明会（Orientation）',badge:'high',ex:{ja:'新入生オリエンテーションは明日です。',cn:'新生入学说明会是明天。'}},
+    {ja:'秀でる',read:'ひいでる',cn:'出众、擅长',badge:'n1',ex:{ja:'彼は語学に秀でた学生だ。',cn:'他是语言方面很出众的学生。'}},
+    {ja:'資質',read:'ししつ',cn:'资质、素质',badge:'n1',ex:{ja:'リーダーとしての資質が問われる。',cn:'作为领导者的素质受到考验。'}},
+    {ja:'培う',read:'つちかう',cn:'培养',badge:'n1',ex:{ja:'大学時代に培った人脈が今も役立つ。',cn:'大学时代培养的人脉现在依然有用。'}},
+    {ja:'怠る',read:'おこたる',cn:'疏忽、懈怠',badge:'n1',ex:{ja:'課題の提出を怠ると単位を落とす。',cn:'疏于提交作业会挂科。'}},
+    {ja:'卓越',read:'たくえつ',cn:'卓越',badge:'n1',ex:{ja:'卓越した研究成果が評価された。',cn:'卓越的研究成果得到了肯定。'}},
+    {ja:'履修漏れ',read:'りしゅうもれ',cn:'漏修课程、学分不足',badge:'n1',ex:{ja:'履修漏れがないか成績表で確認してください。',cn:'请核对成绩单，确认有没有漏修课程。'}},
+  ]
+},
+{
+  id:'weather', icon:'🌤', name:'天気・自然・災害',
+  color:'#1a5fa8', desc:'天気予報のアナウンス・台風・地震・避難指示・節気など、気象と自然・防災の語彙。',
+  descColor:'#1a5fa8',
+  words:[
+    {ja:'台風',read:'たいふう',cn:'台风',badge:'core',ex:{ja:'台風が本州に上陸しました。',cn:'台风登陆了本州。'}},
+    {ja:'避難指示',read:'ひなんしじ',cn:'疏散指示',badge:'key',ex:{ja:'市全域に避難指示が出ています。',cn:'整个市区发布了疏散指示。'}},
+    {ja:'大雨警報',read:'おおあめけいほう',cn:'大雨警报',badge:'core',ex:{ja:'大雨警報が発令されました。',cn:'发布了大雨警报。'}},
+    {ja:'土砂崩れ',read:'どしゃくずれ',cn:'泥石流、山体滑坡',badge:'high',ex:{ja:'山間部では土砂崩れのおそれがあります。',cn:'山区有发生泥石流的危险。'}},
+    {ja:'震度',read:'しんど',cn:'震度（地震强度）',badge:'core',ex:{ja:'震度4の地震が発生しました。',cn:'发生了震度4的地震。'}},
+    {ja:'津波',read:'つなみ',cn:'海啸',badge:'core',ex:{ja:'津波警報が発令されています。',cn:'发布了海啸警报。'}},
+    {ja:'停電',read:'ていでん',cn:'停电',badge:'core',ex:{ja:'台風の影響で広域に停電が発生した。',cn:'受台风影响大范围停电。'}},
+    {ja:'ハザードマップ',read:'はざーどまっぷ',cn:'灾害风险图',badge:'key',ex:{ja:'ハザードマップで自宅の危険度を確認した。',cn:'通过灾害风险图确认了自家的危险程度。'}},
+    {ja:'高波',read:'たかなみ',cn:'大浪',badge:'high',ex:{ja:'沿岸では高波にご注意ください。',cn:'请注意沿岸的大浪。'}},
+    {ja:'乾燥注意報',read:'かんそうちゅういほう',cn:'干燥注意报',badge:'key',ex:{ja:'乾燥注意報が出ているので火気に注意。',cn:'发布了干燥注意报，请注意用火。'}},
+    {ja:'気象情報',read:'きしょうじょうほう',cn:'气象信息',badge:'core',ex:{ja:'最新の気象情報にご注意ください。',cn:'请关注最新气象信息。'}},
+    {ja:'暴風雨',read:'ぼうふうう',cn:'暴风雨',badge:'high',ex:{ja:'暴風雨の影響で交通が乱れています。',cn:'受暴风雨影响，交通混乱。'}},
+    {ja:'洪水',read:'こうずい',cn:'洪水',badge:'high',ex:{ja:'河川の洪水に警戒してください。',cn:'请警惕河流洪水。'}},
+    {ja:'猛暑',read:'もうしょ',cn:'酷暑',badge:'high',ex:{ja:'今年の夏は記録的な猛暑でした。',cn:'今年夏天是创纪录的酷暑。'}},
+    {ja:'熱中症',read:'ねっちゅうしょう',cn:'中暑',badge:'core',ex:{ja:'熱中症に注意して水分補給をしてください。',cn:'请注意中暑，补充水分。'}},
+    {ja:'凍結',read:'とうけつ',cn:'结冰、冻结',badge:'high',ex:{ja:'路面が凍結していますので注意してください。',cn:'路面结冰，请注意。'}},
+    {ja:'積雪',read:'せきせつ',cn:'积雪',badge:'high',ex:{ja:'大雪で50センチの積雪がありました。',cn:'因大雪积雪达50厘米。'}},
+    {ja:'避難所',read:'ひなんじょ',cn:'避难所',badge:'core',ex:{ja:'近くの小学校が避難所になっています。',cn:'附近的小学成为了避难所。'}},
+    {ja:'非常食',read:'ひじょうしょく',cn:'应急食品',badge:'high',ex:{ja:'非常食を3日分用意しておきましょう。',cn:'准备好3天份的应急食品吧。'}},
+    {ja:'余震',read:'よしん',cn:'余震',badge:'high',ex:{ja:'本震の後も余震が続いています。',cn:'主震后余震持续。'}},
+    {ja:'避難勧告',read:'ひなんかんこく',cn:'疏散劝告',badge:'key',ex:{ja:'避難勧告が出たら速やかに行動してください。',cn:'发出疏散劝告时请迅速行动。'}},
+    {ja:'梅雨',read:'つゆ',cn:'梅雨',badge:'core',ex:{ja:'今年の梅雨は例年より長いです。',cn:'今年的梅雨比往年长。'}},
+    {ja:'台風一過',read:'たいふういっか',cn:'台风过后（天气放晴）',badge:'key',ex:{ja:'台風一過で気持ちのいい青空が広がった。',cn:'台风过后，晴空万里。'}},
+    {ja:'猛威を振るう',read:'もういをふるう',cn:'大肆逞威、肆虐',badge:'n1',ex:{ja:'今年は記録的な台風が猛威を振るった。',cn:'今年破纪录的台风大肆肆虐。'}},
+    {ja:'深刻化',read:'しんこくか',cn:'严重化、加剧',badge:'n1',ex:{ja:'渇水の被害が深刻化している。',cn:'干旱造成的损害正在加剧。'}},
+    {ja:'甚大',read:'じんだい',cn:'巨大、严重（灾害等）',badge:'n1',ex:{ja:'地震による甚大な被害が報告された。',cn:'报告了地震造成的巨大损失。'}},
+    {ja:'兆し',read:'きざし',cn:'征兆、迹象',badge:'n1',ex:{ja:'台風が発生する兆しが見られる。',cn:'可以看到台风生成的迹象。'}},
+    {ja:'予断を許さない',read:'よだんをゆるさない',cn:'不容乐观、难以预料',badge:'n1',ex:{ja:'今後の状況は予断を許さない。',cn:'今后的状况难以预料。'}},
+    {ja:'収束',read:'しゅうそく',cn:'平息、收敛',badge:'n1',ex:{ja:'台風の影響は今夜には収束する見込みです。',cn:'预计台风的影响今晚会平息。'}},
+  ]
+},
+{
+  id:'shopping', icon:'🛍', name:'買い物・サービス',
+  color:'#a83070', desc:'店舗・通販・修理・クレーム・返品・サービスカウンターなど、購買・サービス全般の語彙。',
+  descColor:'#a83070',
+  words:[
+    {ja:'返品',read:'へんぴん',cn:'退货',badge:'core',ex:{ja:'レシートがあれば返品できます。',cn:'有收据的话可以退货。'}},
+    {ja:'交換',read:'こうかん',cn:'交换、换货',badge:'core',ex:{ja:'サイズが違うので交換をお願いします。',cn:'尺寸不对，请帮我换货。'}},
+    {ja:'在庫',read:'ざいこ',cn:'库存',badge:'core',ex:{ja:'この商品は現在在庫がございません。',cn:'这件商品目前没有库存。'}},
+    {ja:'取り寄せ',read:'とりよせ',cn:'订货调货',badge:'high',ex:{ja:'取り寄せに1週間ほどかかります。',cn:'调货大约需要一周时间。'}},
+    {ja:'割引',read:'わりびき',cn:'打折',badge:'core',ex:{ja:'会員は10%割引になります。',cn:'会员享受九折优惠。'}},
+    {ja:'キャンセル料',read:'きゃんせるりょう',cn:'取消费',badge:'high',ex:{ja:'当日キャンセルはキャンセル料がかかります。',cn:'当天取消需要支付取消费。'}},
+    {ja:'保証期間',read:'ほしょうきかん',cn:'保修期',badge:'high',ex:{ja:'保証期間内であれば無償で修理します。',cn:'在保修期内可以免费维修。'}},
+    {ja:'送料',read:'そうりょう',cn:'运费',badge:'core',ex:{ja:'3000円以上で送料無料です。',cn:'购买3000日元以上免运费。'}},
+    {ja:'領収書',read:'りょうしゅうしょ',cn:'收据',badge:'core',ex:{ja:'領収書は必要ですか。',cn:'需要收据吗？'}},
+    {ja:'クーポン',read:'くーぽん',cn:'优惠券',badge:'core',ex:{ja:'クーポンはご購入につき一枚です。',cn:'优惠券每次购物限用一张。'}},
+    {ja:'ポイント',read:'ぽいんと',cn:'积分',badge:'core',ex:{ja:'今回のご購入でポイントが貯まります。',cn:'本次购买会累积积分。'}},
+    {ja:'品切れ',read:'しなぎれ',cn:'售罄',badge:'high',ex:{ja:'この商品はただ今品切れです。',cn:'这件商品目前售罄。'}},
+    {ja:'取り扱い',read:'とりあつかい',cn:'经营、处理',badge:'high',ex:{ja:'その商品の取り扱いはございません。',cn:'没有经营那件商品。'}},
+    {ja:'定価',read:'ていか',cn:'定价',badge:'high',ex:{ja:'定価から30%引きになっています。',cn:'从定价打了七折。'}},
+    {ja:'修理',read:'しゅうり',cn:'修理',badge:'core',ex:{ja:'修理に2週間ほどかかります。',cn:'修理大约需要2周。'}},
+    {ja:'お取り置き',read:'おとりおき',cn:'预留（保留商品）',badge:'key',ex:{ja:'明日まで商品をお取り置きします。',cn:'商品保留到明天。'}},
+    {ja:'代引き',read:'だいびき',cn:'货到付款',badge:'key',ex:{ja:'代引きのお支払いは現金のみです。',cn:'货到付款只接受现金。'}},
+    {ja:'配送',read:'はいそう',cn:'配送、配发',badge:'core',ex:{ja:'配送には3〜5日かかります。',cn:'配送需要3〜5天。'}},
+    {ja:'お取り寄せ商品',read:'おとりよせしょうひん',cn:'订购商品',badge:'key',ex:{ja:'お取り寄せ商品はキャンセルできません。',cn:'订购商品不可取消。'}},
+    {ja:'試着',read:'しちゃく',cn:'试穿、试戴',badge:'high',ex:{ja:'試着室はあちらでございます。',cn:'试衣间在那边。'}},
+    {ja:'免税',read:'めんぜい',cn:'免税',badge:'high',ex:{ja:'免税の手続きはカウンターでお願いします。',cn:'请在柜台办理免税手续。'}},
+    {ja:'難癖をつける',read:'なんくせをつける',cn:'故意挑刺、找茬',badge:'n1',ex:{ja:'些細なことに難癖をつける客もいる。',cn:'也有顾客会因为一点小事故意挑刺。'}},
+    {ja:'応じかねる',read:'おうじかねる',cn:'难以应允、无法满足（要求）',badge:'n1',ex:{ja:'その返金要求には応じかねます。',cn:'那项退款要求我们难以应允。'}},
+    {ja:'苦言を呈する',read:'くげんをていする',cn:'进忠言、提出批评',badge:'n1',ex:{ja:'接客態度について苦言を呈された。',cn:'因接待态度被人提出了批评。'}},
+    {ja:'是非もない',read:'ぜひもない',cn:'无可奈何、没办法',badge:'n1',ex:{ja:'品切れとあっては是非もない。',cn:'既然缺货了，那也没办法。'}},
+    {ja:'折衝',read:'せっしょう',cn:'交涉、磋商',badge:'n1',ex:{ja:'返品をめぐって本部と折衝した。',cn:'就退货问题与总部进行了交涉。'}},
+  ]
+},
+{
+  id:'restaurant', icon:'🍽', name:'飲食・外食',
+  color:'#bf5b10', desc:'レストラン・カフェ・居酒屋・弁当・食材・調理法など、飲食場面の実用語彙。',
+  descColor:'#bf5b10',
+  words:[
+    {ja:'予約',read:'よやく',cn:'预约、预订',badge:'core',ex:{ja:'2名で7時に予約していますが。',cn:'我预约了2人7点，请确认。'}},
+    {ja:'満席',read:'まんせき',cn:'满座',badge:'core',ex:{ja:'現在満席で、30分ほどお待ちいただきます。',cn:'目前满座，请等待约30分钟。'}},
+    {ja:'空席',read:'くうせき',cn:'空座',badge:'high',ex:{ja:'空席がありましたらご案内します。',cn:'有空座的话会带您入座。'}},
+    {ja:'お通し',read:'おとおし',cn:'开场小菜（居酒屋文化）',badge:'key',ex:{ja:'お通し代として300円いただきます。',cn:'收取300日元开场小菜费。'}},
+    {ja:'おまかせ',read:'おまかせ',cn:'交给厨师搭配（套餐）',badge:'key',ex:{ja:'おまかせコースでお願いします。',cn:'请给我厨师搭配套餐。'}},
+    {ja:'アレルギー',read:'あれるぎー',cn:'食物过敏',badge:'core',ex:{ja:'アレルギーのある食材はありますか。',cn:'有食物过敏的食材吗？'}},
+    {ja:'テイクアウト',read:'ていくあうと',cn:'外带',badge:'core',ex:{ja:'テイクアウトはできますか。',cn:'可以外带吗？'}},
+    {ja:'食べ放題',read:'たべほうだい',cn:'自助餐、吃到饱',badge:'core',ex:{ja:'食べ放題は90分制です。',cn:'自助餐限时90分钟。'}},
+    {ja:'飲み放題',read:'のみほうだい',cn:'无限畅饮',badge:'core',ex:{ja:'飲み放題プランに変更できます。',cn:'可以改成无限畅饮套餐。'}},
+    {ja:'定食',read:'ていしょく',cn:'套餐（主食+配菜+汤）',badge:'core',ex:{ja:'日替わり定食はこちらです。',cn:'今日套餐在这里。'}},
+    {ja:'追加',read:'ついか',cn:'追加、额外点单',badge:'core',ex:{ja:'追加でビールをもう一杯ください。',cn:'请再追加一杯啤酒。'}},
+    {ja:'お会計',read:'おかいけい',cn:'结账',badge:'core',ex:{ja:'お会計をお願いします。',cn:'请结账。'}},
+    {ja:'割り勘',read:'わりかん',cn:'AA制，各付各的',badge:'core',ex:{ja:'今日は割り勘にしましょう。',cn:'今天各付各的吧。'}},
+    {ja:'領収書',read:'りょうしゅうしょ',cn:'收据',badge:'high',ex:{ja:'領収書を出してもらえますか。',cn:'能开一张收据吗？'}},
+    {ja:'焼き加減',read:'やきかげん',cn:'烹饪程度（几分熟）',badge:'key',ex:{ja:'ステーキの焼き加減はいかがですか。',cn:'牛排要几分熟？'}},
+    {ja:'辛さ',read:'からさ',cn:'辣度',badge:'high',ex:{ja:'辛さは5段階で選べます。',cn:'辣度可以从5个等级中选择。'}},
+    {ja:'量り売り',read:'はかりうり',cn:'按重量出售',badge:'key',ex:{ja:'このコーナーは量り売りです。',cn:'这个区域是按重量出售。'}},
+    {ja:'試食',read:'ししょく',cn:'试吃',badge:'high',ex:{ja:'本日は試食コーナーを設けています。',cn:'今天设有试吃区。'}},
+    {ja:'口コミ',read:'くちこみ',cn:'口碑、评价',badge:'high',ex:{ja:'口コミ評価の高いお店に行こう。',cn:'去口碑评价高的店吧。'}},
+    {ja:'特製',read:'とくせい',cn:'特制、独家',badge:'high',ex:{ja:'シェフ特製のソースが絶品です。',cn:'厨师特制的酱汁极其美味。'}},
+    {ja:'舌鼓を打つ',read:'したつづみをうつ',cn:'吃得津津有味、赞不绝口',badge:'n1',ex:{ja:'旬の食材に舌鼓を打った。',cn:'对当季食材赞不绝口。'}},
+    {ja:'賄う',read:'まかなう',cn:'供给、提供（伙食等）',badge:'n1',ex:{ja:'食費は仕送りで賄っている。',cn:'伙食费靠家里寄的钱来支付。'}},
+    {ja:'堪能する',read:'たんのうする',cn:'尽情享受、充分品尝',badge:'n1',ex:{ja:'旅先で郷土料理を堪能した。',cn:'在旅行地尽情品尝了当地料理。'}},
+    {ja:'手打ち',read:'てうち',cn:'手工制作（面条等）',badge:'n1',ex:{ja:'手打ちそばが自慢の店です。',cn:'这是一家以手工荞麦面为傲的店。'}},
+    {ja:'舌が肥える',read:'したがこえる',cn:'味觉刁钻、懂得品味',badge:'n1',ex:{ja:'グルメな彼は舌が肥えている。',cn:'热爱美食的他味觉很刁钻。'}},
+  ]
+},
+{
+  id:'expression', icon:'🗣', name:'重要表現・接続語',
+  color:'#7c5cbf', desc:'N2〜N1聴解で「話の流れ」「話者の意図」を把握するために必須の表現・接続詞・談話標識。',
+  descColor:'#7c5cbf',
+  words:[
+    {ja:'というのは',read:'というのは',cn:'原因是、因为（说明理由）',badge:'core',ex:{ja:'遅刻しました。というのは電車が遅れたからです。',cn:'迟到了。原因是电车晚点了。'}},
+    {ja:'一方で',read:'いっぽうで',cn:'另一方面',badge:'core',ex:{ja:'コストは下がった。一方で品質も落ちた。',cn:'成本降低了。另一方面，质量也下降了。'}},
+    {ja:'そもそも',read:'そもそも',cn:'根本上、从一开始',badge:'high',ex:{ja:'そもそもこの計画には無理があった。',cn:'这个计划从一开始就不合理。'}},
+    {ja:'ただし',read:'ただし',cn:'但是、不过（附加条件）',badge:'core',ex:{ja:'参加できます。ただし事前登録が必要です。',cn:'可以参加。但是需要提前注册。'}},
+    {ja:'なお',read:'なお',cn:'此外（补充信息）',badge:'core',ex:{ja:'説明会は14時からです。なお、参加無料です。',cn:'说明会从14时开始。此外，参加免费。'}},
+    {ja:'つまり',read:'つまり',cn:'也就是说、总之',badge:'core',ex:{ja:'合格点に達しなかった。つまり不合格だ。',cn:'没达到合格分数线。也就是说不合格。'}},
+    {ja:'あいにく',read:'あいにく',cn:'不巧、遗憾',badge:'key',ex:{ja:'あいにく本日は満席となっております。',cn:'不巧，今天已全部客满。'}},
+    {ja:'むしろ',read:'むしろ',cn:'不如说、倒不如',badge:'high',ex:{ja:'難しいというより、むしろ複雑だ。',cn:'与其说难，不如说复杂。'}},
+    {ja:'せっかく',read:'せっかく',cn:'好不容易、特地',badge:'high',ex:{ja:'せっかく準備したのに、中止になった。',cn:'好不容易准备好了，却被取消了。'}},
+    {ja:'どうせ',read:'どうせ',cn:'反正、终究',badge:'high',ex:{ja:'どうせ間に合わないなら、急がなくていい。',cn:'反正赶不上了，就不用着急了。'}},
+    {ja:'わざわざ',read:'わざわざ',cn:'特意、专门',badge:'high',ex:{ja:'わざわざお越しいただきありがとうございます。',cn:'感谢您特意前来。'}},
+    {ja:'それに',read:'それに',cn:'而且、再加上',badge:'core',ex:{ja:'安いし、それに使いやすい。',cn:'便宜，而且使用方便。'}},
+    {ja:'いずれ',read:'いずれ',cn:'终将、不久',badge:'high',ex:{ja:'いずれその問題は解決されるでしょう。',cn:'这个问题终将会被解决。'}},
+    {ja:'いわば',read:'いわば',cn:'可以说是、打个比方',badge:'n1',ex:{ja:'彼はいわば会社の顔です。',cn:'他可以说是公司的门面。'}},
+    {ja:'かえって',read:'かえって',cn:'反而、反倒',badge:'high',ex:{ja:'助けようとしたが、かえって迷惑をかけた。',cn:'本想帮忙，反而添了麻烦。'}},
+    {ja:'たとえ〜ても',read:'たとえ〜ても',cn:'即使…也…',badge:'core',ex:{ja:'たとえ雨が降っても試合は行います。',cn:'即使下雨也会举行比赛。'}},
+    {ja:'〜上で',read:'〜うえで',cn:'在…之后、在…基础上',badge:'high',ex:{ja:'よく考えた上で決めてください。',cn:'请在充分考虑后再决定。'}},
+    {ja:'〜に際して',read:'〜にさいして',cn:'在…之际、趁着…',badge:'n1',ex:{ja:'ご入学に際しまして一言ご挨拶します。',cn:'在您入学之际，说几句话表示祝贺。'}},
+    {ja:'〜次第',read:'〜しだい',cn:'一…就…、取决于…',badge:'high',ex:{ja:'準備ができ次第ご連絡します。',cn:'准备好了就立即联系您。'}},
+    {ja:'〜に限らず',read:'〜にかぎらず',cn:'不限于…、不只是…',badge:'high',ex:{ja:'学生に限らず社会人も参加できます。',cn:'不限于学生，社会人也可以参加。'}},
+    {ja:'〜を踏まえて',read:'〜をふまえて',cn:'基于…、结合…',badge:'n1',ex:{ja:'アンケート結果を踏まえて改善します。',cn:'基于问卷结果进行改善。'}},
+    {ja:'〜もさることながら',read:'〜もさることながら',cn:'…固然不用说，…也…',badge:'n1',ex:{ja:'実力もさることながら、運も大事だ。',cn:'实力固然不用说，运气也很重要。'}},
+    {ja:'〜んばかりに',read:'〜んばかりに',cn:'几乎要…似的、差点就…',badge:'n1',ex:{ja:'今にも泣き出さんばかりの表情だった。',cn:'表情几乎要哭出来了。'}},
+    {ja:'〜ならでは',read:'〜ならでは',cn:'…独有的、…特有的',badge:'n1',ex:{ja:'これは京都ならではの風情だ。',cn:'这是京都独有的风情。'}},
+    {ja:'〜を余儀なくされる',read:'〜をよぎなくされる',cn:'被迫…、不得不…',badge:'n1',ex:{ja:'台風で予定変更を余儀なくされた。',cn:'因台风被迫更改了计划。'}},
+    {ja:'〜をものともせず',read:'〜をものともせず',cn:'不顾…、不把…放在眼里',badge:'n1',ex:{ja:'反対をものともせず計画を進めた。',cn:'不顾反对推进了计划。'}},
+    {ja:'〜が早いか',read:'〜がはやいか',cn:'刚…就…',badge:'n1',ex:{ja:'ベルが鳴るが早いか教室を飛び出した。',cn:'铃声刚响就冲出了教室。'}},
+    {ja:'あろうことか',read:'あろうことか',cn:'竟然、居然（表意外或不满）',badge:'n1',ex:{ja:'あろうことか会議の日程を忘れていた。',cn:'居然把会议日程给忘了。'}},
+    {ja:'〜なりに',read:'〜なりに',cn:'以…自身的方式、…也有…的（虽不完美但）',badge:'n1',ex:{ja:'子供なりに一生懸命考えた結果だ。',cn:'这是孩子以自己的方式拼命思考的结果。'}},
+  ]
+},
+{
+  id:'phone', icon:'📱', name:'電話・通信',
+  color:'#0e7c68', desc:'電話応対・留守番電話・携帯ショップ・インターネット契約など、通信場面の語彙。',
+  descColor:'#0e7c68',
+  words:[
+    {ja:'ただいま外出中',read:'ただいまがいしゅつちゅう',cn:'目前外出中',badge:'core',ex:{ja:'ただいま外出中のため、後ほどおかけ直しください。',cn:'目前外出中，请稍后再打来。'}},
+    {ja:'おつなぎします',read:'おつなぎします',cn:'为您转接',badge:'core',ex:{ja:'ただいま担当者におつなぎします。',cn:'现在为您转接负责人。'}},
+    {ja:'留守番電話',read:'るすばんでんわ',cn:'留言电话',badge:'core',ex:{ja:'留守番電話にメッセージを残してください。',cn:'请在留言电话上留言。'}},
+    {ja:'折り返し',read:'おりかえし',cn:'回拨',badge:'core',ex:{ja:'担当者から折り返しご連絡します。',cn:'负责人会回拨您的电话。'}},
+    {ja:'電波',read:'でんぱ',cn:'信号',badge:'core',ex:{ja:'この辺りは電波が悪いです。',cn:'这附近信号不好。'}},
+    {ja:'通話料',read:'つうわりょう',cn:'通话费',badge:'high',ex:{ja:'国際通話料は別途かかります。',cn:'国际通话费另行计算。'}},
+    {ja:'データ通信',read:'でーたつうしん',cn:'数据通信',badge:'high',ex:{ja:'今月のデータ通信量が上限に達しました。',cn:'本月数据通信量已达上限。'}},
+    {ja:'契約プラン',read:'けいやくぷらん',cn:'合同套餐',badge:'high',ex:{ja:'契約プランの変更をお願いします。',cn:'请帮我更改合同套餐。'}},
+    {ja:'SIMカード',read:'しむかーど',cn:'SIM卡',badge:'high',ex:{ja:'SIMカードを入れ替えてください。',cn:'请更换SIM卡。'}},
+    {ja:'解約',read:'かいやく',cn:'解约',badge:'core',ex:{ja:'携帯の解約手続きをしに来ました。',cn:'来办理手机解约手续的。'}},
+    {ja:'機種変更',read:'きしゅへんこう',cn:'换机型',badge:'high',ex:{ja:'機種変更したいのですが。',cn:'我想换机型。'}},
+    {ja:'通信障害',read:'つうしんしょうがい',cn:'通信故障',badge:'key',ex:{ja:'現在、通信障害が発生しています。',cn:'目前发生了通信故障。'}},
+    {ja:'マナーモード',read:'まなーもーど',cn:'静音模式',badge:'core',ex:{ja:'マナーモードに設定してください。',cn:'请设置为静音模式。'}},
+    {ja:'充電',read:'じゅうでん',cn:'充电',badge:'basic',ex:{ja:'スマホの充電が切れそうです。',cn:'手机快没电了。'}},
+    {ja:'疎通',read:'そつう',cn:'沟通顺畅、畅通',badge:'n1',ex:{ja:'意思の疎通がうまくいかず誤解が生じた。',cn:'因沟通不畅产生了误解。'}},
+    {ja:'支障をきたす',read:'ししょうをきたす',cn:'造成障碍、带来影响',badge:'n1',ex:{ja:'電波障害で業務に支障をきたしている。',cn:'信号故障对业务造成了影响。'}},
+    {ja:'途絶える',read:'とだえる',cn:'中断、断绝',badge:'n1',ex:{ja:'通信が突然途絶えてしまった。',cn:'通信突然中断了。'}},
+    {ja:'応答',read:'おうとう',cn:'应答',badge:'n1',ex:{ja:'何度かけても応答がない。',cn:'打了好几次都没人应答。'}},
+  ]
+},
+{
+  id:'housing', icon:'🏡', name:'住宅・不動産',
+  color:'#6b4c11', desc:'物件探し・賃貸契約・リフォーム・住民間のトラブルなど、住まいに関する語彙を整理。',
+  descColor:'#6b4c11',
+  words:[
+    {ja:'敷金',read:'しききん',cn:'押金',badge:'core',ex:{ja:'敷金は退去時に返還されます。',cn:'押金在退租时退还。'}},
+    {ja:'礼金',read:'れいきん',cn:'礼金',badge:'core',ex:{ja:'礼金は1ヶ月分でした。',cn:'礼金是一个月的租金。'}},
+    {ja:'管理費',read:'かんりひ',cn:'管理费',badge:'core',ex:{ja:'毎月、管理費が5000円かかります。',cn:'每月需要5000日元管理费。'}},
+    {ja:'仲介手数料',read:'ちゅうかいてすうりょう',cn:'中介手续费',badge:'high',ex:{ja:'仲介手数料は家賃の1ヶ月分です。',cn:'中介手续费是一个月租金。'}},
+    {ja:'更新料',read:'こうしんりょう',cn:'续签费',badge:'high',ex:{ja:'2年ごとに更新料がかかります。',cn:'每2年需要续签费。'}},
+    {ja:'退去',read:'たいきょ',cn:'退租、搬出',badge:'core',ex:{ja:'退去の1ヶ月前に通知が必要です。',cn:'退租前1个月需要通知。'}},
+    {ja:'物件',read:'ぶっけん',cn:'房产物件',badge:'core',ex:{ja:'駅近の物件を探しています。',cn:'在找靠近车站的房子。'}},
+    {ja:'間取り',read:'まどり',cn:'房间格局',badge:'high',ex:{ja:'2LDKの間取りを希望しています。',cn:'希望是2LDK的格局。'}},
+    {ja:'築年数',read:'ちくねんすう',cn:'房龄',badge:'high',ex:{ja:'築10年以内の物件を探しています。',cn:'在找房龄10年以内的房子。'}},
+    {ja:'リフォーム',read:'りふぉーむ',cn:'装修翻新',badge:'high',ex:{ja:'キッチンをリフォームしました。',cn:'对厨房进行了翻新。'}},
+    {ja:'騒音',read:'そうおん',cn:'噪音',badge:'high',ex:{ja:'上の階の騒音に悩んでいます。',cn:'为上层的噪音所烦恼。'}},
+    {ja:'水漏れ',read:'みずもれ',cn:'漏水',badge:'high',ex:{ja:'水漏れが発生したので管理会社に連絡した。',cn:'发生了漏水，联系了管理公司。'}},
+    {ja:'修繕',read:'しゅうぜん',cn:'修缮、修理',badge:'high',ex:{ja:'共用部分の修繕工事が来月始まります。',cn:'共用部分的修缮工程下月开始。'}},
+    {ja:'ペット可',read:'ぺっとか',cn:'允许养宠物',badge:'key',ex:{ja:'ペット可の物件は少ないです。',cn:'允许养宠物的房子很少。'}},
+    {ja:'オートロック',read:'おーとろっく',cn:'自动锁（安全门禁）',badge:'key',ex:{ja:'オートロック付きのマンションです。',cn:'是装有自动门禁的公寓。'}},
+    {ja:'宅配ボックス',read:'たくはいぼっくす',cn:'快递存放柜',badge:'key',ex:{ja:'宅配ボックスがあるので不在でも安心です。',cn:'有快递存放柜，不在家也放心。'}},
+    {ja:'瑕疵',read:'かし',cn:'瑕疵、缺陷（房屋等）',badge:'n1',ex:{ja:'物件に瑕疵が見つかり契約が白紙になった。',cn:'发现房产存在瑕疵，合同作废了。'}},
+    {ja:'補填',read:'ほてん',cn:'补偿、弥补',badge:'n1',ex:{ja:'修繕費の一部は管理組合が補填する。',cn:'修缮费的一部分由管理组合补偿。'}},
+    {ja:'立ち退き',read:'たちのき',cn:'搬迁、腾退',badge:'n1',ex:{ja:'再開発に伴い立ち退きを求められた。',cn:'因再开发被要求搬迁。'}},
+    {ja:'老朽化',read:'ろうきゅうか',cn:'老化、陈旧',badge:'n1',ex:{ja:'建物の老朽化が進んでいる。',cn:'建筑物老化日益严重。'}},
+    {ja:'紛争',read:'ふんそう',cn:'纠纷、争端',badge:'n1',ex:{ja:'境界線をめぐる隣人との紛争が続いている。',cn:'与邻居就边界问题的纠纷仍在持续。'}},
+  ]
+},
+];
+
+// ── State ──
+let curScene=0, isFlash=false, fcIdx=0, fcArr=[], fcShown=false;
+let learned={}, correct=0, totalFc=0, query='';
+
+function save(){try{localStorage.setItem('jv2_l',JSON.stringify(learned));localStorage.setItem('jv2_c',correct);localStorage.setItem('jv2_t',totalFc);}catch(e){}}
+function load(){try{const l=localStorage.getItem('jv2_l');if(l)learned=JSON.parse(l);correct=+localStorage.getItem('jv2_c')||0;totalFc=+localStorage.getItem('jv2_t')||0;}catch(e){}}
+
+function totalWords(){return SCENES.reduce((a,s)=>a+s.words.length,0);}
+function learnedCount(){return Object.values(learned).filter(Boolean).length;}
+
+function updateStats(){
+  const tot=totalWords(),lc=learnedCount();
+  document.getElementById('totalCount').textContent=tot;
+  document.getElementById('learnedCount').textContent=lc;
+  document.getElementById('progressFill').style.width=(lc/tot*100)+'%';
+  document.getElementById('accuracy').textContent=totalFc>0?Math.round(correct/totalFc*100)+'%':'—';
+}
+
+function buildTabs(){
+  document.getElementById('tabsContainer').innerHTML=SCENES.map((s,i)=>
+    `<button class="tab-btn ${i===curScene?'active':''}" onclick="switchScene(${i})">
+      <span class="tab-dot" style="background:${s.color}"></span>${s.icon} ${s.name}
+    </button>`).join('');
+}
+
+function switchScene(i){
+  curScene=i;fcIdx=0;query='';isFlash=false;fcArr=[];
+  buildTabs();render();
+  document.querySelector('.tabs-wrap').scrollTo({left:0});
+  // scroll active tab into view
+  const tabs=document.querySelectorAll('.tab-btn');
+  tabs[i]&&tabs[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+function filteredWords(){
+  let words=[...SCENES[curScene].words];
+  if(query){const q=query.toLowerCase();words=words.filter(w=>w.ja.includes(q)||w.read.includes(q)||w.cn.includes(q));}
+  return words;
+}
+
+function wordId(w){return curScene+'_'+w.ja;}
+
+function render(){
+  const sc=SCENES[curScene];
+  const words=filteredWords();
+  let h=`
+    <div class="scene-header">
+      <div class="scene-title"><span class="scene-icon">${sc.icon}</span>${sc.name}</div>
+      <div class="scene-desc" style="border-color:${sc.descColor}">${sc.desc}</div>
+    </div>
+    <div class="search-bar">
+      <input class="search-input" type="search" placeholder="検索（日本語・読み・中国語）" value="${query}" oninput="onSearch(this.value)">
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn ${!isFlash?'active':''}" onclick="setView(false)">📋 リスト</button>
+      <button class="view-btn ${isFlash?'active':''}" onclick="setView(true)">📇 フラッシュカード</button>
+    </div>`;
+
+  if(!isFlash){
+    h+=`<div class="count-label">${words.length} 語</div><div class="word-list">`;
+    const sections=[
+      {label:'🔑 最重要語',badge:'core',words:words.filter(w=>w.badge==='core')},
+      {label:'⭐ 高頻出語',badge:'high',words:words.filter(w=>w.badge==='high')},
+      {label:'💡 キーワード',badge:'key',words:words.filter(w=>w.badge==='key')},
+      {label:'🔴 N1級',badge:'n1',words:words.filter(w=>w.badge==='n1')},
+      {label:'📘 基礎語',badge:'basic',words:words.filter(w=>w.badge==='basic')},
+    ];
+    sections.forEach(sec=>{
+      if(!sec.words.length)return;
+      h+=`<div class="section-label">${sec.label}</div>`;
+      sec.words.forEach(w=>{
+        const id=wordId(w),done=learned[id];
+        h+=`<div class="word-card lv-${w.badge}" id="c_${id}" onclick="toggleCard('${id}')">
+          <div class="word-top">
+            <div class="word-left">
+              <div class="word-ja">${w.ja}</div>
+              <div class="word-read">${w.read}</div>
+            </div>
+            <div class="word-right">
+              ${done?'<span class="learned-check">✅</span>':''}
+              <span class="word-badge badge-${w.badge}">${BADGE_LABELS[w.badge]}</span>
+            </div>
+          </div>
+          <div class="word-cn">${w.cn}</div>
+          <div class="expand-hint">タップで例文 ▼</div>
+          <div class="word-extra">
+            <div class="word-example"><span class="ja">${w.ex.ja}</span><span class="cn">${w.ex.cn}</span></div>
+            <button class="mark-btn ${done?'done':''}" onclick="event.stopPropagation();toggleLearned('${id}')">
+              ${done?'✅ 習得済み':'○ 習得済みにする'}
+            </button>
+          </div>
+        </div>`;
+      });
+    });
+    if(!words.length)h+='<div class="empty-state">該当する語彙が見つかりません</div>';
+    h+='</div>';
+  } else {
+    if(!fcArr.length){fcArr=[...words];fcIdx=0;}
+    const cur=fcArr[fcIdx];
+    if(!cur){h+='<div class="empty-state">単語がありません</div>';}
+    else{
+      const id=wordId(cur);
+      h+=`<p class="fc-tap-hint">カードをタップして意味を確認してください</p>
+        <div class="flashcard" id="fc" onclick="flipCard()">
+          <span class="fc-corner">表面 / 裏面</span>
+          <div class="fc-badge-wrap"><span class="word-badge badge-${cur.badge}">${BADGE_LABELS[cur.badge]}</span></div>
+          <div class="fc-word">${cur.ja}</div>
+          <div class="fc-read">${cur.read}</div>
+          <div class="fc-answer" id="fca">
+            <div class="fc-cn">${cur.cn}</div>
+            <div class="fc-example"><span class="ja">${cur.ex.ja}</span><span class="cn">${cur.ex.cn}</span></div>
+          </div>
+        </div>
+        <div class="fc-controls" id="fcc">
+          <button class="fc-btn wrong" onclick="fcRate(false)">✗ わからない</button>
+          <button class="fc-btn right" onclick="fcRate(true)">✓ わかった！</button>
+        </div>
+        <div class="fc-nav">
+          <button class="fc-nav-btn" onclick="fcMove(-1)">← 前へ</button>
+          <span class="fc-counter">${fcIdx+1} / ${fcArr.length}</span>
+          <button class="fc-nav-btn" onclick="fcMove(1)">次へ →</button>
+        </div>`;
+    }
+  }
+
+  document.getElementById('contentArea').innerHTML=h;
+  updateStats();
+}
+
+function toggleCard(id){
+  document.querySelectorAll('.word-card').forEach(c=>{
+    c.id==='c_'+id ? c.classList.toggle('expanded') : c.classList.remove('expanded');
+  });
+}
+
+function toggleLearned(id){learned[id]=!learned[id];save();render();}
+
+function onSearch(v){query=v;render();}
+
+function setView(flash){
+  isFlash=flash;
+  if(flash&&!fcArr.length){fcArr=[...filteredWords()];fcIdx=0;}
+  fcShown=false;render();
+}
+
+function toggleView(){setView(!isFlash);}
+
+function flipCard(){
+  const fc=document.getElementById('fc');
+  const fca=document.getElementById('fca');
+  const fcc=document.getElementById('fcc');
+  if(!fc.classList.contains('flipped')){
+    fc.classList.add('flipped');
+    fca.style.display='block';
+    fcc.classList.add('visible');
+    fcShown=true;
+  }
+}
+
+function fcRate(ok){
+  if(ok){correct++;const cur=fcArr[fcIdx];if(cur)learned[wordId(cur)]=true;}
+  totalFc++;save();fcMove(1);
+}
+
+function fcMove(d){
+  fcIdx=(fcIdx+d+fcArr.length)%fcArr.length;
+  fcShown=false;render();
+}
+
+function shuffleWords(){
+  const sc=SCENES[curScene];
+  sc.words=sc.words.sort(()=>Math.random()-.5);
+  fcArr=[...filteredWords()];fcIdx=0;render();
+}
+
+function resetProgress(){
+  if(confirm('学習進捗をリセットしますか？')){
+    learned={};correct=0;totalFc=0;save();render();
+  }
+}
+
+load();buildTabs();render();
+</script>
+</body>
+</html>
