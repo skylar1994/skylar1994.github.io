@@ -1,0 +1,4999 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT Grammar Mind Map 3.0 Ultimate</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:
+"Inter",
+"PingFang SC",
+"Hiragino Sans GB",
+"Microsoft YaHei",
+sans-serif;
+background:#f5f7fb;
+color:#333;
+line-height:1.8;
+display:flex;
+}
+
+aside{
+width:280px;
+height:100vh;
+overflow:auto;
+background:#1f2937;
+color:white;
+position:fixed;
+left:0;
+top:0;
+}
+
+.logo{
+padding:30px;
+font-size:26px;
+font-weight:bold;
+line-height:1.4;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo small{
+display:block;
+font-size:13px;
+color:#aaa;
+margin-top:8px;
+}
+
+.back-to-index{
+display:inline-flex;
+align-items:center;
+gap:6px;
+margin-top:16px;
+padding:8px 12px;
+font-size:13px;
+font-weight:normal;
+color:#e5e7eb;
+background:#374151;
+border-radius:8px;
+text-decoration:none;
+}
+
+.back-to-index:hover{
+background:#4b5563;
+}
+
+nav{
+padding:25px;
+}
+
+nav h3{
+margin:20px 0 10px;
+font-size:14px;
+color:#9ca3af;
+text-transform:uppercase;
+}
+
+nav a{
+display:block;
+padding:8px 12px;
+color:white;
+text-decoration:none;
+border-radius:8px;
+margin-bottom:6px;
+font-size:14px;
+}
+
+nav a:hover{
+background:#374151;
+}
+
+main{
+margin-left:280px;
+width:calc(100% - 280px);
+padding:60px;
+}
+
+.hero{
+background:white;
+padding:50px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:40px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:18px;
+color:#666;
+}
+
+.chapter{
+margin-top:60px;
+}
+
+.chapter-title{
+font-size:34px;
+margin-bottom:30px;
+border-left:8px solid #2563eb;
+padding-left:20px;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:28px;
+margin-bottom:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
+
+.card h3{
+font-size:24px;
+margin-bottom:20px;
+}
+
+.badge{
+display:inline-block;
+padding:4px 12px;
+background:#2563eb;
+color:white;
+border-radius:50px;
+font-size:13px;
+margin-bottom:15px;
+margin-right:8px;
+}
+
+.level{
+display:inline-block;
+padding:3px 10px;
+border-radius:20px;
+background:#16a34a;
+color:white;
+font-size:13px;
+margin-left:8px;
+}
+
+.logic{
+background:#eef4ff;
+padding:15px;
+border-left:5px solid #2563eb;
+border-radius:10px;
+margin:18px 0;
+}
+
+.memory{
+background:#fff7ed;
+padding:15px;
+border-left:5px solid orange;
+border-radius:10px;
+margin:18px 0;
+}
+
+.compare{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.compare td,
+.compare th{
+border:1px solid #ddd;
+padding:10px;
+}
+
+.compare th{
+background:#2563eb;
+color:white;
+}
+
+.example{
+background:#f9fafb;
+padding:16px;
+border-radius:10px;
+margin:16px 0;
+font-family:"Yu Gothic","Meiryo",sans-serif;
+}
+
+.example{
+position:relative;
+padding-right:56px;
+}
+
+.tts-btn{
+position:absolute;
+top:50%;
+right:14px;
+transform:translateY(-50%);
+width:34px;
+height:34px;
+border:none;
+border-radius:50%;
+background:#2563eb;
+color:white;
+font-size:15px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 2px 6px rgba(37,99,235,.4);
+transition:transform .15s ease, background .15s ease;
+}
+
+.tts-btn:hover{
+background:#1d4ed8;
+transform:translateY(-50%) scale(1.08);
+}
+
+.tts-btn.speaking{
+background:#16a34a;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(22,163,74,.5);}
+70%{box-shadow:0 0 0 10px rgba(22,163,74,0);}
+100%{box-shadow:0 0 0 0 rgba(22,163,74,0);}
+}
+
+
+/* ===== Grammar DNA 模块 ===== */
+.dna{
+background:#f3e8ff;
+border-left:5px solid #9333ea;
+border-radius:10px;
+padding:20px;
+margin:18px 0;
+}
+
+.dna h4{
+color:#7e22ce;
+margin-bottom:12px;
+font-size:18px;
+}
+
+.dna-tree{
+font-family:"Courier New",monospace;
+line-height:2;
+color:#4c1d95;
+}
+
+/* ===== Family DNA 词族地图 ===== */
+.family{
+background:#ecfdf5;
+border:2px dashed #10b981;
+border-radius:14px;
+padding:28px;
+margin:30px 0;
+}
+
+.family h3{
+color:#047857;
+}
+
+.family pre{
+font-family:"Courier New",monospace;
+line-height:1.9;
+color:#065f46;
+background:white;
+padding:20px;
+border-radius:10px;
+overflow-x:auto;
+margin-top:10px;
+}
+
+/* ===== Gene 基因一句话 ===== */
+.gene{
+background:#1f2937;
+color:#f9fafb;
+border-radius:14px;
+padding:28px;
+margin:30px 0;
+}
+
+.gene h3{
+color:#facc15;
+margin-bottom:15px;
+}
+
+.gene table{
+width:100%;
+border-collapse:collapse;
+}
+
+.gene td{
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+.gene td:first-child{
+color:#93c5fd;
+font-weight:bold;
+width:30%;
+}
+
+/* ===== warning / 双标签框 ===== */
+.warning{
+background:#fef2f2;
+border-left:5px solid #ef4444;
+border-radius:10px;
+padding:14px;
+margin:14px 0;
+font-size:14px;
+color:#991b1b;
+}
+
+/* ===== 章节导航 ===== */
+.next-chapter{
+background:#eef2ff;
+border-radius:14px;
+padding:22px 28px;
+margin-top:30px;
+text-align:center;
+color:#3730a3;
+line-height:2;
+}
+
+.next-chapter strong{
+color:#1e1b4b;
+}
+
+/* ===== 链接引用卡片 ===== */
+.link-ref{
+background:#f1f5f9;
+border-left:5px solid #64748b;
+border-radius:10px;
+padding:16px;
+margin:16px 0;
+font-size:14px;
+color:#475569;
+}
+
+/* ===== 移动端顶部栏 & 遮罩 ===== */
+.mobile-topbar{
+display:none;
+}
+
+.sidebar-overlay{
+display:none;
+}
+
+/* ===== 响应式：平板与手机 ===== */
+@media (max-width: 900px){
+
+body{
+display:block;
+}
+
+.mobile-topbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:sticky;
+top:0;
+z-index:40;
+background:#1f2937;
+color:white;
+padding:14px 18px;
+box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.mobile-topbar .title{
+font-size:16px;
+font-weight:bold;
+}
+
+.hamburger{
+width:38px;
+height:38px;
+border:none;
+border-radius:8px;
+background:#374151;
+color:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+aside{
+position:fixed;
+left:0;
+top:0;
+width:78vw;
+max-width:300px;
+height:100vh;
+transform:translateX(-100%);
+transition:transform .25s ease;
+z-index:60;
+box-shadow:4px 0 20px rgba(0,0,0,.3);
+}
+
+aside.open{
+transform:translateX(0);
+}
+
+.sidebar-overlay{
+display:block;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+z-index:50;
+opacity:0;
+pointer-events:none;
+transition:opacity .25s ease;
+}
+
+.sidebar-overlay.open{
+opacity:1;
+pointer-events:auto;
+}
+
+main{
+margin-left:0;
+width:100%;
+padding:20px 16px 60px;
+}
+
+.hero{
+padding:26px 22px;
+border-radius:14px;
+}
+
+.hero h1{
+font-size:26px;
+line-height:1.35;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+.chapter{
+margin-top:36px;
+}
+
+.chapter-title{
+font-size:22px;
+border-left-width:6px;
+padding-left:14px;
+margin-bottom:18px;
+}
+
+.card{
+padding:18px;
+border-radius:12px;
+margin-bottom:16px;
+}
+
+.card h3{
+font-size:18px;
+margin-bottom:12px;
+}
+
+.logic, .memory, .dna, .link-ref, .warning{
+padding:12px;
+font-size:14px;
+}
+
+.example{
+padding:12px;
+padding-right:52px;
+font-size:15px;
+}
+
+.tts-btn{
+width:30px;
+height:30px;
+right:10px;
+font-size:13px;
+}
+
+/* 表格在手机上横向滚动，不挤压变形 */
+.card{
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+}
+
+.compare{
+min-width:480px;
+font-size:13px;
+}
+
+.compare td, .compare th{
+padding:7px;
+}
+
+.family{
+padding:16px;
+}
+
+.family pre{
+font-size:12px;
+padding:14px;
+min-width:320px;
+}
+
+.gene{
+padding:18px;
+}
+
+.gene td{
+font-size:13px;
+padding:8px;
+}
+
+.next-chapter{
+padding:16px 18px;
+font-size:14px;
+line-height:1.8;
+}
+
+}
+
+@media (max-width: 420px){
+.hero h1{ font-size:22px; }
+.chapter-title{ font-size:19px; }
+.card h3{ font-size:16px; }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="mobile-topbar">
+<button class="hamburger" onclick="toggleSidebar()" aria-label="打开目录">☰</button>
+<span class="title">JLPT Grammar Mind Map 3.0</span>
+<button class="hamburger" onclick="location.href='index.html'" aria-label="返回语法索引" title="返回语法索引">🏠</button>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<aside id="sidebar">
+
+<div class="logo">
+JLPT Grammar<br>
+Mind Map 3.0
+<small>Ultimate Edition</small>
+<a href="index.html" class="back-to-index">🏠 返回语法索引</a>
+</div>
+
+<nav>
+
+<h3>Introduction</h3>
+<a href="#thinking">Grammar Thinking</a>
+
+<h3>N3~N2 基础思维</h3>
+<a href="#chapter01">01 判断宇宙</a>
+<a href="#chapter02">02 推测宇宙</a>
+<a href="#chapter03">03 原因宇宙</a>
+<a href="#chapter04">04 结果宇宙</a>
+<a href="#chapter05">05 条件宇宙</a>
+<a href="#chapter06">06 时间宇宙</a>
+<a href="#chapter07">07 顺序宇宙</a>
+<a href="#chapter08">08 对比宇宙</a>
+
+<h3>Part N2</h3>
+<a href="#part-n2">进入 N2 思维世界</a>
+<a href="#chapter09">09 转折宇宙</a>
+<a href="#chapter10">10 递进宇宙</a>
+<a href="#chapter11">11 范围宇宙</a>
+<a href="#chapter12">12 表象 × 本质宇宙</a>
+<a href="#chapter13">13 必然宇宙</a>
+
+<h3>N1 阅读核心</h3>
+<a href="#chapter14">14 极限宇宙</a>
+<a href="#chapter15">15 作者态度宇宙</a>
+<a href="#chapter16">16 情绪失控宇宙</a>
+<a href="#chapter17">17 时间流宇宙</a>
+<a href="#chapter18">18 起点 × 终点宇宙</a>
+<a href="#chapter19">19 程度评价宇宙</a>
+<a href="#chapter20">20 限定宇宙</a>
+<a href="#chapter21">21 阅读连接词宇宙</a>
+<a href="#chapter22">22 敬语宇宙</a>
+<a href="#chapter23">23 JLPT Reading Style</a>
+
+<h3>Ultimate</h3>
+<a href="#chapter24">24 Grammar OS</a>
+
+</nav>
+
+</aside>
+
+<main>
+
+<section class="hero">
+
+<h1>JLPT Grammar Mind Map 3.0 Ultimate</h1>
+
+<p>
+不是背语法。
+而是理解日本人为什么这样表达。
+Grammar = Thinking.
+</p>
+
+</section>
+
+<section id="thinking" class="chapter">
+
+<h2 class="chapter-title">Grammar Thinking</h2>
+
+<div class="card">
+
+<h3>学习原则</h3>
+
+<div class="logic">
+中文学习：
+意思 → 文法
+<br><br>
+Ultimate：
+场景 → 心理 → 文法
+</div>
+
+<div class="memory">
+以后看到一个语法，
+不是翻译，
+而是脑中出现电影画面。
+</div>
+
+</div>
+
+</section>
+
+<section id="chapter01" class="chapter">
+
+<h2 class="chapter-title">🌱 Chapter 01 判断宇宙</h2>
+
+<div class="card">
+
+<span class="badge">★★★★★</span>
+<span class="level">N3~N2</span>
+
+<h3>核心思维</h3>
+
+<div class="logic">
+日本人表达判断，
+首先不是问：
+"是什么"
+而是：
+"我是根据什么判断的？"
+</div>
+
+<table class="compare">
+<tr><th>证据强度</th><th>文法</th></tr>
+<tr><td>看到</td><td>そうだ</td></tr>
+<tr><td>推测</td><td>ようだ</td></tr>
+<tr><td>听说</td><td>らしい</td></tr>
+<tr><td>逻辑</td><td>はずだ</td></tr>
+<tr><td>几乎确定</td><td>に違いない</td></tr>
+<tr><td>100%确定</td><td>に決まっている</td></tr>
+</table>
+
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～そうだ（样态）</h3>
+<div class="logic">核心：眼睛看到。</div>
+<div class="example"><span class="tts-text">このケーキはおいしそうだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<b>电影画面</b>
+<p>蛋糕刚端出来。还没吃。只是看起来很好吃。</p>
+<div class="memory">口诀：眼睛看到 → そうだ</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>② ～ようだ</h3>
+<div class="logic">核心：综合所有线索，自己推理。</div>
+<div class="example"><span class="tts-text">雨が降るようだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>乌云 风 空气 ↓ 自己判断。</p>
+<div class="memory">口诀：侦探模式。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>様（よう）</strong>
+↓
+样子 · 状态 · 外观
+<br><br>
+────────────────
+看起来像……
+<br><br>
+↓
+<strong>好像…… 似乎……</strong>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>③ ～らしい</h3>
+<div class="logic">核心：消息来自别人。</div>
+<div class="example"><span class="tts-text">明日は雨らしい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>朋友告诉你。新闻告诉你。SNS看到。</p>
+<div class="memory">口诀：朋友圈消息。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～はずだ</h3>
+<div class="logic">核心：根据已知事实，按理应该如此。</div>
+<div class="example"><span class="tts-text">彼は医者だから、知っているはずだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>你知道：✔ 他是医生 ↓ 医生应该知道医学知识 ↓ 所以：知っているはずだ</p>
+<div class="memory">口诀：逻辑推理。不是猜。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>はず</strong>
+↓
+应有的状态 · 理所当然 · 预计如此
+<br><br>
+＋
+<br><br>
+<strong>だ</strong>
+↓
+判断
+<br><br>
+────────────────
+<strong>按道理，应该如此。</strong>
+<br><br>
+↓
+<strong>按理说……应该……</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是</th><th>区别</th></tr>
+<tr><td>ようだ</td><td>没有充分证据，仅推测</td></tr>
+<tr><td>に違いない</td><td>主观确信更强</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④' ～はずだった</h3>
+<div class="logic">核心：本来应该如此，结果却没有。带有落空、意外的语气。</div>
+<div class="example"><span class="tts-text">今日は晴れるはずだったが、雨が降った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>天气预报说晴天。↓ 结果下雨了。</p>
+<div class="memory">口诀：剧本被改写。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+はず ↓ 原本应该
+<br><br>
+＋ だった ↓ 过去
+<br><br>
+────────────────
+<strong>本来应该如此。结果没有。</strong>
+<br><br>
+↓ 本应……却……
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④'' ～はずがない</h3>
+<div class="logic">核心：不存在"应该如此"这种情况，说话人语气强烈否定。</div>
+<div class="example"><span class="tts-text">彼が嘘をつくはずがない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>凭我对他的了解，↓ 这种事根本不可能发生。</p>
+<div class="memory">口诀：绝不可能。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+はず ↓ 按理
+<br><br>
+＋ がない ↓ 不存在
+<br><br>
+────────────────
+<strong>不存在"应该如此"这种情况。</strong>
+<br><br>
+↓ 绝不可能。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～に違いない</h3>
+<div class="logic">核心：我几乎可以确定。</div>
+<div class="example"><span class="tts-text">彼が犯人に違いない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>所有证据都指向他。虽然还没有法院判决，但自己已经非常确定。</p>
+<div class="memory">口诀：侦探拍桌子。"一定就是他！"</div>
+<table class="compare">
+<tr><th>为什么不是 はずだ</th></tr>
+<tr><td>はずだ ↓ 按逻辑推出来 <br><br> に違いない ↓ 强烈确信</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～に決まっている</h3>
+<div class="logic">核心：100%确定，根本不用讨论。</div>
+<div class="example"><span class="tts-text">そんなの嘘に決まっている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>说话人的态度："这还需要问？"</p>
+<div class="memory">口诀：不用想。就是这样。</div>
+<table class="compare">
+<tr><th>文法</th><th>确信程度</th></tr>
+<tr><td>ようだ</td><td>★★☆☆☆</td></tr>
+<tr><td>はずだ</td><td>★★★☆☆</td></tr>
+<tr><td>に違いない</td><td>★★★★☆</td></tr>
+<tr><td>に決まっている</td><td>★★★★★</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑦ ～のだ（～んだ）</h3>
+<div class="logic">
+核心：告诉别人"事情其实是这样的"——补充判断的依据、解释背景。
+<br><br>
+这是全书中判断宇宙与说明宇宙的交汇点：作者先给出判断，再用「のだ」把判断背后的理由摊开给你看。
+</div>
+<div class="example"><span class="tts-text">今日は会社を休みます。熱があるんです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是：我有发烧。↓ 而是：所以我请假（这是我判断"该请假"的依据）。</p>
+<div class="memory">口诀：💡 原来如此。</div>
+<table class="compare">
+<tr><th>为什么不用普通句？</th></tr>
+<tr><td>普通句 ↓ 陈述事实 <br><br> のだ ↓ 解释原因 · 补充判断依据</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🎯 判断宇宙总结</h3>
+<div class="logic">判断，其实就是：证据越来越强。</div>
+<table class="compare">
+<tr><th>心理活动</th><th>文法</th><th>等级</th></tr>
+<tr><td>眼睛看到</td><td>そうだ</td><td>N3</td></tr>
+<tr><td>自己推测</td><td>ようだ</td><td>N3/N2</td></tr>
+<tr><td>别人告诉我</td><td>らしい</td><td>N3/N2</td></tr>
+<tr><td>逻辑推导</td><td>はずだ</td><td>N2</td></tr>
+<tr><td>高度确信</td><td>に違いない</td><td>N2</td></tr>
+<tr><td>绝对确定</td><td>に決まっている</td><td>N2</td></tr>
+<tr><td>补充依据</td><td>のだ</td><td>N3/N2</td></tr>
+</table>
+<div class="memory">
+一句话口诀：
+<br><br>
+👀 看见 → そうだ　🕵 推理 → ようだ　📱 听说 → らしい
+<br>
+📚 按理 → はずだ　🔍 肯定 → に違いない　💯 一定 → に決まっている
+<br>
+💡 说明依据 → のだ
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　はず家族</h3>
+<pre>
+                はず
+          （应有状态）
+                 │
+────────────────────────
+はずだ
+↓
+按理说……
+────────────────────────
+はずだった
+↓
+本来应该……却……
+────────────────────────
+はずがない
+↓
+绝不可能……
+</pre>
+<div class="memory">
+🌳
+「はず」不是"应该"。
+真正核心是：
+<strong>应有状态。</strong>
+所有变化，都是围绕
+"应有状态"展开。
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　よう家族（★★★★★ 全书最重要 Family 之一，跨判断/条件/结果三章）</h3>
+<pre>
+               様（よう）
+          （样子、状态）
+                 │
+──────────────────────────
+ようだ（本章）
+↓
+好像……
+──────────────────────────
+ような（05 条件宇宙）
+↓
+像……一样的
+──────────────────────────
+ように（05 条件宇宙）
+↓
+像……一样地 / 为了……
+──────────────────────────
+ようになる（04 结果宇宙）
+↓
+变成……
+──────────────────────────
+ようにする（04 结果宇宙）
+↓
+努力变成……
+</pre>
+<div class="memory">
+🌳
+<strong>よう</strong> 真正的核心不是"好像"。
+而是：
+<strong>样子（Appearance）· 状态（State）· 目标状态（Target State）</strong>
+所有「よう」家族，都是围绕"样子 / 状态"不断演化出来的。
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>
+上一章：Grammar Thinking
+<br>
+↓
+<br>
+本章：🌱 判断宇宙
+<br>
+↓
+<br>
+下一章：🔮 推测宇宙
+</div>
+
+</section>
+
+<section id="chapter02" class="chapter">
+
+<h2 class="chapter-title">🔮 Chapter 02 推测宇宙</h2>
+
+<div class="link-ref">
+📌 说明：本章与 01 判断宇宙 共享部分证据强度词汇（ようだ／はずだ／に違いない／に決まっている），
+按最终确定的 24 章目录分别保留，本章聚焦"确信程度光谱"这一整体框架，01 章聚焦"证据来源"角度，两章互为参照。
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1</span>
+<h3>核心思维</h3>
+<div class="logic">
+很多教材把它们都翻译成："大概、应该、一定。"
+<br><br>
+其实真正区别只有一个：<strong>证据有多强？</strong>
+</div>
+<table class="compare">
+<tr><th>证据来源</th><th>文法</th><th>确信</th></tr>
+<tr><td>随便猜</td><td>かもしれない</td><td>★☆☆☆☆</td></tr>
+<tr><td>观察推测</td><td>ようだ</td><td>★★☆☆☆</td></tr>
+<tr><td>听来的消息</td><td>らしい</td><td>★★★☆☆</td></tr>
+<tr><td>逻辑推导</td><td>はずだ</td><td>★★★★☆</td></tr>
+<tr><td>几乎确定</td><td>に違いない</td><td>★★★★★</td></tr>
+<tr><td>绝对如此</td><td>に決まっている</td><td>★★★★★+</td></tr>
+</table>
+<div class="memory">不要记中文。先问：<strong>我是凭什么判断？</strong></div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～かもしれない</h3>
+<div class="logic">核心：只是可能。没有什么证据。</div>
+<div class="example"><span class="tts-text">明日は雨かもしれない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>天气预报没看。只是感觉。</p>
+<div class="memory">口诀：🎲 扔骰子。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ようだ？</th></tr>
+<tr><td>かもしれない ↓ 几乎没有依据 <br><br> ようだ ↓ 已经观察到一些线索</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>② ～ようだ</h3>
+<div class="logic">核心：根据看到、听到、感觉到的线索推测。</div>
+<div class="example"><span class="tts-text">空が暗い。雨が降るようだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>乌云、风、空气。↓ 综合判断。</p>
+<div class="memory">口诀：🕵️‍♂️ 侦探找线索。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>③ ～らしい</h3>
+<div class="logic">核心：消息来自别人。不是自己判断。</div>
+<div class="example"><span class="tts-text">田中さんは結婚したらしい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>朋友告诉我。新闻看到。SNS看到。</p>
+<div class="memory">口诀：📱 消息来源。</div>
+<table class="compare">
+<tr><th>为什么不是 ～そうだ（传闻）？</th></tr>
+<tr><td>そうだ（传闻） ↓ 单纯转述 <br><br> らしい ↓ 带有"看来是真的"的感觉</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～はずだ</h3>
+<div class="logic">核心：根据已知事实，按逻辑推导。</div>
+<div class="example"><span class="tts-text">今日は日曜日だから、銀行は休みのはずだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>今天星期天。↓ 银行按理关门。</p>
+<div class="memory">口诀：📚 教科书推理。</div>
+<table class="compare">
+<tr><th>为什么不是 ～に違いない？</th></tr>
+<tr><td>はずだ ↓ 逻辑推导 <br><br> に違いない ↓ 情绪上的确信</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～に違いない</h3>
+<div class="logic">核心：几乎可以肯定。带有说话人的强烈确信。</div>
+<div class="example"><span class="tts-text">彼が犯人に違いない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>证据很多。↓ 虽然还没宣布。↓ 我已经认定。</p>
+<div class="memory">口诀：🔍 侦探锁定犯人。</div>
+<table class="compare">
+<tr><th>为什么不是 ～はずだ？</th></tr>
+<tr><td>に違いない ↓ 情绪更强 <br><br> はずだ ↓ 逻辑更强</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～に決まっている</h3>
+<div class="logic">核心：100%确定。认为没有讨论空间。</div>
+<div class="example"><span class="tts-text">そんなの嘘に決まっている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>根本不用想。一定是假话。</p>
+<div class="memory">口诀：💥 一锤定音。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑦ ～ものと思われる</h3>
+<div class="logic">核心：书面客观推测，尽量保持中立语气，多用于报告、调查。</div>
+<div class="example"><span class="tts-text">今後も増加するものと思われる。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📊 调查报告。</div>
+<table class="compare">
+<tr><th>为什么不是 ～だろう？</th></tr>
+<tr><td>だろう ↓ 主观推测 <br><br> ものと思われる ↓ 客观报告</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑧ ～ものと考えられる</h3>
+<div class="logic">核心：论文式表达，"可以认为……"，客观推论。</div>
+<div class="example"><span class="tts-text">原因はこれによるものと考えられる。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📖 学术论文。</div>
+</div>
+
+<div class="card">
+<h3>🎯 推测宇宙总结</h3>
+<div class="logic">推测不是六个意思。而是一条"证据越来越强"的阶梯。</div>
+<table class="compare">
+<tr><th>证据</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>乱猜</td><td>かもしれない</td><td>🎲 扔骰子</td></tr>
+<tr><td>看到线索</td><td>ようだ</td><td>🕵️‍♂️ 侦探观察</td></tr>
+<tr><td>别人告诉我</td><td>らしい</td><td>📱 新闻推送</td></tr>
+<tr><td>按理如此</td><td>はずだ</td><td>📚 翻教科书</td></tr>
+<tr><td>高度确信</td><td>に違いない</td><td>🔍 锁定嫌疑人</td></tr>
+<tr><td>绝对如此</td><td>に決まっている</td><td>💥 法官宣判</td></tr>
+<tr><td>书面推测</td><td>ものと思われる</td><td>📊 调查报告</td></tr>
+<tr><td>论文推论</td><td>ものと考えられる</td><td>📖 学术论文</td></tr>
+</table>
+<div class="memory">
+<strong>推测宇宙终极口诀：</strong>
+<br><br>
+🎲 猜 → かもしれない　🕵 看 → ようだ　📱 听 → らしい　📚 推 → はずだ
+<br>
+🔍 信 → に違いない　💥 定 → に決まっている　📊 书面推测 → ものと思われる／考えられる
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🌱 判断宇宙
+<br>↓
+<br>本章：🔮 推测宇宙
+<br>↓
+<br>下一章：🌧️ 原因宇宙
+</div>
+
+</section>
+
+<section id="chapter03" class="chapter">
+
+<h2 class="chapter-title">🌧️ Chapter 03 原因宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3~N2</span>
+<h3>核心思维</h3>
+<div class="logic">
+中文只有一个："因为"
+<br><br>
+日语会区分：这是客观原因？主观解释？借口？还是责怪？
+</div>
+<table class="compare">
+<tr><th>心理</th><th>文法</th></tr>
+<tr><td>普通原因</td><td>から</td></tr>
+<tr><td>客观原因</td><td>ので</td></tr>
+<tr><td>带感情解释</td><td>ものだから</td></tr>
+<tr><td>撒娇/辩解</td><td>もの</td></tr>
+<tr><td>根据性格推测</td><td>ことだから</td></tr>
+<tr><td>解释刚说的话</td><td>というのは</td></tr>
+<tr><td>正式原因（书面）</td><td>により</td></tr>
+<tr><td>正式依据（书面）</td><td>に基づいて</td></tr>
+</table>
+<div class="memory">不要只记"因为"。先问自己：我是解释？还是辩解？还是客观说明？</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～から</h3>
+<div class="logic">核心：最普通的原因。强调："这是我的理由。"</div>
+<div class="example"><span class="tts-text">今日は忙しいから、行けません。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>为什么不能去？↓ 因为今天忙。属于说话人的解释。</p>
+<div class="memory">口诀：😊 最普通的"因为"。口语出现最多。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ので？</th></tr>
+<tr><td>から ↓ 主观 · 自己的理由 <br><br> ので ↓ 客观 · 礼貌</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② ～ので</h3>
+<div class="logic">核心：客观原因。语气比から柔和。</div>
+<div class="example"><span class="tts-text">雨なので、試合は中止です。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是抱怨。只是说明事实。</p>
+<div class="memory">口诀：📢 新闻播报模式。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～ものだから</h3>
+<div class="logic">核心：带有感情色彩的解释。常常带一点不好意思、道歉、无奈。</div>
+<div class="example"><span class="tts-text">道が込んでいたものだから、遅れてしまいました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是单纯说原因。而是："真的很抱歉。"</p>
+<div class="memory">口诀：🙇‍♂️ 一边解释，一边道歉。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～もの</h3>
+<div class="logic">核心：撒娇、抱怨、替自己找理由。多见于女性口语、儿童口语。</div>
+<div class="example"><span class="tts-text">行きたくないんだもの。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>为什么不去？↓ 因为我就是不想嘛。</p>
+<div class="memory">口诀：🥺 "因为嘛……"</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～ことだから</h3>
+<div class="logic">核心：根据某人的性格、习惯、特点，进行判断。</div>
+<div class="example"><span class="tts-text">彼のことだから、きっと時間どおり来るよ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>因为了解他。↓ 所以推测。</p>
+<div class="memory">口诀：👤 我了解这个人。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～というのは</h3>
+<div class="logic">
+核心：解释刚刚说的话，等于"这是因为……"，属于原因家族第4员。
+<br><br>
+なぜなら → 先结论后原因；というのは → 解释刚刚的话；本质都是 Reason。
+</div>
+<div class="example"><span class="tts-text">私は反対です。というのは、時間が足りないからです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>先说结论。↓ 再说明理由。</p>
+<div class="memory">口诀：📢 接下来解释。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～により</h3>
+<div class="logic">核心：正式表示原因、方式、依据。新闻高频，属书面表达风格。</div>
+<div class="example"><span class="tts-text">事故により、電車が遅れています。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📰 新闻标题。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑧ ～に基づいて</h3>
+<div class="logic">核心：依据、根据。法律、论文、制度常用。</div>
+<div class="example"><span class="tts-text">法律に基づいて、判断する。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⚖️ 法律条文。</div>
+</div>
+
+<div class="card">
+<h3>🎯 原因宇宙总结</h3>
+<table class="compare">
+<tr><th>心理活动</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>普通解释</td><td>から</td><td>🙂 自己说明理由</td></tr>
+<tr><td>客观说明</td><td>ので</td><td>📰 新闻播报</td></tr>
+<tr><td>带歉意解释</td><td>ものだから</td><td>🙇‍♂️ 一边解释一边道歉</td></tr>
+<tr><td>撒娇辩解</td><td>もの</td><td>🥺 因为嘛……</td></tr>
+<tr><td>了解某人</td><td>ことだから</td><td>👤 我知道他的性格</td></tr>
+<tr><td>解释刚说的话</td><td>というのは</td><td>📢 让我说明一下</td></tr>
+<tr><td>正式原因</td><td>により</td><td>📰 新闻标题</td></tr>
+<tr><td>正式依据</td><td>に基づいて</td><td>⚖️ 法律条文</td></tr>
+</table>
+<div class="memory">
+<strong>原因宇宙口诀：</strong>
+<br><br>
+🙂 普通解释 → から　📰 客观说明 → ので　🙇‍♂️ 带感情解释 → ものだから
+<br>
+🥺 撒娇辩解 → もの　👤 根据性格判断 → ことだから　📢 解释刚说的 → というのは
+<br>
+📰 正式原因 → により　⚖️ 正式依据 → に基づいて
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🔮 推测宇宙
+<br>↓
+<br>本章：🌧️ 原因宇宙
+<br>↓
+<br>下一章：🎯 结果宇宙
+</div>
+
+</section>
+
+<section id="chapter04" class="chapter">
+
+<h2 class="chapter-title">🎯 Chapter 04 结果宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3～N1 高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+原因宇宙回答：<strong>为什么发生？</strong>
+结果宇宙回答：<strong>最后变成什么样？</strong>
+所有结果语法，本质都是：<strong>事情的发展方向。</strong>
+</div>
+<table class="compare">
+<tr><th>结果类型</th><th>文法</th></tr>
+<tr><td>自然变化</td><td>～になる</td></tr>
+<tr><td>人为改变</td><td>～にする</td></tr>
+<tr><td>逐渐变化</td><td>～ていく</td></tr>
+<tr><td>变化到现在</td><td>～てくる</td></tr>
+<tr><td>能力发生变化</td><td>～ようになる</td></tr>
+<tr><td>努力保持状态</td><td>～ようにする</td></tr>
+<tr><td>结果被决定</td><td>～ことになる</td></tr>
+<tr><td>自己决定</td><td>～ことにする</td></tr>
+<tr><td>长期规定</td><td>～ことになっている</td></tr>
+<tr><td>最终结束</td><td>～てしまう</td></tr>
+<tr><td>最终落到……</td><td>～末に</td></tr>
+<tr><td>折腾之后……</td><td>～あげく</td></tr>
+<tr><td>最坏结果</td><td>～果てに</td></tr>
+<tr><td>正式因果结论</td><td>そのため／したがって／ゆえに</td></tr>
+</table>
+<div class="memory">这一章只有一句话：📈 时间一直往前走。最后，事情一定会变成一种状态。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～になる</h3>
+<div class="logic">核心：自然变化。没有强调是谁造成。</div>
+<div class="example"><span class="tts-text">春になった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>春天自己到了。</p>
+<div class="memory">口诀：🍃 季节自己变化。</div>
+<table class="compare">
+<tr><th>为什么不是 ～にする？</th></tr>
+<tr><td>になる ↓ 自然发生 <br><br> にする ↓ 人为决定</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② ～にする</h3>
+<div class="logic">核心：主动改变。自己做决定。</div>
+<div class="example"><span class="tts-text">コーヒーにします。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：✋ 我亲手决定。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>③ ～ていく</h3>
+<div class="logic">核心：现在开始，一直向未来发展。</div>
+<div class="example"><span class="tts-text">人口が減っていく。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：➡️ 向未来延伸。</div>
+<table class="compare">
+<tr><th>为什么不是 ～てくる？</th></tr>
+<tr><td>ていく ↓ 现在 → 未来 <br><br> てくる ↓ 过去 → 现在</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>④ ～てくる</h3>
+<div class="logic">核心：过去一直变化，直到现在。</div>
+<div class="example"><span class="tts-text">寒くなってきた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⬅️ 一路走到今天。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤ ～ようになる</h3>
+<div class="logic">核心：能力、习惯、状态，发生变化——终于达成。</div>
+<div class="example"><span class="tts-text">日本語が話せるようになった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎓 升级成功。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+よう ↓ 某种状态
+<br><br>
+＋ になる ↓ 变成
+<br><br>
+────────────────
+<strong>逐渐变成那种状态。</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 ～ことになる？</th></tr>
+<tr><td>ようになる ↓ 能力改变 <br><br> ことになる ↓ 规则决定</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤' ～ようにする</h3>
+<div class="logic">核心：不是已经达成，而是主动努力，让自己保持这种状态——强调持续的意志与努力。</div>
+<div class="example"><span class="tts-text">毎日野菜を食べるようにしている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是已经变成习惯（ようになる），而是每天主动提醒自己去做。</p>
+<div class="memory">口诀：💪 每天努力保持。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+よう ↓ 目标状态
+<br><br>
+＋ にする ↓ 主动变成
+<br><br>
+────────────────
+<strong>努力让自己保持这种状态。</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 ～ようになる？</th></tr>
+<tr><td>ようにする ↓ 主动努力中 <br><br> ようになる ↓ 已经形成结果</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑥ ～ことになる</h3>
+<div class="logic">核心：不是自己决定。而是：外界决定。</div>
+<div class="example"><span class="tts-text">大阪へ転勤することになった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📢 公司通知。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>こと</strong> ↓ 事情 · 事件
+<br><br>
+＋
+<br><br>
+<strong>になる</strong> ↓ 变成
+<br><br>
+────────────────
+事情变成这样。
+<br><br>
+↓
+<strong>决定如此。形成这样的结果。</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 ことにする？</th></tr>
+<tr><td>ことになる ↓ 别人决定 · 制度决定 · 自然形成 <br><br> ことにする ↓ 自己决定 · 自己选择</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑦ ～ことにする</h3>
+<div class="logic">核心：自己下决定。</div>
+<div class="example"><span class="tts-text">毎日歩くことにした。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📝 自己立Flag。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>こと</strong> ↓ 事情
+<br><br>
+＋
+<br><br>
+<strong>にする</strong> ↓ 主动决定
+<br><br>
+────────────────
+<strong>把事情变成这样。</strong>
+<br><br>
+↓ 自己决定。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦' ～ことになっている</h3>
+<div class="logic">核心：事情已经这样规定，长期持续存在——制度、规则、约定。</div>
+<div class="example"><span class="tts-text">毎朝ラジオ体操をすることになっている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是某一次的决定，而是长期固定下来的规矩。</p>
+<div class="memory">口诀：📜 写进了规章制度。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+こと ↓ 事情
+<br><br>
+＋ なっている ↓ 已经形成 · 持续存在
+<br><br>
+────────────────
+<strong>事情已经这样规定。</strong>
+<br><br>
+↓ 制度、规则、约定。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑧ ～てしまう</h3>
+<div class="logic">核心：事情结束了。通常：遗憾、完成、无法挽回。</div>
+<div class="example"><span class="tts-text">忘れてしまった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：💥 Game Over。</div>
+<table class="compare">
+<tr><th>为什么不是 ～終わる？</th></tr>
+<tr><td>てしまう ↓ 强调结果 <br><br> 終わる ↓ 强调动作结束</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑨ ～末に</h3>
+<div class="logic">核心：经过漫长过程，终于得到结果。</div>
+<div class="example"><span class="tts-text">努力の末に成功した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🏔 爬到山顶。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑩ ～あげく</h3>
+<div class="logic">核心：折腾很久，结果通常不好。</div>
+<div class="example"><span class="tts-text">迷ったあげく、買わなかった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：😵 绕了一大圈。</div>
+<table class="compare">
+<tr><th>为什么不是 ～末に？</th></tr>
+<tr><td>末に ↓ 中性、努力后的结果 <br><br> あげく ↓ 多带遗憾、负面色彩</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑪ ～果てに</h3>
+<div class="logic">核心：最终走向最坏结局。比「あげく」更重。</div>
+<div class="example"><span class="tts-text">苦労の果てに倒れた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🌑 走到故事终章。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑫ そのため／したがって／ゆえに</h3>
+<div class="logic">核心：正式书面表达中，把前文原因推导出最终结论。属于阅读中"结果"信号词。</div>
+<div class="example"><span class="tts-text">売上が減少した。したがって、コスト削減が必要である。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📊 因果推导，得出结论。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑬ ～まま</h3>
+<div class="logic">核心：不是"变化的结果"，而是"没有变化的结果"——保持原来的状态，一直持续下去，不做任何改变。</div>
+<div class="example"><span class="tts-text">靴を履いたまま、部屋に入った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>鞋子还穿着。↓ 没有脱。↓ 就这样进了房间。</p>
+<div class="memory">口诀：⏸️ 按下暂停键。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+まま ↓ 状态 · 样子
+<br><br>
+＋ 保持 · 持续 ↓ 状态没有改变
+<br><br>
+────────────────
+<strong>保持原来的状态继续存在。</strong>
+<br><br>
+↓ 做完后保持、没有变化、按照状态。
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 ～ている？</th></tr>
+<tr><td>まま ↓ 强调"没有做该做的改变" <br><br> ている ↓ 单纯描述正在持续的状态</td></tr>
+</table>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　まま家族</h3>
+<pre>
+                まま
+          （状态保持不变）
+                 │
+────────────────────────
+Vた ＋ まま
+↓
+做完后一直保持（靴を履いたまま）
+────────────────────────
+Nの ＋ まま
+↓
+维持原样（そのままの姿）
+────────────────────────
+そのまま
+↓
+就这样，不做任何改变
+</pre>
+<div class="memory">
+🌳
+「まま」不是"结果"，而是<strong>"没有结果的结果"</strong>——
+本来该发生的变化，没有发生，状态被原样冻结住了。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>まま</td><td>= 原状保持（As-is）。所有まま家族都在说："没有变，就这样。"</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 结果宇宙总结</h3>
+<table class="compare">
+<tr><th>结果类型</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>自然变化</td><td>になる</td><td>🍃 四季变化</td></tr>
+<tr><td>人为改变</td><td>にする</td><td>✋ 自己选择</td></tr>
+<tr><td>未来变化</td><td>ていく</td><td>➡️ 向前延伸</td></tr>
+<tr><td>变化到现在</td><td>てくる</td><td>⬅️ 一路走来</td></tr>
+<tr><td>能力升级</td><td>ようになる</td><td>🎓 升级</td></tr>
+<tr><td>努力保持</td><td>ようにする</td><td>💪 坚持努力</td></tr>
+<tr><td>外界决定</td><td>ことになる</td><td>📢 通知</td></tr>
+<tr><td>自己决定</td><td>ことにする</td><td>📝 决定书</td></tr>
+<tr><td>长期规定</td><td>ことになっている</td><td>📜 规章制度</td></tr>
+<tr><td>结束</td><td>てしまう</td><td>💥 Game Over</td></tr>
+<tr><td>努力结果</td><td>末に</td><td>🏔 登顶</td></tr>
+<tr><td>折腾结果</td><td>あげく</td><td>😵 绕远路</td></tr>
+<tr><td>最坏结局</td><td>果てに</td><td>🌑 黑屏结尾</td></tr>
+<tr><td>保持不变</td><td>まま</td><td>⏸️ 按下暂停键</td></tr>
+</table>
+<div class="memory">
+<strong>结果宇宙终极口诀：</strong>
+<br><br>
+🍃 自然变化 → になる　✋ 人为改变 → にする　➡️ 向未来 → ていく　⬅️ 到现在 → てくる
+<br>
+🎓 能力升级 → ようになる　💪 努力保持 → ようにする　📢 外界决定 → ことになる
+<br>
+📝 自己决定 → ことにする　📜 长期规定 → ことになっている
+<br>
+💥 无法挽回 → てしまう　🏔 努力之后 → 末に　😵 折腾之后 → あげく　🌑 最终结局 → 果てに　⏸️ 保持不变 → まま
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　こと家族（状态变化系）</h3>
+<pre>
+              こと
+          （事情）
+               │
+────────────────────────────
+ことになる
+↓
+事情变成……
+↓
+客观决定
+────────────────────────────
+ことにする
+↓
+把事情变成……
+↓
+自己决定
+────────────────────────────
+ことになっている
+↓
+事情一直这样
+↓
+规定 · 制度
+</pre>
+<div class="memory">
+🌳
+<strong>こと = 事情。</strong>
+事情自己决定 ↓ ことにする
+<br>
+事情自然形成 ↓ ことになる
+<br>
+事情长期固定 ↓ ことになっている
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>こと</td><td>= 事情（Event）。不是动作，不是状态，而是一件"事情"。所有こと家族，都是围绕"事情"变化。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🌧️ 原因宇宙
+<br>↓
+<br>本章：🎯 结果宇宙
+<br>↓
+<br>下一章：🔗 条件宇宙
+</div>
+
+</section>
+
+<section id="chapter05" class="chapter">
+
+<h2 class="chapter-title">🔗 Chapter 05 条件宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3~N2</span>
+<h3>核心思维</h3>
+<div class="logic">
+中文只有一个："如果"
+<br><br>
+日语其实有四种完全不同的思维，再加上"为了……"这一整套目的表达——它们都在回答同一个更大的问题：<strong>要满足什么，才能走到下一步？</strong>
+</div>
+<table class="compare">
+<tr><th>文法</th><th>真正意思</th></tr>
+<tr><td>と</td><td>只要A，就一定B（自然规律）</td></tr>
+<tr><td>ば</td><td>只要满足条件即可</td></tr>
+<tr><td>たら</td><td>A结束以后，再发生B</td></tr>
+<tr><td>なら</td><td>既然你说A，那我就B</td></tr>
+<tr><td>ために</td><td>为了实现目标</td></tr>
+<tr><td>に（用途）</td><td>为了某用途</td></tr>
+<tr><td>ように</td><td>为了……而准备 / 像……一样</td></tr>
+<tr><td>ないように</td><td>为了避免</td></tr>
+<tr><td>に向けて</td><td>朝着目标推进（正式）</td></tr>
+</table>
+<div class="memory">
+不要再背："四个都表示如果。"
+考试真正考的是：说话人的思维。
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～と</h3>
+<div class="logic">核心：自然规律。固定结果。</div>
+<div class="example"><span class="tts-text">春になると、暖かくなる。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>春天来了，一定变暖。不是人的意志。</p>
+<div class="memory">口诀：按下开关。一定发生。</div>
+<table class="compare">
+<tr><th>特点</th><th>说明</th></tr>
+<tr><td>结果固定</td><td>每次都会发生</td></tr>
+<tr><td>自然规律</td><td>四季、机器、习惯等</td></tr>
+<tr><td>不能表示意志</td><td>后项一般不能是命令、邀请、请求、意志</td></tr>
+</table>
+<b>为什么不能这样说？</b>
+<div class="example"><span class="tts-text">❌ 春になると、公園へ行こう。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+因为：
+<div class="logic">"春天到了" ↓ 不会必然推出 "去公园" ↓ 这是人的意志。</div>
+<b>正确：</b>
+<div class="example"><span class="tts-text">春になったら、公園へ行こう。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">🌸 と = 按下开关 ↓ 机器自动运行</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② ～ば</h3>
+<div class="logic">核心：满足条件即可。重点放在"条件成立"而不是时间。</div>
+<div class="example"><span class="tts-text">時間があれば、行きます。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>有没有时间？↓ 有 ↓ 那就去。</p>
+<div class="memory">口诀：满足条件 ↓ 即可成立。</div>
+<table class="compare">
+<tr><th>为什么不是 たら？</th></tr>
+<tr><td>ば ↓ 强调条件 <br><br> たら ↓ 强调动作完成以后</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>③ ～たら</h3>
+<div class="logic">核心：A结束以后，再发生B。</div>
+<div class="example"><span class="tts-text">日本へ行ったら、京都へ行きたい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>先：到日本 ↓ 之后：去京都。</p>
+<div class="memory">口诀：时间轴。A结束 ↓ B开始</div>
+<table class="compare">
+<tr><th>为什么不是 と？</th></tr>
+<tr><td>と ↓ 每次都会发生 <br><br> たら ↓ 只说这一次。</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>④ ～なら</h3>
+<div class="logic">核心：既然你提到了A，那我就说B。</div>
+<div class="example"><span class="tts-text">京都へ行くなら、嵐山がおすすめです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>你说：去京都。↓ 我回应：推荐岚山。</p>
+<div class="memory">口诀：接话模式。别人说A ↓ 我回答B</div>
+<table class="compare">
+<tr><th>为什么不是 ば？</th></tr>
+<tr><td>なら ↓ 根据对方的话回答。 <br><br> ば ↓ 客观条件。</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤ ～ために</h3>
+<div class="logic">核心：为了实现一个明确目标。重点：后项是行动，自己可以控制。</div>
+<div class="example"><span class="tts-text">日本へ留学するために、毎日日本語を勉強しています。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>目标：去日本留学 ↓ 所以每天学习。</p>
+<div class="memory">口诀：🎯 目标已经确定。所有努力都朝着目标。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ように？</th></tr>
+<tr><td>ために ↓ 自己可以控制 ↓ 努力就可能做到 <br><br> ように ↓ 结果不一定能控制</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑥ ～に（用途）</h3>
+<div class="logic">核心：不是目的。而是用途。"拿来做什么。"</div>
+<div class="example"><span class="tts-text">これは料理に使います。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是为了料理。而是：用于料理。</p>
+<div class="memory">口诀：🔧 工具用途。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>⑦ ～ように</h3>
+<div class="logic">
+核心：希望达到某个状态，结果不能完全靠自己控制。
+<br><br>
+「ように」有两个核心用法，DNA 相同——都源自"朝着某种状态"：
+</div>
+<div class="example"><span class="tts-text">日本語が話せるように、毎日練習しています。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>努力练习。↓ 希望以后能说。是否成功，不能100%保证。</p>
+<div class="memory">口诀：🌱 朝目标成长。不是立即实现。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+よう ↓ 样子 · 方式
+<br><br>
+＋ に ↓ 方式 · 状态
+<br><br>
+────────────────
+<strong>像……一样地 / 为了达到……</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>两种用法</th><th>例子</th></tr>
+<tr><td>比喻方式</td><td>鳥のように飛ぶ（像鸟一样飞）</td></tr>
+<tr><td>目的结果</td><td>忘れないようにメモする（为了不忘而记下来）</td></tr>
+</table>
+
+<table class="compare">
+<tr><th>为什么不是 ～ために？</th></tr>
+<tr><td>ために ↓ 考大学、赚钱、买房——自己能决定 <br><br> ように ↓ 会说日语、不生病、考试及格——结果不能保证</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑦' ～ような</h3>
+<div class="logic">核心：像……一样的……，用来修饰名词，是「ように」的名词修饰形。</div>
+<div class="example"><span class="tts-text">天使のような人。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是说明动作，而是形容一个人、事、物"像什么一样"。</p>
+<div class="memory">口诀：🎭 贴上一个比喻标签。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+よう ↓ 样子
+<br><br>
+＋ な ↓ 修饰名词
+<br><br>
+────────────────
+<strong>像……一样的……</strong>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>⑧ ～ないように</h3>
+<div class="logic">核心：为了避免。重点：不要发生某件事。</div>
+<div class="example"><span class="tts-text">風邪をひかないように、早く寝ます。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是为了感冒。而是：为了不要感冒。</p>
+<div class="memory">口诀：🚫 提前预防。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ように？</th></tr>
+<tr><td>ように ↓ 希望发生 <br><br> ないように ↓ 希望不要发生</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑨ ～に向けて</h3>
+<div class="logic">核心：朝着目标，不断推进。属于正式书面表达。</div>
+<div class="example"><span class="tts-text">試験に向けて、勉強する。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎯 瞄准终点。</div>
+</div>
+
+<div class="card">
+<h3>🎯 条件 × 目的宇宙总结</h3>
+<div class="logic">四个条件 + 四种目的，其实代表八种思维——满足什么，才能走到下一步。</div>
+<table class="compare">
+<tr><th>心理</th><th>文法</th><th>一句话</th></tr>
+<tr><td>自然规律</td><td>と</td><td>一定发生</td></tr>
+<tr><td>满足条件</td><td>ば</td><td>条件成立即可</td></tr>
+<tr><td>时间顺序</td><td>たら</td><td>先A后B</td></tr>
+<tr><td>根据对方的话</td><td>なら</td><td>既然如此</td></tr>
+<tr><td>实现目标</td><td>ために</td><td>🎯 瞄准靶心</td></tr>
+<tr><td>说明用途</td><td>～に</td><td>🔧 工具说明书</td></tr>
+<tr><td>希望达到</td><td>ように</td><td>🌱 慢慢成长</td></tr>
+<tr><td>提前避免</td><td>ないように</td><td>🚫 系安全带</td></tr>
+<tr><td>朝目标推进</td><td>に向けて</td><td>🎯 瞄准终点</td></tr>
+</table>
+<div class="memory">
+一句话口诀：
+<br><br>
+🌸 自然规律 → と　📋 满足条件 → ば　⏰ 做完再说 → たら　💬 接别人话 → なら
+<br>
+🎯 达成目标 → ために　🔧 说明用途 → ～に　🌱 希望做到 → ように　🚫 防止发生 → ないように
+<br>
+🎯 朝向目标 → に向けて
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🎯 结果宇宙
+<br>↓
+<br>本章：🔗 条件宇宙
+<br>↓
+<br>下一章：⏰ 时间宇宙
+</div>
+
+</section>
+
+<section id="chapter06" class="chapter">
+
+<h2 class="chapter-title">⏰ Chapter 06 时间宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3~N2</span>
+<h3>核心思维</h3>
+<div class="logic">
+时间文法，不是表示"什么时候"，而是表示"A 与 B 的时间关系。"
+</div>
+<table class="compare">
+<tr><th>关系</th><th>文法</th></tr>
+<tr><td>马上</td><td>～ようとしている</td></tr>
+<tr><td>正在</td><td>～ているところ</td></tr>
+<tr><td>刚刚</td><td>～たところ</td></tr>
+<tr><td>之后立刻</td><td>～たとたん</td></tr>
+<tr><td>同时</td><td>～と同時に</td></tr>
+<tr><td>随着</td><td>～につれて</td></tr>
+<tr><td>随着（规律）</td><td>～にしたがって</td></tr>
+</table>
+<div class="memory">不要记：时间。要记：动作之间是什么关系。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>ところ 家族（时间切片）</h3>
+<div class="logic">
+「ところ」的核心不是"地方"，而是<strong>时间切片</strong>——把一个动作按"即将开始 / 正在进行 / 刚刚结束"切成三张快照。
+</div>
+<table class="compare">
+<tr><th>切片位置</th><th>文法</th></tr>
+<tr><td>动作即将开始</td><td>辞書形 + ところ</td></tr>
+<tr><td>动作正在进行</td><td>ているところ</td></tr>
+<tr><td>动作刚刚结束</td><td>たところ</td></tr>
+</table>
+<div class="memory">口诀：🎬 电影的三个瞬间——预告片、正片、片尾字幕。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+ところ ↓ 位置 · 地点
+<br><br>
+↓ 时间上的位置
+<br><br>
+＋ 动作状态 ↓ 发生阶段
+<br><br>
+────────────────
+<strong>事情发展的某一个瞬间。</strong>
+<br><br>
+↓ 正要发生、正在进行、刚刚结束。
+</div>
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　ところ家族</h3>
+<pre>
+                ところ
+          （时间切片）
+                 │
+────────────────────────
+辞書形＋ところ
+↓
+正要发生
+────────────────────────
+ているところ
+↓
+正在进行
+────────────────────────
+たところ
+↓
+刚刚结束
+</pre>
+<div class="memory">
+🌳
+「ところ」不是"地方"。
+真正核心是：
+<strong>时间切片。</strong>
+把一个连续的动作，切成三张快照——预告、正片、字幕。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>ところ</td><td>= 时间切片（Moment）。不是空间上的"地方"，而是动作发展中的某一个瞬间。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～たところ</h3>
+<div class="logic">核心：刚刚完成。</div>
+<div class="example"><span class="tts-text">今、帰ったところです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是过去很久。而是：刚结束。</p>
+<div class="memory">口诀：电影刚结束。字幕刚出来。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② ～ているところ</h3>
+<div class="logic">核心：动作正在进行。重点："现在正处于动作里面。"</div>
+<div class="example"><span class="tts-text">今、食べているところです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>动作已经开始。还没有结束。正进行中。</p>
+<div class="memory">口诀：🎬 电影正在播放。</div>
+<table class="compare">
+<tr><th>为什么不是 ～たところ？</th></tr>
+<tr><td>たところ ↓ 电影结束 <br><br> ているところ ↓ 电影播放中</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～ようとしている</h3>
+<div class="logic">核心：马上就要开始。动作还没发生。</div>
+<div class="example"><span class="tts-text">今から家を出ようとしている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>鞋已经穿好。门已经打开。马上出去。</p>
+<div class="memory">口诀：🎬 倒计时3秒。3... 2... 1...</div>
+<table class="compare">
+<tr><th>为什么不是 ～ているところ？</th></tr>
+<tr><td>ようとしている ↓ 还没开始 <br><br> ているところ ↓ 已经开始</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～たとたん</h3>
+<div class="logic">核心：刚结束，另一件事立刻发生。强调"瞬间"。</div>
+<div class="example"><span class="tts-text">家を出たとたん、雨が降り出した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>刚踏出门。↓ 马上下雨。</p>
+<div class="memory">口诀：⚡ 一开门，雨就来了。</div>
+<table class="compare">
+<tr><th>为什么不是 ～たら？</th></tr>
+<tr><td>たら ↓ 普通先后 <br><br> たとたん ↓ 几乎同时</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～と同時に</h3>
+<div class="logic">核心：两个动作同时发生。没有先后。</div>
+<div class="example"><span class="tts-text">ベルが鳴ると同時に、学生が教室へ入った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>铃声响。↓ 学生进入。几乎同一瞬间。</p>
+<div class="memory">口诀：🎬 双镜头同步播放。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ながら？</th></tr>
+<tr><td>ながら ↓ 同一个人两个动作 <br><br> と同時に ↓ 两个事件同时发生</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～につれて</h3>
+<div class="logic">核心：随着A自然变化，B也自然变化。</div>
+<div class="example"><span class="tts-text">年を取るにつれて、体力が落ちる。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>年龄增加。↓ 体力下降。自然趋势。</p>
+<div class="memory">口诀：📈 两条曲线一起变化。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～にしたがって</h3>
+<div class="logic">核心：按照某种规律、规则、数据的发展，另一件事也发生变化。</div>
+<div class="example"><span class="tts-text">人口が増えるにしたがって、交通問題も深刻になった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>人口越来越多。↓ 交通压力越来越大。强调客观规律。</p>
+<div class="memory">口诀：📊 看统计图。</div>
+</div>
+
+<div class="card">
+<h3>🎯 时间宇宙总结</h3>
+<table class="compare">
+<tr><th>时间关系</th><th>文法</th><th>画面</th></tr>
+<tr><td>马上开始</td><td>ようとしている</td><td>🚪 手已经放在门把上</td></tr>
+<tr><td>正在进行</td><td>ているところ</td><td>🎬 电影播放中</td></tr>
+<tr><td>刚刚结束</td><td>たところ</td><td>🎬 字幕刚出现</td></tr>
+<tr><td>结束瞬间</td><td>たとたん</td><td>⚡ 一开门就下雨</td></tr>
+<tr><td>两个动作同步</td><td>と同時に</td><td>🎥 双镜头同步</td></tr>
+<tr><td>自然变化</td><td>につれて</td><td>📈 两条自然曲线</td></tr>
+<tr><td>规律变化</td><td>にしたがって</td><td>📊 数据统计图</td></tr>
+</table>
+<div class="memory">
+<strong>时间轴口诀：</strong>
+<br><br>
+🚪 即将开始 → ようとしている　🎬 正在进行 → ているところ　🏁 刚刚结束 → たところ
+<br>
+⚡ 瞬间发生 → たとたん　🤝 同时发生 → と同時に　📈 自然变化 → につれて　📊 规律变化 → にしたがって
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🔗 条件宇宙
+<br>↓
+<br>本章：⏰ 时间宇宙
+<br>↓
+<br>下一章：📅 顺序宇宙
+</div>
+
+</section>
+
+<section id="chapter07" class="chapter">
+
+<h2 class="chapter-title">📅 Chapter 07 顺序宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3～N1 高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+时间宇宙回答：<strong>什么时候发生？</strong>
+顺序宇宙回答：<strong>先做什么？后做什么？</strong>
+所有顺序语法，其实都在描述：<strong>动作流程。</strong>
+不是时间点。而是：动作之间的执行关系。
+</div>
+<table class="compare">
+<tr><th>动作关系</th><th>文法</th></tr>
+<tr><td>先A后B</td><td>～てから</td></tr>
+<tr><td>A结束后B</td><td>～たあとで</td></tr>
+<tr><td>完成A再B</td><td>～うえで</td></tr>
+<tr><td>趁A的时候</td><td>～際に</td></tr>
+<tr><td>刚一A就发现</td><td>～たところ（详见 06 时间宇宙）</td></tr>
+<tr><td>顺便做</td><td>～ついでに</td></tr>
+<tr><td>兼做另一件事</td><td>～がてら</td></tr>
+<tr><td>借机顺便</td><td>～かたがた</td></tr>
+<tr><td>正在进行</td><td>～最中に</td></tr>
+</table>
+<div class="memory">这一章就是：🎬 导演安排镜头。每个动作，都有自己的出场顺序。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① ～てから</h3>
+<div class="logic">核心：A完成。然后B。动作必须按顺序发生。</div>
+<div class="example"><span class="tts-text">ご飯を食べてから勉強する。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：▶️ 下一步。</div>
+<table class="compare">
+<tr><th>为什么不是 ～あとで？</th></tr>
+<tr><td>てから ↓ 强调动作顺序 <br><br> あとで ↓ 强调时间先后</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② ～たあとで</h3>
+<div class="logic">核心：A结束以后，再发生B。中间可以有间隔。</div>
+<div class="example"><span class="tts-text">映画を見たあとで食事した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📅 下一阶段。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～うえで</h3>
+<div class="logic">核心：必须先完成A，B才有资格进行。A是前提。</div>
+<div class="example"><span class="tts-text">内容を確認したうえで契約する。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📋 审核通过。</div>
+<table class="compare">
+<tr><th>为什么不是 ～てから？</th></tr>
+<tr><td>てから ↓ 普通顺序 <br><br> うえで ↓ A是必要前提</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～際に</h3>
+<div class="logic">核心：趁这个机会，发生另一动作。书面语。</div>
+<div class="example"><span class="tts-text">ご来店の際に、会員証をご提示ください。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🚪 到门口的时候。</div>
+<div class="warning">
+<strong>Primary Universe：</strong> 顺序宇宙（动作发生的时机）
+<br>
+<strong>Secondary：</strong> 23 JLPT Reading Style（公文风格常见词）
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～たところ</h3>
+<div class="logic">核心：刚完成A，马上发现B——强调结果出现。本节点核心讲解已并入 06 时间宇宙的「ところ 家族」，此处仅作顺序场景下的补充例句。</div>
+<div class="example"><span class="tts-text">先生に聞いたところ、大丈夫だった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：💡 一试就知道。（详见 06 时间宇宙）</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑥ ～ついでに</h3>
+<div class="logic">核心：既然已经做A，那就顺便做B。</div>
+<div class="example"><span class="tts-text">買い物のついでに、郵便局へ行った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🛍 顺路完成。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～がてら</h3>
+<div class="logic">核心：A本身就是目的。B只是顺便。两个动作同时成立。</div>
+<div class="example"><span class="tts-text">散歩がてら、写真を撮った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🚶 一边走，一边完成。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ついでに？</th></tr>
+<tr><td>ついでに ↓ 后来顺便 <br><br> がてら ↓ 本来就兼做</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑧ ～かたがた</h3>
+<div class="logic">核心：借某个正式机会，顺便完成另一件事。郑重表达。</div>
+<div class="example"><span class="tts-text">ご挨拶かたがた、伺いました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎩 正式拜访。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑨ ～最中に</h3>
+<div class="logic">核心：动作正在进行。另一件事情突然发生。</div>
+<div class="example"><span class="tts-text">会議の最中に、電話が鳴った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎥 镜头暂停。</div>
+</div>
+
+<div class="card">
+<h3>🎯 顺序宇宙总结</h3>
+<table class="compare">
+<tr><th>流程关系</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>下一步</td><td>てから</td><td>▶️ 下一幕</td></tr>
+<tr><td>结束以后</td><td>たあとで</td><td>📅 第二天</td></tr>
+<tr><td>完成前提</td><td>うえで</td><td>📋 审批</td></tr>
+<tr><td>趁机会</td><td>際に</td><td>🚪 门口</td></tr>
+<tr><td>顺便</td><td>ついでに</td><td>🛍 顺路</td></tr>
+<tr><td>兼做</td><td>がてら</td><td>🚶 同时进行</td></tr>
+<tr><td>正式顺便</td><td>かたがた</td><td>🎩 礼节拜访</td></tr>
+<tr><td>进行途中</td><td>最中に</td><td>🎥 镜头暂停</td></tr>
+</table>
+<div class="memory">
+<strong>顺序宇宙终极口诀：</strong>
+<br><br>
+▶️ 下一步 → てから　📅 结束以后 → あとで　📋 前提完成 → うえで　🚪 趁机会 → 際に
+<br>
+🛍 顺路完成 → ついでに　🚶 一边兼做 → がてら　🎩 正式拜访 → かたがた　🎥 正在进行 → 最中に
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：⏰ 时间宇宙
+<br>↓
+<br>本章：📅 顺序宇宙
+<br>↓
+<br>下一章：⚖️ 对比宇宙
+</div>
+
+</section>
+
+<section id="chapter08" class="chapter">
+
+<h2 class="chapter-title">⚖️ Chapter 08 对比宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1 阅读高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+转折宇宙回答：<strong>事情反转了吗？</strong>
+对比宇宙回答：<strong>A 和 B 到底有什么区别？</strong>
+所有对比语法，都是把两个对象放在一起。比较、衬托、替代、反差。
+</div>
+<table class="compare">
+<tr><th>对比方式</th><th>文法</th></tr>
+<tr><td>双方对照</td><td>～に対して</td></tr>
+<tr><td>相反</td><td>～に反して</td></tr>
+<tr><td>另一方面</td><td>一方（で）</td></tr>
+<tr><td>相反的一面</td><td>反面</td></tr>
+<tr><td>不同于</td><td>～と違って</td></tr>
+<tr><td>代替 / 权衡</td><td>～かわりに</td></tr>
+<tr><td>反差超预期</td><td>～どころか</td></tr>
+</table>
+<div class="memory">这一章只有一句话：⚖️ 把两个东西放到天平上。看看：到底哪里不同。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～に対して</h3>
+<div class="logic">核心：A 与 B 相对应。进行比较。最中性的对比。</div>
+<div class="example"><span class="tts-text">兄に対して、弟はおとなしい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⚖️ 两边一起看。</div>
+<table class="compare">
+<tr><th>为什么不是 ～と比べて？</th></tr>
+<tr><td>に対して ↓ 强调对应关系 <br><br> と比べて ↓ 强调比较结果</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>② ～に反して</h3>
+<div class="logic">核心：结果与预想相反。</div>
+<div class="example"><span class="tts-text">期待に反して、失敗した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：↔ 完全反方向。</div>
+<table class="compare">
+<tr><th>为什么不是 ～にもかかわらず？</th></tr>
+<tr><td>に反して ↓ 两个事实相反 <br><br> にもかかわらず ↓ 顶着条件继续发生</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ 一方（で）</h3>
+<div class="logic">核心：另一方面。把两件事情同时摆出来。不一定矛盾。</div>
+<div class="example"><span class="tts-text">都会は便利だ。一方で、物価が高い。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⚖️ 天平另一边。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>④ 反面</h3>
+<div class="logic">核心：好处存在。另一面也存在。强调双面性。</div>
+<div class="example"><span class="tts-text">便利な反面、危険もある。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🪙 硬币两面。</div>
+<table class="compare">
+<tr><th>为什么不是 一方？</th></tr>
+<tr><td>反面 ↓ 同一对象两面 <br><br> 一方 ↓ 两个角度并列</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤ ～と違って</h3>
+<div class="logic">核心：直接指出不同。最直观的比较。</div>
+<div class="example"><span class="tts-text">兄と違って、妹は明るい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🔍 找不同。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～かわりに</h3>
+<div class="logic">核心：放弃A。得到B。一种交换关系。「かわりに」实际有两种用法，为保持体系简洁，统一放在对比宇宙讲解：</div>
+<div class="example"><span class="tts-text">車のかわりに、電車で行く。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🔄 等价交换。</div>
+<table class="compare">
+<tr><th>两种用法</th><th>例句</th><th>含义</th></tr>
+<tr><td>① 代替（Replacement）</td><td>車のかわりに電車で行く</td><td>用B代替A</td></tr>
+<tr><td>② 补偿/交换（Trade-off）</td><td>給料は低いかわりに休みが多い</td><td>A的缺点由B来平衡</td></tr>
+</table>
+<table class="compare">
+<tr><th>为什么不是 ～に対して？</th></tr>
+<tr><td>かわりに ↓ 替代 <br><br> に対して ↓ 比较</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑦ ～どころか</h3>
+<div class="logic">
+核心：预期：A。现实：连 B 都……完全反方向。
+<br><br>
+<strong>Primary Universe：对比宇宙</strong>
+</div>
+<div class="example"><span class="tts-text">漢字どころか、ひらがなも書けない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📉 一路跌破预期。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ばかりか？</th></tr>
+<tr><td>どころか ↓ 反向升级 · 越来越差 <br><br> ばかりか ↓ 正向升级 · 越来越多（详见 10 递进宇宙）</td></tr>
+</table>
+<div class="warning">
+<strong>Primary Universe：</strong> 对比宇宙
+<br>
+<strong>Secondary：</strong> 递进宇宙（程度变化）
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 对比宇宙总结</h3>
+<table class="compare">
+<tr><th>比较方式</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>对应比较</td><td>に対して</td><td>⚖️ 天平</td></tr>
+<tr><td>完全相反</td><td>に反して</td><td>↔ 掉头</td></tr>
+<tr><td>另一方面</td><td>一方で</td><td>⚖️ 左右两栏</td></tr>
+<tr><td>双面性</td><td>反面</td><td>🪙 硬币</td></tr>
+<tr><td>找不同</td><td>と違って</td><td>🔍 对比图</td></tr>
+<tr><td>替代关系</td><td>かわりに</td><td>🔄 交换</td></tr>
+<tr><td>跌破预期</td><td>どころか</td><td>📉 电梯向下</td></tr>
+</table>
+<div class="memory">
+<strong>对比宇宙终极口诀：</strong>
+<br><br>
+⚖️ 对应比较 → に対して　↔ 完全相反 → に反して　⚖️ 另一方面 → 一方で
+<br>
+🪙 双面性 → 反面　🔍 找不同 → と違って　🔄 替代 → かわりに　📉 跌破预期 → どころか
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：📅 顺序宇宙
+<br>↓
+<br>本章：⚖️ 对比宇宙
+<br>↓
+<br>下一章：进入 N2 思维世界
+</div>
+
+</section>
+
+<section id="part-n2" class="chapter">
+
+<h2 class="chapter-title">🚀 PART N2</h2>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>进入 N2 思维世界</h3>
+<div class="logic">
+如果说 N3 学的是："句子怎么说。"
+<br><br>
+那么 N2 开始学的是：<strong>"说话人为什么这样说。"</strong>
+</div>
+<table class="compare">
+<tr><th>等级</th><th>核心变化</th></tr>
+<tr><td>N3</td><td>动作、时间、条件</td></tr>
+<tr><td>N2</td><td>心理、态度、立场</td></tr>
+<tr><td>N1</td><td>作者观点、逻辑、修辞</td></tr>
+</table>
+<div class="memory">从这一章开始，不要再背中文意思。开始背：<strong>说话人的心理。</strong></div>
+</div>
+
+</section>
+
+<section id="chapter09" class="chapter">
+
+<h2 class="chapter-title">⚔️ Chapter 09 转折宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2</span>
+<h3>核心思维</h3>
+<div class="logic">
+中文只有："虽然……"
+<br><br>
+日语却会区分：是遗憾？意外？坚持？还是完全相反？
+</div>
+<table class="compare">
+<tr><th>心理变化</th><th>文法</th></tr>
+<tr><td>期待落空</td><td>ものの</td></tr>
+<tr><td>先否定后肯定</td><td>ながらも</td></tr>
+<tr><td>完全不受影响</td><td>にもかかわらず</td></tr>
+<tr><td>承认一下</td><td>とはいえ</td></tr>
+<tr><td>即便如此仍然</td><td>それでも</td></tr>
+<tr><td>明知如此却……</td><td>くせに</td></tr>
+<tr><td>与预期不一致</td><td>わりに</td></tr>
+<tr><td>两个事实长期并存</td><td>つつ（も）</td></tr>
+<tr><td>反转承接（连接词）</td><td>しかし・ところが</td></tr>
+</table>
+<div class="memory">一句话：所有转折，其实都是"心理落差。"</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>① ～ものの</h3>
+<div class="logic">核心：先承认事实。但是结果令人失望。重点：<strong>期待落空。</strong></div>
+<div class="example"><span class="tts-text">大学は卒業したものの、就職できなかった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>毕业。↓ 本来应该找到工作。↓ 结果没有。</p>
+<div class="memory">口诀：🎓 毕业了，却没有未来。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ながらも？</th></tr>
+<tr><td>ものの ↓ 前面值得期待，后面落空 <br><br> ながらも ↓ 前面不好，后面反而不错</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>② ～ながらも</h3>
+<div class="logic">核心：先承认不足。但是结果比预想更好。重点：<strong>先抑后扬。</strong></div>
+<div class="example"><span class="tts-text">若いながらも、しっかりしている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>年轻。↓ 按理经验不足。↓ 结果非常成熟。</p>
+<div class="memory">口诀：🌱 年轻，却很可靠。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～にもかかわらず</h3>
+<div class="logic">核心：明明如此，却完全没有受到影响。强调违反常识。</div>
+<div class="example"><span class="tts-text">雨にもかかわらず、試合は行われた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>下大雨。↓ 正常应该取消。↓ 结果照常举行。</p>
+<div class="memory">口诀：🌧 暴雨，比赛照踢。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～とはいえ</h3>
+<div class="logic">核心：先承认。再提醒。语气缓和。</div>
+<div class="example"><span class="tts-text">子供とはいえ、礼儀は必要だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>承认：他还是孩子。↓ 但是：还是应该有礼貌。</p>
+<div class="memory">口诀：🤝 我先同意一点。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～それでも</h3>
+<div class="logic">核心：即使知道困难，仍坚持。强调意志。</div>
+<div class="example"><span class="tts-text">失敗した。それでも、もう一度挑戦した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>失败。↓ 没有放弃。↓ 继续。</p>
+<div class="memory">口诀：🔥 跌倒了，继续跑。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～くせに</h3>
+<div class="logic">核心：说话人非常不满。带有责怪、轻视、讽刺。</div>
+<div class="example"><span class="tts-text">知らないくせに、偉そうに話す。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>根本不知道。↓ 还装懂。</p>
+<div class="memory">口诀：😒 明明不会，还装。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～わりに</h3>
+<div class="logic">核心：结果和一般印象不同。没有责怪。只是意外。</div>
+<div class="example"><span class="tts-text">この店は高いわりに、おいしくない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>价格高。↓ 应该很好吃。↓ 其实一般。</p>
+<div class="memory">口诀：🤔 和想的不一样。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦' ～にしては</h3>
+<div class="logic">核心：以某个身份/条件为标准来衡量，结果却不太相符——语气比わりに更强调"以……的标准来看，不太够格/不太像"。</div>
+<div class="example"><span class="tts-text">彼は初心者にしては上手だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>按"初学者"这个标准来看。↓ 应该很生疏。↓ 结果却很厉害。</p>
+<div class="memory">口诀：🎭 不像这个身份该有的样子。</div>
+<table class="compare">
+<tr><th>わりに vs にしては</th><th>区别</th></tr>
+<tr><td>わりに</td><td>拿"一般印象/常理"做参照，语气偏中性意外</td></tr>
+<tr><td>にしては</td><td>拿一个具体"身份/条件"做参照，语气更强调不相符、有反差评价</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑧ ～つつ（も）</h3>
+<div class="logic">核心：两种相反状态，长期并存。强调内心矛盾。</div>
+<div class="example"><span class="tts-text">悪いと知りつつ、黙っていた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>知道不好。↓ 却一直沉默。</p>
+<div class="memory">口诀：⚖️ 心里知道，身体没动。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑨ しかし／ところが／一方</h3>
+<div class="logic">核心：阅读连接词层面的转折信号——看到它们，说明作者观点即将反转。</div>
+<div class="example"><span class="tts-text">天気予報は晴れだった。ところが、実際は大雨だった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🔀 看到这个词，准备转弯。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>🧬 辨析　ものの × ながら × くせに</h3>
+<div class="logic">
+三者都能连接"看似矛盾"的两件事，但说话人的<strong>情绪温度</strong>完全不同——从中性遗憾，到中性反差，再到带刺的责怪。
+</div>
+<table class="compare">
+<tr><th>词</th><th>情绪温度</th><th>方向</th><th>例句</th></tr>
+<tr><td>ものの</td><td>😐 中性偏遗憾</td><td>期待→落空</td><td>卒業したものの、就職できなかった。</td></tr>
+<tr><td>ながら（も）</td><td>🙂 中性偏惊喜</td><td>不足→反而更好</td><td>若いながらも、しっかりしている。</td></tr>
+<tr><td>くせに</td><td>😠 带情绪责怪</td><td>不该→却做了</td><td>知らないくせに、偉そうに話す。</td></tr>
+</table>
+<div class="memory">
+🌡️
+一句话锁定：
+<br><br>
+😐 单纯没达到预期 → ものの　🙂 反差是惊喜 → ながらも　😠 反差带着不满 → くせに
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 转折宇宙总结</h3>
+<table class="compare">
+<tr><th>心理</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>期待落空</td><td>ものの</td><td>🎓 毕业却失业</td></tr>
+<tr><td>先抑后扬</td><td>ながらも</td><td>🌱 年轻却成熟</td></tr>
+<tr><td>违反常识</td><td>にもかかわらず</td><td>🌧 暴雨照比赛</td></tr>
+<tr><td>承认再提醒</td><td>とはいえ</td><td>🤝 我先认同你</td></tr>
+<tr><td>坚持到底</td><td>それでも</td><td>🔥 跌倒继续跑</td></tr>
+<tr><td>责怪不满</td><td>くせに</td><td>😒 明明不会还装</td></tr>
+<tr><td>结果反差</td><td>わりに</td><td>🤔 贵却不好吃</td></tr>
+<tr><td>内心矛盾</td><td>つつ（も）</td><td>⚖️ 知道却不改</td></tr>
+</table>
+<div class="memory">
+<strong>转折宇宙终极口诀：</strong>
+<br><br>
+📉 好→坏 → ものの　📈 坏→好 → ながらも　🌧 常识失效 → にもかかわらず　🤝 先认同 → とはいえ
+<br>
+🔥 继续坚持 → それでも　😒 带情绪责怪 → くせに　🤔 出乎预料 → わりに　⚖️ 心理矛盾 → つつ（も）
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：进入 N2 思维世界
+<br>↓
+<br>本章：⚔️ 转折宇宙
+<br>↓
+<br>下一章：📈 递进宇宙
+</div>
+
+</section>
+
+<section id="chapter10" class="chapter">
+
+<h2 class="chapter-title">📈 Chapter 10 递进宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1 阅读高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+对比宇宙回答：<strong>A 和 B 哪里不同？</strong>
+递进宇宙回答：<strong>程度是不是越来越强？</strong>
+所有递进语法，都在不断升级信息。作者想告诉你：<strong>真正重要的，永远在后面。</strong>
+</div>
+<table class="compare">
+<tr><th>递进方式</th><th>文法</th></tr>
+<tr><td>不仅……而且……</td><td>～ばかりか</td></tr>
+<tr><td>不仅……还……</td><td>～のみならず</td></tr>
+<tr><td>更不用说</td><td>～まして</td></tr>
+<tr><td>而且</td><td>さらに</td></tr>
+<tr><td>更何况</td><td>しかも</td></tr>
+<tr><td>不仅如此</td><td>そのうえ</td></tr>
+</table>
+<div class="memory">这一章就是：📈 电梯不断上升。每一句，都比上一句更强。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～ばかりか</h3>
+<div class="logic">核心：A 已经很厉害。没想到：B 更进一步。</div>
+<div class="example"><span class="tts-text">日本語ばかりか、英語も話せる。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📈 一级一级升级。</div>
+<table class="compare">
+<tr><th>为什么不是 ～どころか？</th></tr>
+<tr><td>ばかりか ↓ 正向递进 · 越来越多 <br><br> どころか ↓ 反向递进 · 越来越差（详见 08 对比宇宙）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～のみならず</h3>
+<div class="logic">核心：不仅如此。还有更多。书面语比「ばかりか」更正式。</div>
+<div class="example"><span class="tts-text">国内のみならず、海外でも有名だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🏛 新闻报道。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～まして</h3>
+<div class="logic">核心：A 都已经如此。更不用说 B。程度继续升级。</div>
+<div class="example"><span class="tts-text">子供でも難しい。まして、大人には無理だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🚀 火箭继续升空。</div>
+<table class="compare">
+<tr><th>为什么不是 ～はおろか？</th></tr>
+<tr><td>まして ↓ 顺势递进 <br><br> はおろか ↓ 极限否定（详见 14 极限宇宙）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>④ さらに</h3>
+<div class="logic">核心：在原来的基础上，继续增加。最典型的阅读连接词。</div>
+<div class="example"><span class="tts-text">さらに、問題が発生した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⬆️ 再往上一层。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤ しかも</h3>
+<div class="logic">核心：不仅增加，还带有"令人意外"。</div>
+<div class="example"><span class="tts-text">彼は若い。しかも、経験も豊富だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎁 还有惊喜。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ そのうえ</h3>
+<div class="logic">核心：前一句成立。后一句继续累加。语气自然。</div>
+<div class="example"><span class="tts-text">安い。そのうえ、品質もいい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🧱 再盖一层楼。</div>
+</div>
+
+<div class="card">
+<h3>📚 JLPT 阅读提醒</h3>
+<div class="logic">
+本章很多语法，同时也是阅读连接词。但是：<strong>Primary Universe 仍然属于：递进宇宙。</strong>
+阅读时，看到这些词，作者通常还没有结束。真正的重要信息，往往在后一句。
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 递进宇宙总结</h3>
+<table class="compare">
+<tr><th>升级方式</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>越来越多</td><td>ばかりか</td><td>📈 电梯上升</td></tr>
+<tr><td>正式递进</td><td>のみならず</td><td>🏛 新闻报道</td></tr>
+<tr><td>更不用说</td><td>まして</td><td>🚀 火箭升空</td></tr>
+<tr><td>继续增加</td><td>さらに</td><td>⬆️ 加一层</td></tr>
+<tr><td>还有惊喜</td><td>しかも</td><td>🎁 开礼物</td></tr>
+<tr><td>继续累加</td><td>そのうえ</td><td>🧱 继续盖楼</td></tr>
+</table>
+<div class="memory">
+<strong>递进宇宙终极口诀：</strong>
+<br><br>
+📈 不仅如此 → ばかりか　🏛 正式递进 → のみならず　🚀 更不用说 → まして
+<br>
+⬆️ 继续增加 → さらに　🎁 而且还有 → しかも　🧱 再加一层 → そのうえ
+<br><br>
+<strong>补充：</strong>
+📉 <strong>どころか</strong> 属于<strong>对比宇宙（Primary）</strong>，这里只作为关联理解，不重复展开。
+<br>
+🌑 <strong>はおろか</strong> 属于<strong>极限宇宙（Primary）</strong>，详见 Chapter14。
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：⚔️ 转折宇宙
+<br>↓
+<br>本章：📈 递进宇宙
+<br>↓
+<br>下一章：🌍 范围宇宙
+</div>
+
+</section>
+
+<section id="chapter11" class="chapter">
+
+<h2 class="chapter-title">🌍 Chapter 11 范围宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1 阅读高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+限定宇宙回答：<strong>范围缩到哪里？</strong>
+范围宇宙回答：<strong>范围扩大到哪里？</strong>
+所有范围语法，都在描述：<strong>覆盖范围、中心对象、持续区间。</strong>
+不是限制。而是：不断向外扩散。
+</div>
+<table class="compare">
+<tr><th>范围方式</th><th>文法</th></tr>
+<tr><td>以……为中心</td><td>～を中心に</td></tr>
+<tr><td>以……为首</td><td>～をはじめ</td></tr>
+<tr><td>以……为首（正式）</td><td>～をはじめとして</td></tr>
+<tr><td>贯穿整个期间</td><td>～にわたって</td></tr>
+<tr><td>从……到……</td><td>～にかけて</td></tr>
+<tr><td>通过……媒介</td><td>～を通じて</td></tr>
+<tr><td>通过……过程</td><td>～を通して</td></tr>
+</table>
+<div class="memory">这一章就是：🌍 地图不断放大。影响范围越来越广。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>① ～を中心に</h3>
+<div class="logic">核心：以某一点作为中心。向四周扩散。</div>
+<div class="example"><span class="tts-text">東京を中心に、店舗を展開している。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎯 圆心。</div>
+<table class="compare">
+<tr><th>为什么不是 ～をはじめ？</th></tr>
+<tr><td>を中心に ↓ 强调中心 <br><br> をはじめ ↓ 强调代表</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>② ～をはじめ</h3>
+<div class="logic">核心：举出最有代表性的一个。后面还有很多。</div>
+<div class="example"><span class="tts-text">日本をはじめ、アジア各国。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🥇 第一位代表。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>③ ～をはじめとして</h3>
+<div class="logic">核心：与「をはじめ」相同。更加正式。新闻、论文常见。</div>
+<div class="example"><span class="tts-text">世界各国をはじめとして、支援が集まった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🏛 新闻版本。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～にわたって</h3>
+<div class="logic">核心：覆盖整个范围。时间、空间、数量，全部包含。</div>
+<div class="example"><span class="tts-text">三年間にわたって、研究した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🌉 一座长桥。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～にかけて</h3>
+<div class="logic">核心：从A延伸到B。重点：区间。</div>
+<div class="example"><span class="tts-text">九州から沖縄にかけて、雨が降る。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📍 地图连线。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑥ ～を通じて</h3>
+<div class="logic">核心：通过某个媒介。人与人连接。</div>
+<div class="example"><span class="tts-text">インターネットを通じて、知り合った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📡 信号塔。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～を通して</h3>
+<div class="logic">核心：通过整个过程。经历之后，获得变化。</div>
+<div class="example"><span class="tts-text">留学を通して、成長した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🎬 整部电影。</div>
+</div>
+
+<div class="card">
+<h3>📚 JLPT 阅读提醒</h3>
+<div class="logic">
+阅读中，本章最大的陷阱就是：<strong>「范围」与「限定」千万不要混。</strong>
+范围：越来越大。例如：全国、亚洲、三年间。
+限定：越来越小。例如：只有、仅限、据我所知。
+这是两个完全相反的思维方向。
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 范围宇宙总结</h3>
+<table class="compare">
+<tr><th>扩展方式</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>中心扩散</td><td>を中心に</td><td>🎯 圆心</td></tr>
+<tr><td>代表人物</td><td>をはじめ</td><td>🥇 第一名</td></tr>
+<tr><td>正式代表</td><td>をはじめとして</td><td>🏛 新闻</td></tr>
+<tr><td>全部覆盖</td><td>にわたって</td><td>🌉 长桥</td></tr>
+<tr><td>区间延伸</td><td>にかけて</td><td>📍 地图连线</td></tr>
+<tr><td>通过媒介</td><td>を通じて</td><td>📡 信号塔</td></tr>
+<tr><td>通过经历</td><td>を通して</td><td>🎬 整部电影</td></tr>
+</table>
+<div class="memory">
+<strong>范围宇宙终极口诀：</strong>
+<br><br>
+🎯 中心扩散 → を中心に　🥇 举代表 → をはじめ　🏛 正式代表 → をはじめとして
+<br>
+🌉 全部覆盖 → にわたって　📍 区间延伸 → にかけて　📡 借助媒介 → を通じて　🎬 经历全过程 → を通して
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：📈 递进宇宙
+<br>↓
+<br>本章：🌍 范围宇宙
+<br>↓
+<br>下一章：🎭 表象 × 本质宇宙
+</div>
+
+</section>
+
+<section id="chapter12" class="chapter">
+
+<h2 class="chapter-title">🎭 Chapter 12 表象 × 本质宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1</span>
+<h3>核心思维</h3>
+<div class="logic">
+N1 阅读最喜欢的一种套路：<strong>作者先告诉你一个"看起来"，然后一步一步推翻它。</strong>
+真正考的是："表面" 和 "事实"。
+</div>
+<table class="compare">
+<tr><th>作者心理</th><th>文法</th></tr>
+<tr><td>只是表面</td><td>ように見える</td></tr>
+<tr><td>并非全部如此</td><td>わけではない</td></tr>
+<tr><td>未必如此</td><td>とは限らない</td></tr>
+<tr><td>并不是所谓……</td><td>というものではない</td></tr>
+<tr><td>本来不是这样</td><td>ものではない</td></tr>
+<tr><td>并非一定</td><td>必ずしも～ない</td></tr>
+<tr><td>引用消息来源</td><td>によると</td></tr>
+</table>
+<div class="memory">这一章真正只有一句话：👀 不要相信第一眼。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>① ～ように見える</h3>
+<div class="logic">核心：只是看起来。不代表事实。</div>
+<div class="example"><span class="tts-text">彼は元気なように見える。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>只是外表。↓ 真实情况未知。</p>
+<div class="memory">口诀：👀 第一眼。</div>
+<table class="compare">
+<tr><th>为什么不是 ～そうだ？</th></tr>
+<tr><td>そうだ ↓ 瞬间感觉 <br><br> ように見える ↓ 观察后的判断</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～わけではない</h3>
+<div class="logic">核心：不是全部否定。只是：<strong>没有那么绝对。</strong></div>
+<div class="example"><span class="tts-text">高い物が全部いいわけではない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是说：高价不好。↓ 而是：高价≠一定好。</p>
+<div class="memory">口诀：⚪ 留一点空间。</div>
+<table class="compare">
+<tr><th>为什么不是 ～とは限らない？</th></tr>
+<tr><td>わけではない ↓ 作者主动否定 <br><br> とは限らない ↓ 强调存在例外</td></tr>
+</table>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+わけ ↓ 理由 · 道理
+<br><br>
+＋ ではない ↓ 否定整个理由
+<br><br>
+────────────────
+<strong>不是这个道理。↓ 并不是……</strong>
+</div>
+</div>
+<div class="link-ref">📌 わけ家族的另外三名成员（わけだ、わけがない、ないわけにはいかない）统一收录在 13 必然宇宙的「わけ家族」词族地图中。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～とは限らない</h3>
+<div class="logic">核心：不是每次都这样。一定存在例外。</div>
+<div class="example"><span class="tts-text">努力すれば成功するとは限らない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>努力。↓ 大多数成功。↓ 但不是百分百。</p>
+<div class="memory">口诀：🎲 总会有例外。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>④ ～というものではない</h3>
+<div class="logic">核心：不能简单认为：A 就等于 B。作者在纠正一种观点。</div>
+<div class="example"><span class="tts-text">お金があれば幸せというものではない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>很多人这样想。↓ 作者纠正。</p>
+<div class="memory">口诀：🧠 别想得太简单。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑤ ～ものではない</h3>
+<div class="logic">核心：本来就不应该。表示：道德、常识、经验。</div>
+<div class="example"><span class="tts-text">人をだますものではない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>骗人。↓ 做人本来就不应该。</p>
+<div class="memory">口诀：📜 做人的原则。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑥ 必ずしも～ない</h3>
+<div class="logic">核心：不一定。并非总是。强调存在例外。</div>
+<div class="example"><span class="tts-text">日本人が必ずしも寿司が好きとは限らない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>很多人喜欢。↓ 但不是全部。</p>
+<div class="memory">口诀：📊 不是100%。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑦ ～によると</h3>
+<div class="logic">核心：引用消息来源。新闻、调查、研究——表明这是"别人说的"，不是作者自己的判断。</div>
+<div class="example"><span class="tts-text">新聞によると、来週値上げするそうだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：📰 据报道。</div>
+<table class="compare">
+<tr><th>为什么不是 ～そうだ？</th></tr>
+<tr><td>によると ↓ 来源 <br><br> そうだ ↓ 传闻</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🎯 表象 × 本质宇宙总结</h3>
+<table class="compare">
+<tr><th>作者动作</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>第一眼</td><td>ように見える</td><td>👀 看起来</td></tr>
+<tr><td>没有那么绝对</td><td>わけではない</td><td>⚪ 留一点空间</td></tr>
+<tr><td>一定有例外</td><td>とは限らない</td><td>🎲 总会翻车</td></tr>
+<tr><td>纠正观点</td><td>というものではない</td><td>🧠 思维纠偏</td></tr>
+<tr><td>做人原则</td><td>ものではない</td><td>📜 人生经验</td></tr>
+<tr><td>并非全部</td><td>必ずしも～ない</td><td>📊 不是100%</td></tr>
+<tr><td>引用来源</td><td>によると</td><td>📰 据报道</td></tr>
+</table>
+<div class="memory">
+<strong>表象宇宙终极口诀：</strong>
+<br><br>
+👀 看起来 → ように見える　⚪ 没那么绝对 → わけではない　🎲 一定有例外 → とは限らない
+<br>
+🧠 别想太简单 → というものではない　📜 本来就不该 → ものではない
+<br>
+📊 并非全部 → 必ずしも～ない　📰 据报道 → によると
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🌍 范围宇宙
+<br>↓
+<br>本章：🎭 表象 × 本质宇宙
+<br>↓
+<br>下一章：🧩 必然宇宙
+</div>
+
+</section>
+
+<section id="chapter13" class="chapter">
+
+<h2 class="chapter-title">🧩 Chapter 13 必然宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+这一章所有文法都有同一个灵魂：<strong>事情本来就是这样。</strong>
+不是推测。不是评价。而是：唯一合理解释——以及，由谁来推着你走到这个唯一解释。
+</div>
+<table class="compare">
+<tr><th>作者/现实心理</th><th>文法</th></tr>
+<tr><td>除此之外没有解释</td><td>～にほかならない</td></tr>
+<tr><td>正因为……才……</td><td>～ならでは</td></tr>
+<tr><td>自然结果</td><td>～わけだ</td></tr>
+<tr><td>终于明白</td><td>～というわけだ</td></tr>
+<tr><td>并不是……</td><td>～わけではない</td></tr>
+<tr><td>绝无可能</td><td>～わけがない</td></tr>
+<tr><td>规则要求</td><td>なければならない</td></tr>
+<tr><td>现实要求</td><td>ないといけない</td></tr>
+<tr><td>道德/人情要求</td><td>ないわけにはいかない</td></tr>
+<tr><td>没有必要</td><td>なくてもいい</td></tr>
+<tr><td>绝不能</td><td>てはいけない</td></tr>
+<tr><td>最好不要</td><td>ないほうがいい</td></tr>
+<tr><td>也不是没有</td><td>ないことはない</td></tr>
+</table>
+<div class="memory">一句话：🧩 所有线索，最终只能拼成这一块——不管是逻辑上的必然，还是现实中的被逼。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～にほかならない</h3>
+<div class="logic">核心：除了这个，没有第二种解释。作者语气非常肯定。</div>
+<div class="example"><span class="tts-text">成功は努力の結果にほかならない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>成功。↓ 不是运气。↓ 就是努力。</p>
+<div class="memory">口诀：🧩 拼图只有这一块。</div>
+<table class="compare">
+<tr><th>为什么不是 ～というものだ？</th></tr>
+<tr><td>にほかならない ↓ 唯一解释 <br><br> というものだ ↓ 价值评价</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～ならでは</h3>
+<div class="logic">核心：只有它才有。别人没有。强调独特性。</div>
+<div class="example"><span class="tts-text">京都ならではの景色。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>别的城市没有。↓ 京都限定。</p>
+<div class="memory">口诀：⭐ 限定款。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～わけだ</h3>
+<div class="logic">核心：原来如此。怪不得。根据前面的信息，自然得出结果。</div>
+<div class="example"><span class="tts-text">今日は祝日だ。店が閉まっているわけだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>今天放假。↓ 难怪关门。</p>
+<div class="memory">口诀：💡 原来如此。</div>
+<table class="compare">
+<tr><th>为什么不是 ～はずだ？</th></tr>
+<tr><td>わけだ ↓ 已经知道答案 <br><br> はずだ ↓ 还在推测</td></tr>
+</table>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>わけ</strong> ↓ 理由 · 道理
+<br><br>
+＋
+<br><br>
+<strong>だ</strong> ↓ 判断
+<br><br>
+────────────────
+<strong>这就是理由所在。</strong>
+<br><br>
+↓ 原来如此。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～というわけだ</h3>
+<div class="logic">核心：综合全部内容。最后总结。</div>
+<div class="example"><span class="tts-text">つまり、努力が必要だというわけだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>前面讲很多。↓ 最后一句总结。</p>
+<div class="memory">口诀：📦 最终结论。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑤ ～わけではない</h3>
+<div class="logic">核心：不是全盘否定，只是"没有那么绝对"。完整讲解详见 12 表象×本质宇宙，此处作为わけ家族一员收录。</div>
+<div class="example"><span class="tts-text">嫌いなわけではない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：⚪ 留一点空间。（详见 12 表象×本质宇宙）</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑥ ～わけがない</h3>
+<div class="logic">核心：不存在这种可能性。语气比「わけではない」更强、更绝对。</div>
+<div class="example"><span class="tts-text">彼が犯人のわけがない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>凭常理判断，↓ 这种事根本不可能。</p>
+<div class="memory">口诀：🚫 绝无可能。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+わけ ↓ 道理 · 理由
+<br><br>
+＋ がない ↓ 不存在
+<br><br>
+────────────────
+<strong>不存在这种道理。</strong>
+<br><br>
+↓ 绝不可能。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑦ ～なければならない</h3>
+<div class="logic">核心：规则、法律、制度规定。"必须。"</div>
+<div class="example"><span class="tts-text">シートベルトを締めなければならない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是自己想。而是：法律规定。</p>
+<div class="memory">口诀：⚖️ 法律在后面推你。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ないといけない？</th></tr>
+<tr><td>なければならない ↓ 正式 · 规定 · 制度 <br><br> ないといけない ↓ 生活现实</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑧ ～ないといけない</h3>
+<div class="logic">核心：现实情况逼着你。不是法律。而是：不这样就不行。</div>
+<div class="example"><span class="tts-text">明日は早く起きないといけない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>没人规定。↓ 但是明天有事。↓ 不得不起。</p>
+<div class="memory">口诀：⏰ 闹钟在催你。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑧' ～べきだ</h3>
+<div class="logic">核心：既不是法律逼你，也不是现实逼你，而是根据道理、常识、责任判断"应该如此"——一种价值判断上的义务。</div>
+<div class="example"><span class="tts-text">約束は守るべきだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>没有人拿枪逼你。↓ 但从做人的道理上讲，应该遵守。</p>
+<div class="memory">口诀：⚖️ 良心天平。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+べし（古语）↓ 应当 · 理应
+<br><br>
+＋ だ ↓ 判断
+<br><br>
+────────────────
+<strong>从道理上讲，应该如此。</strong>
+<br><br>
+↓ 应该……　理应……
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 なければならない？</th></tr>
+<tr><td>べきだ ↓ 价值判断 · 道理上应该 <br><br> なければならない ↓ 外部规定 · 制度强制</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑧'' ～べきではない</h3>
+<div class="logic">核心：从道理上讲，不应该这样做——べきだ 的否定形。</div>
+<div class="example"><span class="tts-text">子供の前で喧嘩するべきではない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是不能（不可能），而是不应该（不合适）。</p>
+<div class="memory">口诀：🙅 良心说不。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑧''' ～べきだった／べきではなかった</h3>
+<div class="logic">核心：过去应该做而没做（べきだった），或过去不该做却做了（べきではなかった）——都带有强烈的事后反思、后悔语气。</div>
+<div class="example"><span class="tts-text">もっと早く病院に行くべきだった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>当时没去。↓ 现在后悔：早该去的。</p>
+<div class="memory">口诀：😔 事后诸葛亮。</div>
+<table class="compare">
+<tr><th>两个方向</th><th>含义</th></tr>
+<tr><td>べきだった</td><td>该做没做，后悔"没做"</td></tr>
+<tr><td>べきではなかった</td><td>不该做却做了，后悔"做了"</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2 ★★★★★</span>
+<h3>⑨ ～ないわけにはいかない</h3>
+<div class="logic">核心：不是制度逼你，也不是现实逼你。而是：<strong>做人不能不这样。</strong></div>
+<div class="example"><span class="tts-text">恩師に会ったので、挨拶しないわけにはいかない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>可以不打招呼吗？↓ 理论上可以。↓ 但是做人不可以。</p>
+<div class="memory">
+口诀：🤝 人情在推你。
+<br><br>
+拆解记忆：ない ↓ 不能不　わけ ↓ 道理 · 理由　にはいかない ↓ 做不到 · 不能这样做
+<br><br>
+最终：<strong>没有理由不去做。</strong>
+</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+<strong>ない</strong> ↓ 否定
+<br><br>
+＋
+<br><br>
+<strong>わけ</strong> ↓ 理由 · 道理
+<br><br>
+＋
+<br><br>
+<strong>には</strong> ↓ 作为……就……
+<br><br>
+＋
+<br><br>
+<strong>いかない</strong> ↓ 行不通 · 不能成立
+<br><br>
+────────────────
+<strong>不存在"可以不做"的理由。</strong>
+<br><br>
+↓ <strong>不得不……</strong>
+</div>
+</div>
+
+<table class="compare">
+<tr><th>为什么不是 ～ないといけない？</th></tr>
+<tr><td>ないといけない ↓ 现实要求 <br><br> ないわけにはいかない ↓ 人情 · 责任 · 道德 · 社会常识</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑩ ～なくてもいい</h3>
+<div class="logic">核心：没有必要。可以不做。</div>
+<div class="example"><span class="tts-text">今日は来なくてもいいです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是禁止。只是：不用来也可以。</p>
+<div class="memory">口诀：😊 放你一天假。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑪ ～てはいけない</h3>
+<div class="logic">核心：禁止。绝对不能。</div>
+<div class="example"><span class="tts-text">ここで写真を撮ってはいけません。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是建议。而是：禁止。</p>
+<div class="memory">口诀：🚫 红灯。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑫ ～ないほうがいい</h3>
+<div class="logic">核心：建议不要。不是命令。</div>
+<div class="example"><span class="tts-text">今日は無理しないほうがいい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>医生建议。朋友建议。不是规定。</p>
+<div class="memory">口诀：👨‍⚕️ 医生提醒。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑬ ～ないことはない</h3>
+<div class="logic">核心：双重否定，"也不是没有，还是有一点"——语气比直接肯定更委婉、留有余地。</div>
+<div class="example"><span class="tts-text">食べられないことはない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是很想吃。↓ 但勉强还是能吃的。</p>
+<div class="memory">口诀：🔓 留一条缝。</div>
+
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+ない ↓ 否定
+<br><br>
+＋ こと ↓ 事情 · 情况
+<br><br>
+＋ は ↓ 强调
+<br><br>
+＋ ない ↓ 再次否定
+<br><br>
+────────────────
+双重否定
+<br><br>
+↓ <strong>也不是没有。还是有一点。</strong>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 必然宇宙总结</h3>
+<table class="compare">
+<tr><th>作者想表达 / 是谁在逼你</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>唯一解释</td><td>にほかならない</td><td>🧩 拼图完成</td></tr>
+<tr><td>独一无二</td><td>ならでは</td><td>⭐ 限定商品</td></tr>
+<tr><td>原来如此</td><td>わけだ</td><td>💡 灯泡亮了</td></tr>
+<tr><td>最终总结</td><td>というわけだ</td><td>📦 全文收尾</td></tr>
+<tr><td>法律制度</td><td>なければならない</td><td>⚖️ 法官敲法槌</td></tr>
+<tr><td>现实生活</td><td>ないといけない</td><td>⏰ 闹钟响了</td></tr>
+<tr><td>人情道义</td><td>ないわけにはいかない</td><td>🤝 遇见恩师必须问好</td></tr>
+<tr><td>可以不做</td><td>なくてもいい</td><td>😊 今天放假</td></tr>
+<tr><td>禁止</td><td>てはいけない</td><td>🚫 红灯禁止通行</td></tr>
+<tr><td>最好不要</td><td>ないほうがいい</td><td>👨‍⚕️ 医生建议</td></tr>
+<tr><td>留有余地</td><td>ないことはない</td><td>🔓 留一条缝</td></tr>
+<tr><td>道理应该</td><td>べきだ</td><td>⚖️ 良心天平</td></tr>
+<tr><td>事后反思</td><td>べきだった</td><td>😔 早该做的</td></tr>
+</table>
+<div class="memory">
+<strong>必然宇宙终极口诀：</strong>
+<br><br>
+🧩 就是它 → にほかならない　⭐ 只有它 → ならでは　💡 原来如此 → わけだ　📦 所以说 → というわけだ
+<br>
+⚖️ 法律逼 → なければならない　⏰ 现实逼 → ないといけない　🤝 良心逼 → ないわけにはいかない
+<br>
+😊 不用做 → なくてもいい　🚫 绝对禁止 → てはいけない　👨‍⚕️ 最好别 → ないほうがいい
+<br>
+🔓 留有余地 → ないことはない　⚖️ 道理应该 → べきだ　😔 早该如此 → べきだった
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　わけ家族</h3>
+<pre>
+                 わけ
+             （理由、道理）
+                     │
+────────────────────────────
+わけだ
+↓
+原来如此
+────────────────────────────
+わけではない
+↓
+并不是……
+────────────────────────────
+わけがない
+↓
+绝无可能
+────────────────────────────
+ないわけにはいかない
+↓
+不得不……
+────────────────────────────
+というわけだ
+↓
+所以……
+</pre>
+<div class="memory">
+🌳
+看到「わけ」，不要背五个语法。只记住一个核心：
+<strong>"理由"</strong>
+其它意思，都是围绕"理由"变化出来的。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>わけ</td><td>= 理由（Reason）。不是"意思"，而是事情背后的那个道理。</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　べき家族</h3>
+<pre>
+                べき
+          （应然、理应如此）
+                 │
+────────────────────────────
+べきだ
+↓
+应该……（道理上）
+────────────────────────────
+べきではない
+↓
+不应该……
+────────────────────────────
+べきだった
+↓
+当时该做没做（后悔）
+────────────────────────────
+べきではなかった
+↓
+当时不该做却做了（后悔）
+</pre>
+<div class="memory">
+🌳
+「べき」不是"必须"。
+真正核心是：
+<strong>应然——从道理、常识、责任出发，判断"理应如此"。</strong>
+它不靠外力强制（那是 なければならない 的工作），而靠一把内心的良心天平。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>べき</td><td>= 应然（Ought-to）。不是被逼的，而是说话人自己认定"道理上就该这样"。</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 终极辨析　はず × べき × わけ</h3>
+<div class="logic">
+这三个词是全书中最容易被混为一谈的三兄弟——都能翻成"应该"，但各自守着完全不同的领地。
+</div>
+<table class="compare">
+<tr><th>词根</th><th>本质</th><th>回答的问题</th><th>例句</th></tr>
+<tr><td>はず</td><td>应有状态（推断）</td><td>按已知事实，事情客观上"应该是"什么样？</td><td>もう着くはずだ。（按时间算，应该到了）</td></tr>
+<tr><td>べき</td><td>应然（价值判断）</td><td>从道理上，人"应该做"什么？</td><td>もっと早く行くべきだった。（道理上早该去）</td></tr>
+<tr><td>わけ</td><td>理由（因果解释）</td><td>为什么会变成这样？理由是什么？</td><td>だから遅れたわけだ。（原来这就是理由）</td></tr>
+</table>
+<div class="memory">
+🧭
+一句话锁定：
+<br><br>
+🔮 猜"是什么" → はず　⚖️ 判断"该做什么" → べき　💡 解释"为什么" → わけ
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🎭 表象 × 本质宇宙
+<br>↓
+<br>本章：🧩 必然宇宙
+<br>↓
+<br>下一章：⚡ 极限宇宙
+</div>
+
+</section>
+
+<section id="chapter14" class="chapter">
+
+<h2 class="chapter-title">⚡ Chapter 14 极限宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1</span>
+<h3>核心思维</h3>
+<div class="logic">
+N1 很喜欢考：<strong>程度已经超过正常人的想象。</strong>
+不是"很多"。而是：<strong>已经突破极限。</strong>
+</div>
+<table class="compare">
+<tr><th>程度变化</th><th>文法</th></tr>
+<tr><td>甚至相反</td><td>どころか</td></tr>
+<tr><td>别说A，连B</td><td>はおろか</td></tr>
+<tr><td>一路扩大到</td><td>に至るまで</td></tr>
+<tr><td>最后竟然发展到</td><td>に至って</td></tr>
+<tr><td>已经达到……程度</td><td>ほどだ</td></tr>
+<tr><td>甚至可以说</td><td>と言ってもいい</td></tr>
+</table>
+<div class="memory">一句话：📈 超过正常范围。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>① ～どころか</h3>
+<div class="logic">核心：不是A。而是：完全相反。程度一下子翻过去。<strong>完整讲解详见 08 对比宇宙（Primary）。</strong></div>
+<div class="example"><span class="tts-text">休むどころか、毎日残業している。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：↩️ 完全反方向。（详见 08 对比宇宙）</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>② ～はおろか</h3>
+<div class="logic">核心：A 都做不到。更不用说 B。强调：<strong>突破下限。</strong></div>
+<div class="example"><span class="tts-text">漢字はおろか、ひらがなも書けない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>连简单的都不会。↓ 更别说难的。</p>
+<div class="memory">口诀：🪜 连楼梯第一层都没上去。</div>
+<table class="compare">
+<tr><th>为什么不是 ～どころか？</th></tr>
+<tr><td>はおろか ↓ 程度递进 · 突破下限 <br><br> どころか ↓ 完全相反</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>③ ～に至るまで</h3>
+<div class="logic">核心：一直扩大。一直覆盖。直到最后。</div>
+<div class="example"><span class="tts-text">服装から話し方に至るまで、全部変わった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是一部分。↓ 全部都变。</p>
+<div class="memory">口诀：🌏 全地图覆盖。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>④ ～に至って</h3>
+<div class="logic">核心：事情一步一步发展。最后终于到了……强调：最终阶段。</div>
+<div class="example"><span class="tts-text">事故は死亡者が出るに至った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>事情越来越严重。↓ 最终死人了。</p>
+<div class="memory">口诀：📈 剧情升级。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～ほどだ</h3>
+<div class="logic">核心：程度已经高到：可以用后句来形容。</div>
+<div class="example"><span class="tts-text">倒れるほど疲れた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是普通累。↓ 累到快倒下。</p>
+<div class="memory">口诀：💥 已经爆表。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑥ ～と言ってもいい</h3>
+<div class="logic">核心：已经可以大胆下定义。几乎等于。</div>
+<div class="example"><span class="tts-text">彼は天才と言ってもいい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是随便夸。↓ 已经达到那个等级。</p>
+<div class="memory">口诀：🏅 官方认证。</div>
+</div>
+
+<div class="card">
+<h3>🎯 极限宇宙总结</h3>
+<table class="compare">
+<tr><th>突破方式</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>完全相反</td><td>どころか</td><td>↩️ 剧情反转</td></tr>
+<tr><td>程度递进</td><td>はおろか</td><td>🪜 连第一关都没过</td></tr>
+<tr><td>全面覆盖</td><td>に至るまで</td><td>🌏 全地图点亮</td></tr>
+<tr><td>发展到最终</td><td>に至って</td><td>📈 Boss最终形态</td></tr>
+<tr><td>程度爆表</td><td>ほどだ</td><td>💥 能量槽爆满</td></tr>
+<tr><td>足以定义</td><td>と言ってもいい</td><td>🏅 官方认证</td></tr>
+</table>
+<div class="memory">
+<strong>极限宇宙终极口诀：</strong>
+<br><br>
+↩️ 完全相反 → どころか　🪜 更不用说 → はおろか　🌏 一直到 → に至るまで
+<br>
+📈 发展到 → に至って　💥 到……程度 → ほどだ　🏅 足以称为 → と言ってもいい
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🧩 必然宇宙
+<br>↓
+<br>本章：⚡ 极限宇宙
+<br>↓
+<br>下一章：❤️ 作者态度宇宙
+</div>
+
+</section>
+
+<section id="chapter15" class="chapter">
+
+<h2 class="chapter-title">❤️ Chapter 15 作者态度宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 阅读核心</span>
+<h3>核心思维</h3>
+<div class="logic">
+到了 N1，作者已经不满足于表达事实。真正想表达的是：<strong>自己怎么看这件事。</strong>
+因此很多 N1 文法，其实都是：作者情绪。
+</div>
+<table class="compare">
+<tr><th>作者心理</th><th>文法</th></tr>
+<tr><td>回忆过去</td><td>ものだ</td></tr>
+<tr><td>人生经验</td><td>ものだ</td></tr>
+<tr><td>强烈愿望</td><td>ものなら</td></tr>
+<tr><td>评价批评</td><td>というものだ</td></tr>
+<tr><td>感叹</td><td>ことだ</td></tr>
+<tr><td>惋惜</td><td>ものを</td></tr>
+<tr><td>从某个角度看</td><td>という観点から</td></tr>
+</table>
+<div class="memory">一句话：这一章，全部都是作者的内心独白。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～ものだ</h3>
+<div class="logic">这是 N1 最容易考的语法之一。它不是一个意思。而是四种思维。</div>
+<table class="compare">
+<tr><th>思维</th><th>例子</th></tr>
+<tr><td>回忆</td><td>昔はよく遊んだものだ。</td></tr>
+<tr><td>感叹</td><td>時間が経つのは早いものだ。</td></tr>
+<tr><td>人生经验</td><td>人は失敗するものだ。</td></tr>
+<tr><td>理所当然</td><td>親なら心配するものだ。</td></tr>
+</table>
+<div class="memory">口诀：📖 人生就是这样。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ことだ？</th></tr>
+<tr><td>ものだ ↓ 人生规律 · 经验 · 回忆 <br><br> ことだ ↓ 建议 · 感叹</td></tr>
+</table>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+もの ↓ 事情 · 事物
+<br><br>
+＋ だ ↓ 确认存在 · 判断
+<br><br>
+────────────────
+<strong>把事情拿出来，进行说明或评价。</strong>
+<br><br>
+↓ 常识、理由、感叹、过去经验。
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>② ～ものなら</h3>
+<div class="logic">核心：如果真的能够……但事实上：几乎不可能。</div>
+<div class="example"><span class="tts-text">帰れるものなら、今すぐ帰りたい。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>其实回不了。只是愿望。</p>
+<div class="memory">口诀：🌠 对流星许愿。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>③ ～というものだ</h3>
+<div class="logic">核心：作者下定义。评价一种行为。</div>
+<div class="example"><span class="tts-text">約束を破るのは、失礼というものだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是解释。而是：作者认为：这就是……</p>
+<div class="memory">口诀：⚖️ 作者判决。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～ことだ</h3>
+<div class="logic">核心：表示建议。或者：强烈感叹。</div>
+<div class="example"><span class="tts-text">疲れているなら、早く寝ることだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是命令。而是：建议。</p>
+<div class="memory">口诀：👨‍⚕️ 医生建议。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑤ ～ものを</h3>
+<div class="logic">核心：本来可以。结果没有。带有：遗憾、埋怨、后悔。</div>
+<div class="example"><span class="tts-text">聞けば教えたものを。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>如果问我。↓ 我就会告诉你。↓ 可是没问。</p>
+<div class="memory">口诀：😔 可惜啊……</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑥ ～という観点から</h3>
+<div class="logic">核心：从……这个角度来看——作者主动表明自己站在哪个立场发言，论文最常见。</div>
+<div class="example"><span class="tts-text">教育という観点から、考える。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🔍 换一个镜头。</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　もの家族</h3>
+<pre>
+                もの
+          （事情、事物本质）
+                 │
+────────────────────────────
+ものだ（本章）
+↓
+人生经验 · 回忆 · 感叹
+────────────────────────────
+ものなら（本章）
+↓
+如果真能……（几乎不可能）
+────────────────────────────
+というものだ（本章）
+↓
+这就是……（作者评价）
+────────────────────────────
+ものを（本章）
+↓
+本可以……却……（遗憾）
+────────────────────────────
+ものではない（12 表象×本质宇宙）
+↓
+本来就不该……
+────────────────────────────
+というものではない（12 表象×本质宇宙）
+↓
+不能简单认为是……
+</pre>
+<div class="memory">
+🌳
+「もの」不是随口的"东西"。
+真正核心是：
+<strong>事物本质。</strong>
+说话人把一件事"拿出来"，或感叹、或评价、或申明常识——都是在指向这件事本身该有的样子。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>もの</td><td>= 事物本质（Essence）。不是具体的"东西"，而是一件事、一种行为背后"理应如此"的本质。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 作者态度宇宙总结</h3>
+<table class="compare">
+<tr><th>作者情绪</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>人生经验</td><td>ものだ</td><td>📖 老人讲故事</td></tr>
+<tr><td>遥不可及</td><td>ものなら</td><td>🌠 对流星许愿</td></tr>
+<tr><td>价值评价</td><td>というものだ</td><td>⚖️ 法官判决</td></tr>
+<tr><td>提出建议</td><td>ことだ</td><td>👨‍⚕️ 医生提醒</td></tr>
+<tr><td>后悔遗憾</td><td>ものを</td><td>😔 如果当初……</td></tr>
+<tr><td>表明立场</td><td>という観点から</td><td>🔍 换个镜头</td></tr>
+</table>
+<div class="memory">
+<strong>作者态度宇宙终极口诀：</strong>
+<br><br>
+📖 人生如此 → ものだ　🌠 如果可以 → ものなら　⚖️ 我认为 → というものだ
+<br>
+👨‍⚕️ 我建议 → ことだ　😔 真可惜 → ものを　🔍 从这个角度 → という観点から
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：⚡ 极限宇宙
+<br>↓
+<br>本章：❤️ 作者态度宇宙
+<br>↓
+<br>下一章：🔥 情绪失控宇宙
+</div>
+
+</section>
+
+<section id="chapter16" class="chapter">
+
+<h2 class="chapter-title">🔥 Chapter 16 情绪失控宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 核心</span>
+<h3>核心思维</h3>
+<div class="logic">
+这一章最大的特点：<strong>理智输了。</strong>
+不是"我决定这样做"。而是：感情、责任、现实，已经压过理智。
+</div>
+<table class="compare">
+<tr><th>是谁在控制我？</th><th>文法</th></tr>
+<tr><td>情绪控制我</td><td>ずにはいられない</td></tr>
+<tr><td>情绪越来越强</td><td>てたまらない</td></tr>
+<tr><td>心里一直放不下</td><td>てならない</td></tr>
+<tr><td>现实逼着我</td><td>ざるを得ない</td></tr>
+<tr><td>能力不足做不到</td><td>かねる</td></tr>
+<tr><td>可能发展成坏结果</td><td>かねない</td></tr>
+</table>
+<div class="memory">一句话：❤️ 已经不是我控制自己。而是事情控制了我。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～ずにはいられない</h3>
+<div class="logic">核心：控制不了。忍不住。不是故意。而是：情绪自己跑出来。</div>
+<div class="example"><span class="tts-text">彼の話を聞いて、泣かずにはいられなかった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是想哭。↓ 眼泪自己出来。</p>
+<div class="memory">口诀：😭 情绪溢出来。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ざるを得ない？</th></tr>
+<tr><td>ずにはいられない ↓ 情绪逼你 <br><br> ざるを得ない ↓ 现实逼你</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>② ～ないではいられない</h3>
+<div class="logic">核心：意思几乎等于：ずにはいられない。现代口语更常见。</div>
+<div class="example"><span class="tts-text">笑わないではいられない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>太好笑。↓ 完全忍不住。</p>
+<div class="memory">口诀：😂 嘴角压不住。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～てたまらない</h3>
+<div class="logic">核心：程度已经爆表。强调：身体感觉。心理感觉。</div>
+<div class="example"><span class="tts-text">眠くてたまらない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是困。↓ 困到爆炸。</p>
+<div class="memory">口诀：💥 能量条爆满。</div>
+<table class="compare">
+<tr><th>为什么不是 ～てならない？</th></tr>
+<tr><td>てたまらない ↓ 感觉非常强烈 <br><br> てならない ↓ 心里一直放不下</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～てならない</h3>
+<div class="logic">核心：某种情绪一直存在。挥之不去。</div>
+<div class="example"><span class="tts-text">家族のことが心配でならない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>一直担心。↓ 停不下来。</p>
+<div class="memory">口诀：💭 脑子循环播放。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑤ ～ざるを得ない</h3>
+<div class="logic">核心：现实逼着你。除了这样，没有别的办法。</div>
+<div class="example"><span class="tts-text">電車が止まったので、歩かざるを得なかった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>没人想走。↓ 现实只能走。</p>
+<div class="memory">口诀：🚪 所有出口都关了。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ないわけにはいかない？</th></tr>
+<tr><td>ざるを得ない ↓ 现实没办法 <br><br> ないわけにはいかない ↓ 做人不能不（详见 13 必然宇宙）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑥ ～かねる</h3>
+<div class="logic">核心：不是不愿意。而是：做不到。难以做到。</div>
+<div class="example"><span class="tts-text">その質問には答えかねます。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是拒绝。↓ 是真的无法回答。</p>
+<div class="memory">口诀：🙇 能力不足。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑦ ～かねない</h3>
+<div class="logic">核心：如果继续这样。很可能发生坏事。</div>
+<div class="example"><span class="tts-text">このままだと、事故になりかねない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>还没发生。↓ 但是危险。</p>
+<div class="memory">口诀：⚠️ 危险警报。</div>
+</div>
+
+<div class="card">
+<h3>🎯 情绪失控宇宙总结</h3>
+<table class="compare">
+<tr><th>控制来源</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>眼泪控制我</td><td>ずにはいられない</td><td>😭 忍不住哭</td></tr>
+<tr><td>嘴角控制我</td><td>ないではいられない</td><td>😂 忍不住笑</td></tr>
+<tr><td>身体爆表</td><td>てたまらない</td><td>💥 疼到爆</td></tr>
+<tr><td>内心循环</td><td>てならない</td><td>💭 一直担心</td></tr>
+<tr><td>现实控制我</td><td>ざるを得ない</td><td>🚪 无路可走</td></tr>
+<tr><td>能力不足</td><td>かねる</td><td>🙇 无法回答</td></tr>
+<tr><td>危险逼近</td><td>かねない</td><td>⚠️ 红色警报</td></tr>
+</table>
+<div class="memory">
+<strong>情绪失控宇宙终极口诀：</strong>
+<br><br>
+😭 忍不住 → ずにはいられない　😂 憋不住 → ないではいられない　💥 强烈感觉 → てたまらない
+<br>
+💭 一直惦记 → てならない　🚪 被现实逼 → ざるを得ない　🙇 做不到 → かねる　⚠️ 坏结果 → かねない
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：❤️ 作者态度宇宙
+<br>↓
+<br>本章：🔥 情绪失控宇宙
+<br>↓
+<br>下一章：⏳ 时间流宇宙
+</div>
+
+</section>
+
+<section id="chapter17" class="chapter">
+
+<h2 class="chapter-title">⏳ Chapter 17 时间流宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+所有教材都会把这些翻译成："一……就……"
+实际上，JLPT 真正考的是：<strong>两个动作之间隔了多久？</strong>
+</div>
+<table class="compare">
+<tr><th>时间距离</th><th>文法</th></tr>
+<tr><td>完全零间隔</td><td>が早いか</td></tr>
+<tr><td>几乎同时</td><td>や否や</td></tr>
+<tr><td>瞬间变化</td><td>かと思うと</td></tr>
+<tr><td>刚做完又发生</td><td>そばから</td></tr>
+<tr><td>顺便完成</td><td>がてら</td></tr>
+<tr><td>长期兼顾</td><td>かたわら</td></tr>
+<tr><td>顺手一起做</td><td>ついでに</td></tr>
+</table>
+<div class="memory">一句话：⏱️ 动作之间，到底隔了几秒？</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>① ～が早いか</h3>
+<div class="logic">核心：前一个动作结束的瞬间，后一个动作立刻发生。几乎没有时间差。书面语。</div>
+<div class="example"><span class="tts-text">ベルが鳴るが早いか、学生は教室を飛び出した。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>铃声刚响。↓ 马上冲出去。</p>
+<div class="memory">口诀：⚡ 零延迟。</div>
+<table class="compare">
+<tr><th>为什么不是 ～とたん？</th></tr>
+<tr><td>が早いか ↓ 客观描写 · 书面 <br><br> とたん ↓ 口语 · 强调意外</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>② ～や否や（やいなや）</h3>
+<div class="logic">核心：几乎同时发生。强调：动作连接非常快。</div>
+<div class="example"><span class="tts-text">席に着くや否や、仕事を始めた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>刚坐下。↓ 马上工作。</p>
+<div class="memory">口诀：🏃 连喘气都没有。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～かと思うと（かと思えば）</h3>
+<div class="logic">核心：不是快。而是：变化太突然。让人吃惊。</div>
+<div class="example"><span class="tts-text">泣いたかと思うと、もう笑っている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>刚哭。↓ 马上笑。</p>
+<div class="memory">口诀：🎭 情绪秒切换。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～そばから</h3>
+<div class="logic">核心：刚做完。马上又恢复原状。带有：抱怨、无奈。</div>
+<div class="example"><span class="tts-text">教えるそばから、忘れてしまう。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>刚教。↓ 马上忘。</p>
+<div class="memory">口诀：🪣 漏水的桶。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑤ ～がてら</h3>
+<div class="logic">核心：主动作只有一个。另一个只是顺便。</div>
+<div class="example"><span class="tts-text">散歩がてら、コンビニへ行った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>真正目的：散步。↓ 顺便买东西。</p>
+<div class="memory">口诀：🛒 顺路买一下。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑥ ～かたわら</h3>
+<div class="logic">核心：长期同时进行。一个是主业。一个是副业。</div>
+<div class="example"><span class="tts-text">教師のかたわら、小説を書いている。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>白天老师。↓ 长期写小说。</p>
+<div class="memory">口诀：⚖️ 双重人生。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑦ ～ついでに</h3>
+<div class="logic">核心：既然已经去了。顺便做。没有长期关系。</div>
+<div class="example"><span class="tts-text">買い物のついでに、銀行へ寄った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>真正目的：买东西。↓ 顺便去银行。</p>
+<div class="memory">口诀：📦 顺手一下。</div>
+</div>
+
+<div class="card">
+<h3>🎯 时间流宇宙总结</h3>
+<table class="compare">
+<tr><th>动作关系</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>零延迟</td><td>が早いか</td><td>⚡ 子弹发射</td></tr>
+<tr><td>几乎同时</td><td>や否や</td><td>🏃 冲出起跑线</td></tr>
+<tr><td>突然变化</td><td>かと思うと</td><td>🎭 秒变脸</td></tr>
+<tr><td>重复发生</td><td>そばから</td><td>🪣 漏水桶</td></tr>
+<tr><td>顺便做</td><td>がてら</td><td>🛒 散步顺便购物</td></tr>
+<tr><td>长期兼顾</td><td>かたわら</td><td>⚖️ 双职业</td></tr>
+<tr><td>顺手一下</td><td>ついでに</td><td>📦 路过一起办</td></tr>
+</table>
+<div class="memory">
+<strong>时间流宇宙终极口诀：</strong>
+<br><br>
+⚡ 零秒发生 → が早いか　🏃 紧接发生 → や否や　🎭 突然变化 → かと思うと
+<br>
+🪣 刚做又忘 → そばから　🛒 顺便完成 → がてら　⚖️ 长期兼顾 → かたわら　📦 顺手一起 → ついでに
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🔥 情绪失控宇宙
+<br>↓
+<br>本章：⏳ 时间流宇宙
+<br>↓
+<br>下一章：🚩 起点 × 终点宇宙
+</div>
+
+</section>
+
+<section id="chapter18" class="chapter">
+
+<h2 class="chapter-title">🚩 Chapter 18 起点 × 终点宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 高频书面表达</span>
+<h3>核心思维</h3>
+<div class="logic">
+新闻、论文、公告最喜欢的一章。真正表达的是：<strong>事情的发展轨迹。</strong>
+不是发生了什么。而是：从哪里开始，发展到哪里结束。
+</div>
+<table class="compare">
+<tr><th>发展阶段</th><th>文法</th></tr>
+<tr><td>以……开始</td><td>を皮切りに</td></tr>
+<tr><td>直到最后</td><td>に至るまで</td></tr>
+<tr><td>最终发展成</td><td>に至る</td></tr>
+<tr><td>截止于</td><td>をもって</td></tr>
+<tr><td>最后结果</td><td>次第だ</td></tr>
+</table>
+<div class="memory">一句话：🏃 一场马拉松。起点 → 过程 → 终点。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～を皮切りに</h3>
+<div class="logic">核心：以某件事情作为开始。后面连续展开。强调：<strong>起点。</strong></div>
+<div class="example"><span class="tts-text">東京公演を皮切りに、全国ツアーが始まった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>东京。↓ 第一站。↓ 之后全国巡演。</p>
+<div class="memory">口诀：🚩 发令枪响。</div>
+<table class="compare">
+<tr><th>为什么不是 ～から？</th></tr>
+<tr><td>から ↓ 普通开始 <br><br> を皮切りに ↓ 连续展开 · 规模扩大</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～に至る</h3>
+<div class="logic">核心：事情不断发展。最后终于到了……</div>
+<div class="example"><span class="tts-text">長年の議論は、中止に至った。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>一步一步。↓ 最终取消。</p>
+<div class="memory">口诀：📈 剧情推进。</div>
+<table class="compare">
+<tr><th>为什么不是 ～になった？</th></tr>
+<tr><td>になった ↓ 普通变化 <br><br> に至った ↓ 经过漫长过程</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～に至るまで</h3>
+<div class="logic">核心：范围一直扩大。覆盖到最后。</div>
+<div class="example"><span class="tts-text">髪型から服装に至るまで、全部変わった。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是几个地方。↓ 全部。</p>
+<div class="memory">口诀：🌍 全地图探索。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～をもって</h3>
+<div class="logic">核心：以……作为结束时间。正式公告最喜欢。</div>
+<div class="example"><span class="tts-text">本日をもって、閉店いたします。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>今天。↓ 最后一天。</p>
+<div class="memory">口诀：🏁 冲过终点。</div>
+<table class="compare">
+<tr><th>为什么不是 ～まで？</th></tr>
+<tr><td>まで ↓ 普通截止 <br><br> をもって ↓ 正式公告 · 书面表达</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑤ ～次第だ</h3>
+<div class="logic">这个语法有四个高频义项，考试必须区分。</div>
+<table class="compare">
+<tr><th>义项</th><th>意思</th></tr>
+<tr><td>～次第だ①</td><td>全凭……</td></tr>
+<tr><td>～次第だ②</td><td>立即……</td></tr>
+<tr><td>～次第だ③</td><td>情况就是这样</td></tr>
+<tr><td>～次第だ④</td><td>取决于……</td></tr>
+</table>
+<div class="memory">口诀：🎲 结果，全看前面。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+次第 ↓ 顺序 · 过程
+<br><br>
+＋ 变化 · 推进 ↓ 前项完成，后项发生
+<br><br>
+────────────────
+<strong>事情按照顺序发展，前一个条件决定后一个结果。</strong>
+<br><br>
+↓ 一……马上……　取决于……　根据情况。
+</div>
+</div>
+
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>次第</td><td>= 顺序推进（Sequence）。四个义项都在讲"前一件事怎么样，直接决定后一件事怎么样"。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 起点 × 终点宇宙总结</h3>
+<table class="compare">
+<tr><th>路线</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>起跑</td><td>を皮切りに</td><td>🚩 发令枪</td></tr>
+<tr><td>不断发展</td><td>に至る</td><td>📈 剧情升级</td></tr>
+<tr><td>全部覆盖</td><td>に至るまで</td><td>🌍 世界地图</td></tr>
+<tr><td>冲过终点</td><td>をもって</td><td>🏁 比赛结束</td></tr>
+<tr><td>最后结果</td><td>次第だ</td><td>🎲 命运揭晓</td></tr>
+</table>
+<div class="memory">
+<strong>起点宇宙终极口诀：</strong>
+<br><br>
+🚩 第一站 → を皮切りに　📈 最终发展 → に至る　🌍 覆盖全部 → に至るまで
+<br>
+🏁 截止结束 → をもって　🎲 全看结果 → 次第だ
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：⏳ 时间流宇宙
+<br>↓
+<br>本章：🚩 起点 × 终点宇宙
+<br>↓
+<br>下一章：📊 程度评价宇宙
+</div>
+
+</section>
+
+<section id="chapter19" class="chapter">
+
+<h2 class="chapter-title">📊 Chapter 19 程度评价宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N1 核心评价表达</span>
+<h3>核心思维</h3>
+<div class="logic">
+这一章不是描述事情。而是在评价事情。作者不断告诉你：<strong>"我觉得已经到了什么程度。"</strong>
+</div>
+<table class="compare">
+<tr><th>评价等级</th><th>文法</th></tr>
+<tr><td>已经达到极点</td><td>極まりない</td></tr>
+<tr><td>没有比这更……</td><td>この上ない</td></tr>
+<tr><td>令人……</td><td>にたえない</td></tr>
+<tr><td>感到无比……</td><td>の至り</td></tr>
+<tr><td>达到……程度</td><td>ほどだ</td></tr>
+<tr><td>……得不得了</td><td>限りだ</td></tr>
+</table>
+<div class="memory">一句话：⭐⭐⭐⭐⭐ 作者开始给事情打五星（或者一星）。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～極まりない</h3>
+<div class="logic">核心：已经到了极点。通常表示：负面评价。</div>
+<div class="example"><span class="tts-text">失礼極まりない態度。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是普通失礼。↓ 已经突破下限。</p>
+<div class="memory">口诀：📈 指针爆表。</div>
+<table class="compare">
+<tr><th>为什么不是 ～この上ない？</th></tr>
+<tr><td>極まりない ↓ 多为负面 <br><br> この上ない ↓ 正负皆可 · 多为正面</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～この上ない</h3>
+<div class="logic">核心：没有比这更……程度最高。</div>
+<div class="example"><span class="tts-text">この上ない幸せ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>幸福已经封顶。</p>
+<div class="memory">口诀：🏔 山顶。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>③ ～にたえない</h3>
+<div class="logic">核心：值得……令人……常见：感谢、敬佩、同情。</div>
+<div class="example"><span class="tts-text">感謝にたえない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>感谢到无法表达。</p>
+<div class="memory">口诀：🙏 发自内心。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～の至り</h3>
+<div class="logic">核心：达到一种极高程度。多表示：光荣、幸福、羞愧。</div>
+<div class="example"><span class="tts-text">光栄の至りです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>已经无法更光荣。</p>
+<div class="memory">口诀：👑 皇冠等级。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑤ ～ほどだ</h3>
+<div class="logic">核心：程度已经可以用后句来说明。</div>
+<div class="example"><span class="tts-text">立てないほど疲れた。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：💥 爆表。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑥ ～限りだ</h3>
+<div class="logic">核心：非常……无限……通常接：残念、うれしい、幸せ。</div>
+<div class="example"><span class="tts-text">残念な限りです。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是一点遗憾。↓ 非常遗憾。</p>
+<div class="memory">口诀：🌊 情绪无限延伸。</div>
+</div>
+
+<div class="card">
+<h3>🎯 程度评价宇宙总结</h3>
+<table class="compare">
+<tr><th>评价</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>突破极限</td><td>極まりない</td><td>📈 爆表</td></tr>
+<tr><td>登峰造极</td><td>この上ない</td><td>🏔 山顶</td></tr>
+<tr><td>发自内心</td><td>にたえない</td><td>🙏 深深感谢</td></tr>
+<tr><td>最高荣誉</td><td>の至り</td><td>👑 皇冠</td></tr>
+<tr><td>达到程度</td><td>ほどだ</td><td>💥 能量爆满</td></tr>
+<tr><td>无限情绪</td><td>限りだ</td><td>🌊 海浪</td></tr>
+</table>
+<div class="memory">
+<strong>程度评价宇宙终极口诀：</strong>
+<br><br>
+📈 爆表 → 極まりない　🏔 封顶 → この上ない　🙏 深深…… → にたえない
+<br>
+👑 至高…… → の至り　💥 到……程度 → ほどだ　🌊 无限…… → 限りだ
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🚩 起点 × 终点宇宙
+<br>↓
+<br>本章：📊 程度评价宇宙
+<br>↓
+<br>下一章：🔒 限定宇宙
+</div>
+
+</section>
+
+<section id="chapter20" class="chapter">
+
+<h2 class="chapter-title">🔒 Chapter 20 限定宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1 高频</span>
+<h3>核心思维</h3>
+<div class="logic">
+这一章全部回答一个问题：<strong>范围到底还能不能再缩小？</strong>
+作者不断排除。直到：只剩一种可能。
+</div>
+<table class="compare">
+<tr><th>缩小方式</th><th>文法</th></tr>
+<tr><td>仅仅只是</td><td>にすぎない</td></tr>
+<tr><td>除了……没有</td><td>しかない</td></tr>
+<tr><td>只要……就行</td><td>さえ～ば</td></tr>
+<tr><td>最好还是……</td><td>に限る</td></tr>
+<tr><td>仅限……</td><td>限り</td></tr>
+<tr><td>据……来看</td><td>限りでは</td></tr>
+<tr><td>仅在……范围内</td><td>限りにおいて</td></tr>
+</table>
+<div class="memory">这一章就是：🎯 不断缩圈。最后只剩一个答案。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>① ～にすぎない</h3>
+<div class="logic">核心：没有那么厉害。其实只是……作者主动降低评价。</div>
+<div class="example"><span class="tts-text">私は一人の学生にすぎない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是专家。↓ 只是学生。</p>
+<div class="memory">口诀：🎈 给气球放气。</div>
+<table class="compare">
+<tr><th>为什么不是 ～だけ？</th></tr>
+<tr><td>だけ ↓ 客观数量 <br><br> にすぎない ↓ 心理上："仅此而已"</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>② ～しかない</h3>
+<div class="logic">核心：已经没有选择。只能这样。</div>
+<div class="example"><span class="tts-text">歩くしかない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>公交没了。↓ 出租没了。↓ 只能走。</p>
+<div class="memory">口诀：🚪 最后一扇门。</div>
+<table class="compare">
+<tr><th>为什么不是 ～ざるを得ない？</th></tr>
+<tr><td>しかない ↓ 客观没有办法 <br><br> ざるを得ない ↓ 现实逼迫 · 书面语更强（详见 16 情绪失控宇宙）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>③ ～さえ～ば</h3>
+<div class="logic">核心：条件已经缩到最小。只要这一件事。其它都不用。</div>
+<div class="example"><span class="tts-text">健康でさえあれば、幸せだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>唯一条件：健康。</p>
+<div class="memory">口诀：🔑 一把钥匙。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>④ ～に限る</h3>
+<div class="logic">核心：作者认为：最好就是……最推荐。</div>
+<div class="example"><span class="tts-text">疲れた時は、温泉に限る。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>个人评价。↓ 这是最佳选择。</p>
+<div class="memory">口诀：🏆 我的第一名。</div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>⑤ ～限り</h3>
+<div class="logic">核心：限定范围。超过就不成立。</div>
+<div class="example"><span class="tts-text">知っている限り。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>我的知识范围。↓ 仅此而已。</p>
+<div class="memory">口诀：📦 画一个圈。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑥ ～限りでは</h3>
+<div class="logic">核心：根据目前掌握的信息。做出判断。</div>
+<div class="example"><span class="tts-text">私が見る限りでは、問題ない。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>只是目前判断。</p>
+<div class="memory">口诀：👀 我的视角。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>⑦ ～限りにおいて</h3>
+<div class="logic">核心：只在某个范围内成立。离开这个范围。结论可能改变。</div>
+<div class="example"><span class="tts-text">法律の範囲において。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🗺️ 地图边界。</div>
+
+<!-- ===== Grammar DNA ===== -->
+<div class="dna">
+<h4>🧬 Grammar DNA</h4>
+<div class="dna-tree">
+限り ↓ 界限 · 范围
+<br><br>
+＋ 条件 · 状态 ↓ 范围被限定
+<br><br>
+────────────────
+<strong>在某个限定范围内，结果成立。</strong>
+<br><br>
+↓ 只要……　除非……　据……所知。
+</div>
+</div>
+</div>
+
+<!-- ================================================= -->
+<div class="family">
+<h3>🧬 Family DNA　限り家族</h3>
+<pre>
+                限り
+          （界限、范围）
+                 │
+────────────────────────
+限り
+↓
+限定范围内
+────────────────────────
+限りでは
+↓
+据我观察
+────────────────────────
+限りにおいて
+↓
+仅在此范围内
+</pre>
+<div class="memory">
+🌳
+「限り」不是"只要"。
+真正核心是：
+<strong>界限。</strong>
+先画一个圈，再说圈里发生的事情才成立。
+</div>
+<div class="gene">
+<h3>🧬 Gene 基因一句话</h3>
+<table>
+<tr><td>限り</td><td>= 界限（Boundary）。所有限り家族都在回答"边界画在哪里"。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 限定宇宙总结</h3>
+<table class="compare">
+<tr><th>缩圈方式</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>只是</td><td>にすぎない</td><td>🎈 放气</td></tr>
+<tr><td>唯一办法</td><td>しかない</td><td>🚪 最后一扇门</td></tr>
+<tr><td>唯一条件</td><td>さえ～ば</td><td>🔑 一把钥匙</td></tr>
+<tr><td>最佳选择</td><td>に限る</td><td>🏆 冠军</td></tr>
+<tr><td>限定范围</td><td>限り</td><td>📦 一个圈</td></tr>
+<tr><td>我的观察</td><td>限りでは</td><td>👀 第一视角</td></tr>
+<tr><td>法律范围</td><td>限りにおいて</td><td>🗺️ 国界线</td></tr>
+</table>
+<div class="memory">
+<strong>限定宇宙终极口诀：</strong>
+<br><br>
+🎈 仅此而已 → にすぎない　🚪 没别的办法 → しかない　🔑 只要这一点 → さえ～ば
+<br>
+🏆 最推荐 → に限る　📦 到这里为止 → 限り　👀 据我观察 → 限りでは　🗺️ 在此范围 → 限りにおいて
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：📊 程度评价宇宙
+<br>↓
+<br>本章：🔒 限定宇宙
+<br>↓
+<br>下一章：🧭 阅读连接词宇宙
+</div>
+
+</section>
+
+<section id="chapter21" class="chapter">
+
+<h2 class="chapter-title">🧭 Chapter 21 阅读连接词宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3～N1 阅读满分关键</span>
+<h3>核心思维</h3>
+<div class="logic">
+很多人阅读慢，不是不会单词。而是：<strong>不知道作者准备往哪里写。</strong>
+真正决定阅读速度的，其实是连接词。看到连接词，后面的内容几乎就能预测。
+</div>
+<table class="compare">
+<tr><th>作者动作</th><th>连接词</th><th>提前预测</th></tr>
+<tr><td>补充</td><td>さらに・しかも（详见 10 递进宇宙）</td><td>还有新的信息</td></tr>
+<tr><td>转折</td><td>しかし・ところが・一方（详见 09 转折 / 08 对比）</td><td>观点要反转</td></tr>
+<tr><td>原因</td><td>なぜなら・というのも（详见 03 原因宇宙）</td><td>马上解释原因</td></tr>
+<tr><td>结果</td><td>そのため・したがって・ゆえに（详见 04 结果宇宙）</td><td>马上得出结论</td></tr>
+<tr><td>举例</td><td>例えば・いわば</td><td>开始举例</td></tr>
+<tr><td>总结</td><td>つまり・要するに・言い換えれば</td><td>答案快出现了</td></tr>
+</table>
+<div class="memory"><strong>阅读不是一句一句翻译。</strong>而是：🧭 跟着作者的导航走。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>① ～つまり</h3>
+<div class="logic">核心：前面太复杂。一句话总结。</div>
+<div class="example"><span class="tts-text">彼は日本国籍ではありません。つまり、外国人です。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>很多信息。↓ 一句总结。</p>
+<div class="memory">口诀：📦 打包。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>② ～要するに</h3>
+<div class="logic">核心：把前面所有内容浓缩成一句结论，语气比つまり更强调"说白了"。</div>
+<div class="example"><span class="tts-text">要するに、彼はやる気がないのだ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🗜️ 压缩成一句话。</div>
+</div>
+
+<div class="card">
+<span class="badge">N1</span>
+<h3>③ ～言い換えれば</h3>
+<div class="logic">核心：换一种表达。帮助理解。</div>
+<div class="example"><span class="tts-text">努力とは、言い換えれば、未来への投資だ。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>不是新的观点。只是：换句话说。</p>
+<div class="memory">口诀：🔄 换个说法。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>④ ～たとえば</h3>
+<div class="logic">核心：抽象不好懂。举例。</div>
+<div class="example"><span class="tts-text">日本には四季があります。たとえば、春は桜が有名です。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：🌸 举个例子。</div>
+</div>
+
+<div class="card">
+<h3>🎯 阅读连接词宇宙总结</h3>
+<table class="compare">
+<tr><th>作者动作</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>一句总结</td><td>つまり</td><td>📦 打包总结</td></tr>
+<tr><td>说白了</td><td>要するに</td><td>🗜️ 压缩成一句</td></tr>
+<tr><td>换句话说</td><td>言い換えれば</td><td>🔄 换个角度</td></tr>
+<tr><td>举例说明</td><td>たとえば</td><td>🌸 举个例子</td></tr>
+</table>
+<div class="memory">
+<strong>阅读连接词宇宙终极口诀：</strong>
+<br><br>
+📦 做总结 → つまり　🗜️ 说白了 → 要するに　🔄 换表达 → 言い換えれば　🌸 举例子 → たとえば
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🔒 限定宇宙
+<br>↓
+<br>本章：🧭 阅读连接词宇宙
+<br>↓
+<br>下一章：🗣️ 敬语宇宙
+</div>
+
+</section>
+
+<section id="chapter22" class="chapter">
+
+<h2 class="chapter-title">🗣️ Chapter 22 敬语宇宙</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N3~N2</span>
+<h3>核心思维</h3>
+<div class="logic">
+敬语不是"礼貌一点"。真正的思维是：<strong>谁需要被抬高？谁需要放低？</strong>
+而授受动词（给予/接受）本质上也是同一种思维的延伸：<strong>镜头站在谁那边？</strong>
+</div>
+<table class="compare">
+<tr><th>心理</th><th>文法</th></tr>
+<tr><td>抬高对方</td><td>尊敬语</td></tr>
+<tr><td>降低自己</td><td>谦让语</td></tr>
+<tr><td>单纯礼貌</td><td>丁寧語</td></tr>
+<tr><td>别人给我</td><td>くれる</td></tr>
+<tr><td>我给别人</td><td>あげる</td></tr>
+<tr><td>我接受</td><td>もらう</td></tr>
+<tr><td>别人为我做</td><td>～てくれる</td></tr>
+<tr><td>我请别人做</td><td>～てもらう</td></tr>
+<tr><td>我为别人做</td><td>～てあげる</td></tr>
+</table>
+<div class="memory">敬语考试第一步不要想"怎么变"，先判断：<strong>主语是谁？我要尊敬谁？还是我要表达谁受益？</strong></div>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>敬语判断流程（考试秒杀）</h3>
+<div class="logic">不要先想："这个动词怎么变？"先问自己三个问题。</div>
+<table class="compare">
+<tr><th>步骤</th><th>思考内容</th></tr>
+<tr><td>① 谁做动作？</td><td>动作主体是谁？</td></tr>
+<tr><td>② 要尊敬谁？</td><td>客户？老师？上司？</td></tr>
+<tr><td>③ 我属于哪一边？</td><td>自己公司还是对方公司？</td></tr>
+</table>
+<div class="memory">口诀：谁做？↓ 敬谁？↓ 站哪边？</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>① 尊敬語（尊敬语）</h3>
+<div class="logic">核心：动作还是对方做。只是把对方抬高。</div>
+<div class="example"><span class="tts-text">社長がお帰りになります。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>真正变化的是：社長 不是：帰る</p>
+<div class="memory">口诀：👑 给别人戴皇冠。</div>
+<table class="compare">
+<tr><th>普通形</th><th>尊敬语</th></tr>
+<tr><td>行く</td><td>いらっしゃる</td></tr>
+<tr><td>来る</td><td>いらっしゃる</td></tr>
+<tr><td>見る</td><td>ご覧になる</td></tr>
+<tr><td>言う</td><td>おっしゃる</td></tr>
+<tr><td>食べる</td><td>召し上がる</td></tr>
+<tr><td>知っている</td><td>ご存じ</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>② 谦让语（謙譲語）</h3>
+<div class="logic">核心：动作还是我做。只是把自己放低。</div>
+<div class="example"><span class="tts-text">私がご説明いたします。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>真正降低的是：我。不是动作。</p>
+<div class="memory">口诀：🙇 自己弯腰。</div>
+<table class="compare">
+<tr><th>普通形</th><th>谦让语</th></tr>
+<tr><td>行く</td><td>参る</td></tr>
+<tr><td>来る</td><td>参る</td></tr>
+<tr><td>言う</td><td>申す</td></tr>
+<tr><td>する</td><td>いたす</td></tr>
+<tr><td>見る</td><td>拝見する</td></tr>
+<tr><td>聞く</td><td>伺う</td></tr>
+<tr><td>会う</td><td>お目にかかる</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>③ 丁寧語（礼貌语）</h3>
+<div class="logic">核心：谁都没有提高。谁都没有降低。只是：说话变礼貌。</div>
+<div class="example"><span class="tts-text">今日は雨です。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<div class="memory">口诀：😊 加滤镜。</div>
+<table class="compare">
+<tr><th>普通</th><th>丁寧語</th></tr>
+<tr><td>だ</td><td>です</td></tr>
+<tr><td>行く</td><td>行きます</td></tr>
+<tr><td>読む</td><td>読みます</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<h3>最容易考错的四组敬语</h3>
+<table class="compare">
+<tr><th>错误</th><th>正确理解</th></tr>
+<tr><td>社長が参ります</td><td>❌ 主语是社长，应使用尊敬语</td></tr>
+<tr><td>私がいらっしゃいます</td><td>❌ 自己不能尊敬自己</td></tr>
+<tr><td>先生をご覧しました</td><td>❌ ご覧になる属于尊敬语，不能用于自己</td></tr>
+<tr><td>先生を拝見しました</td><td>❌ 拝見する表示"我看"，不能表示"我见老师"</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>④ ～くれる</h3>
+<div class="logic">核心：别人把东西（或帮助）给我（或我方）。重点：镜头站在"我"这边。</div>
+<div class="example"><span class="tts-text">友達が本をくれました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>朋友 ↓ 给我一本书。说话人受益。</p>
+<div class="memory">口诀：🎁 礼物飞向我。</div>
+<table class="compare">
+<tr><th>为什么不是 あげる？</th></tr>
+<tr><td>くれる ↓ 东西来到我这里 <br><br> あげる ↓ 东西离开我这里</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑤ ～あげる</h3>
+<div class="logic">核心：我（或我方）把东西给别人。镜头跟着送礼的人。</div>
+<div class="example"><span class="tts-text">私は妹に花をあげました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>我 ↓ 妹妹。礼物离开自己。</p>
+<div class="memory">口诀：📦 礼物送出去。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3</span>
+<h3>⑥ ～もらう</h3>
+<div class="logic">核心：我得到。重点：强调接受的一方。</div>
+<div class="example"><span class="tts-text">先生に辞書をもらいました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>老师给。↓ 我收到。镜头放在："我获得了。"</p>
+<div class="memory">口诀：📥 收快递。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>⑦ ～てくれる</h3>
+<div class="logic">核心：别人主动为我做事。我受益。</div>
+<div class="example"><span class="tts-text">友達が宿題を手伝ってくれました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>朋友主动帮忙。↓ 我受惠。</p>
+<div class="memory">口诀：❤️ 别人为我付出。</div>
+</div>
+
+<div class="card">
+<span class="badge">N3/N2</span>
+<h3>⑧ ～てもらう</h3>
+<div class="logic">核心：我请别人帮忙。重点：事情因我的请求而发生。</div>
+<div class="example"><span class="tts-text">先生に説明してもらいました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>我拜托老师。↓ 老师说明。</p>
+<div class="memory">口诀：🙋 我开口请求。</div>
+</div>
+
+<div class="card">
+<span class="badge">N2</span>
+<h3>⑨ ～てあげる</h3>
+<div class="logic">核心：我主动替别人做事。强调：别人受益。</div>
+<div class="example"><span class="tts-text">妹に日本語を教えてあげました。</span><button class="tts-btn" onclick="speakJP(this)" aria-label="朗读例句" title="朗读例句">🔊</button></div>
+<p>我主动教妹妹。↓ 妹妹得到帮助。</p>
+<div class="memory">口诀：🤝 我帮助别人。</div>
+</div>
+
+<div class="card">
+<h3>🧠 敬语 × 授受 思维导图</h3>
+<div class="logic">真正考试考的是：视角。</div>
+<table class="compare">
+<tr><th>动作/给予是谁做？</th><th>我要做什么？</th><th>文法</th></tr>
+<tr><td>客户</td><td>抬高客户</td><td>尊敬语</td></tr>
+<tr><td>部长</td><td>抬高部长</td><td>尊敬语</td></tr>
+<tr><td>自己</td><td>降低自己</td><td>谦让语</td></tr>
+<tr><td>别人给我</td><td>镜头对内</td><td>くれる／てくれる</td></tr>
+<tr><td>我给别人</td><td>镜头对外</td><td>あげる／てあげる</td></tr>
+<tr><td>我请求</td><td>我发起</td><td>もらう／てもらう</td></tr>
+</table>
+<div class="memory">
+👑 对方戴皇冠 ↓ 🙇 自己弯腰 ↓ 😊 最后再加礼貌
+<br><br>
+🎁 给我 → くれる ↓ 📦 给别人 → あげる ↓ 📥 我收到 → もらう
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 敬语 × 授受宇宙总结</h3>
+<table class="compare">
+<tr><th>关系</th><th>文法</th><th>电影画面</th></tr>
+<tr><td>抬高别人</td><td>尊敬語</td><td>👑 给对方戴皇冠</td></tr>
+<tr><td>降低自己</td><td>謙譲語</td><td>🙇 自己鞠躬</td></tr>
+<tr><td>保持礼貌</td><td>丁寧語</td><td>😊 微笑服务</td></tr>
+<tr><td>礼物来到我</td><td>くれる</td><td>🎁 礼物飞向我</td></tr>
+<tr><td>礼物离开我</td><td>あげる</td><td>📦 我送礼物</td></tr>
+<tr><td>我收到东西</td><td>もらう</td><td>📥 收快递</td></tr>
+<tr><td>别人主动帮我</td><td>～てくれる</td><td>❤️ 主动帮忙</td></tr>
+<tr><td>我拜托别人</td><td>～てもらう</td><td>🙋 举手请求</td></tr>
+<tr><td>我主动帮助别人</td><td>～てあげる</td><td>🤝 我帮助别人</td></tr>
+</table>
+<div class="memory">
+<strong>敬语 × 授受终极口诀：</strong>
+<br><br>
+👑 谁做动作？别人 → 尊敬语　🙇 谁做动作？自己 → 谦让语　😊 不涉及身份？ → 礼貌语
+<br><br>
+🎁 给我 → くれる　📦 给别人 → あげる　📥 我收到 → もらう
+<br>
+❤️ 主动帮我 → ～てくれる　🙋 我请别人 → ～てもらう　🤝 我帮别人 → ～てあげる
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🧭 阅读连接词宇宙
+<br>↓
+<br>本章：🗣️ 敬语宇宙
+<br>↓
+<br>下一章：📰 JLPT Reading Style
+</div>
+
+</section>
+
+<section id="chapter23" class="chapter">
+
+<h2 class="chapter-title">📰 Chapter 23 JLPT Reading Style（阅读风格宇宙）</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">N2～N1 阅读核心</span>
+<h3>核心思维</h3>
+<div class="logic">
+本章不再讲新的语法——每一个语法点都已经在自己的 Primary Universe 里讲透了。
+<br><br>
+这一章讲的是：<strong>考试中，作者是怎样写文章的。</strong>
+看到某一类词汇密集出现，你应该能在两秒内判断：这是新闻？论文？公文？还是作者正在推进逻辑？
+判断出文体，就能预判整段文章的走向和难度。
+</div>
+</div>
+
+<div class="card">
+<span class="badge">📰</span>
+<h3>① 新闻风格</h3>
+<div class="logic">看到这些，立即知道：<strong>正在读新闻。</strong></div>
+<table class="compare">
+<tr><th>词汇</th><th>Primary Universe</th></tr>
+<tr><td>～によると</td><td>12 表象×本质宇宙（信息来源）</td></tr>
+<tr><td>～という</td><td>21 阅读连接词宇宙</td></tr>
+<tr><td>～により</td><td>03 原因宇宙</td></tr>
+<tr><td>～と発表した</td><td>03 原因宇宙 / 22 敬语宇宙（谦让报道用语）</td></tr>
+</table>
+<div class="memory">口诀：📰 据报道……</div>
+</div>
+
+<div class="card">
+<span class="badge">📖</span>
+<h3>② 论文风格</h3>
+<div class="logic">看到这些，立即知道：<strong>正在读学术论文。</strong></div>
+<table class="compare">
+<tr><th>词汇</th><th>Primary Universe</th></tr>
+<tr><td>～ものと思われる</td><td>02 推测宇宙</td></tr>
+<tr><td>～と考えられる</td><td>02 推测宇宙</td></tr>
+<tr><td>～に基づいて</td><td>03 原因宇宙（依据）</td></tr>
+<tr><td>～という観点から</td><td>15 作者态度宇宙</td></tr>
+</table>
+<div class="memory">口诀：📖 客观、克制、留有余地。</div>
+</div>
+
+<div class="card">
+<span class="badge">📋</span>
+<h3>③ 公文风格</h3>
+<div class="logic">看到这些，立即知道：<strong>正在读通知、公文。</strong></div>
+<table class="compare">
+<tr><th>词汇</th><th>Primary Universe</th></tr>
+<tr><td>～に際して</td><td>07 顺序宇宙</td></tr>
+<tr><td>～に向けて</td><td>05 条件宇宙（目的部分）</td></tr>
+<tr><td>～をもって</td><td>18 起点×终点宇宙</td></tr>
+<tr><td>～願います／～ものとする</td><td>13 必然宇宙（规定语气）</td></tr>
+</table>
+<div class="memory">口诀：📋 正式、生硬、没有感情色彩。</div>
+</div>
+
+<div class="card">
+<span class="badge">🧭</span>
+<h3>④ 阅读逻辑连接</h3>
+<div class="logic">看到这些，立即知道：<strong>作者正在推进逻辑，答案通常就在附近。</strong></div>
+<table class="compare">
+<tr><th>词汇</th><th>Primary Universe</th></tr>
+<tr><td>さらに・しかも</td><td>10 递进宇宙</td></tr>
+<tr><td>一方・しかし・ところが</td><td>08 对比宇宙 / 09 转折宇宙</td></tr>
+<tr><td>つまり・要するに</td><td>21 阅读连接词宇宙</td></tr>
+<tr><td>したがって</td><td>04 结果宇宙</td></tr>
+</table>
+<div class="memory">口诀：🧭 跟着作者的导航走。</div>
+</div>
+
+<div class="card">
+<h3>🎯 阅读风格速查总表</h3>
+<table class="compare">
+<tr><th>文体</th><th>一眼识别特征</th><th>心理准备</th></tr>
+<tr><td>📰 新闻</td><td>によると / により / と発表した</td><td>找信息来源和事件结果</td></tr>
+<tr><td>📖 论文</td><td>ものと思われる / に基づいて / という観点から</td><td>找作者的立场和依据</td></tr>
+<tr><td>📋 公文</td><td>に際して / をもって / ものとする</td><td>找生效时间和适用范围</td></tr>
+<tr><td>🧭 逻辑推进</td><td>さらに / しかし / つまり / したがって</td><td>预判下一句的功能</td></tr>
+</table>
+<div class="memory">
+<strong>阅读风格终极口诀：</strong>
+<br><br>
+📰 报道口吻 → 新闻风格　📖 克制推论 → 论文风格　📋 生硬规定 → 公文风格　🧭 承上启下 → 逻辑连接
+</div>
+</div>
+
+<div class="next-chapter">
+📖 思维导航
+<br>上一章：🗣️ 敬语宇宙
+<br>↓
+<br>本章：📰 JLPT Reading Style
+<br>↓
+<br>下一章：🧠 Grammar OS
+</div>
+
+</section>
+
+<section id="chapter24" class="chapter">
+
+<h2 class="chapter-title">🧠 Chapter 24 Grammar Operating System（Grammar OS）</h2>
+
+<div class="card">
+<span class="badge">★★★★★</span>
+<span class="level">Ultimate</span>
+<h3>Grammar 3.0 最后一章</h3>
+<div class="logic">
+学到这里，你已经不用再背430个语法。因为：<strong>真正需要记住的只有24种思维。</strong>
+每一个语法，其实都是一种思维模式。考试不是考语法。考试考：<strong>作者现在脑子里正在想什么。</strong>
+</div>
+</div>
+
+<div class="card">
+<h3>🌌 Grammar Universe Map（定稿版）</h3>
+<table class="compare">
+<tr><th width="8%">Chapter</th><th width="28%">思维宇宙</th><th width="64%">核心问题</th></tr>
+<tr><td>01</td><td>判断宇宙</td><td>作者是根据什么下判断？</td></tr>
+<tr><td>02</td><td>推测宇宙</td><td>确信程度到了几成？</td></tr>
+<tr><td>03</td><td>原因宇宙</td><td>为什么会这样？</td></tr>
+<tr><td>04</td><td>结果宇宙</td><td>最后变成什么样？</td></tr>
+<tr><td>05</td><td>条件宇宙</td><td>满足什么条件 / 为了什么目的？</td></tr>
+<tr><td>06</td><td>时间宇宙</td><td>两件事是什么时间关系？</td></tr>
+<tr><td>07</td><td>顺序宇宙</td><td>先做什么？后做什么？</td></tr>
+<tr><td>08</td><td>对比宇宙</td><td>A和B有什么区别？</td></tr>
+<tr><td>09</td><td>转折宇宙</td><td>事情为什么反转？</td></tr>
+<tr><td>10</td><td>递进宇宙</td><td>程度是不是越来越强？</td></tr>
+<tr><td>11</td><td>范围宇宙</td><td>覆盖范围扩大到哪里？</td></tr>
+<tr><td>12</td><td>表象×本质宇宙</td><td>表面是真的吗？</td></tr>
+<tr><td>13</td><td>必然宇宙</td><td>是不是唯一解释 / 谁在逼你？</td></tr>
+<tr><td>14</td><td>极限宇宙</td><td>是不是突破极限？</td></tr>
+<tr><td>15</td><td>作者态度宇宙</td><td>作者是什么情绪？</td></tr>
+<tr><td>16</td><td>情绪失控宇宙</td><td>是谁控制了我？</td></tr>
+<tr><td>17</td><td>时间流宇宙</td><td>两个动作隔了多久？</td></tr>
+<tr><td>18</td><td>起点×终点宇宙</td><td>事情发展到哪一步？</td></tr>
+<tr><td>19</td><td>程度评价宇宙</td><td>作者给几分？</td></tr>
+<tr><td>20</td><td>限定宇宙</td><td>范围还能再缩小吗？</td></tr>
+<tr><td>21</td><td>阅读连接词宇宙</td><td>作者下一句准备说什么？</td></tr>
+<tr><td>22</td><td>敬语宇宙</td><td>人与人的距离 / 谁受益？</td></tr>
+<tr><td>23</td><td>JLPT Reading Style</td><td>这是什么文体？</td></tr>
+<tr><td>24</td><td>Grammar OS</td><td>所有宇宙如何互相连接？</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🧠 真正的做题流程（Grammar OS）</h3>
+<div class="logic">以后看到任何一个语法，不要先翻译。而是先问自己：</div>
+<table class="compare">
+<tr><th>步骤</th><th>问自己什么？</th></tr>
+<tr><td>①</td><td>作者现在是在判断？还是推测？</td></tr>
+<tr><td>②</td><td>还是在说原因，还是说结果？</td></tr>
+<tr><td>③</td><td>还是表达情绪，还是评价程度？</td></tr>
+<tr><td>④</td><td>还是表示条件、时间或顺序？</td></tr>
+<tr><td>⑤</td><td>还是限制范围，还是扩大范围？</td></tr>
+<tr><td>⑥</td><td>是否是唯一解释，或是被逼无奈？</td></tr>
+<tr><td>⑦</td><td>看看是不是某个「词根家族」的成员（わけ／はず／よう／こと……）。</td></tr>
+<tr><td>⑧</td><td>最后再锁定具体语法。</td></tr>
+</table>
+<div class="memory">Grammar 3.0 最大变化：以前：语法 → 中文　现在：思维 → 语法</div>
+</div>
+
+<div class="card">
+<h3>🎬 Grammar Memory Engine（电影记忆法）</h3>
+<table class="compare">
+<tr><th>宇宙</th><th>电影画面</th></tr>
+<tr><td>判断/推测</td><td>🔮 福尔摩斯推理</td></tr>
+<tr><td>条件</td><td>🚪 一扇门打开</td></tr>
+<tr><td>时间</td><td>⏰ 时间轴</td></tr>
+<tr><td>极限</td><td>💥 能量槽爆满</td></tr>
+<tr><td>作者态度</td><td>🎙️ 作者旁白</td></tr>
+<tr><td>情绪失控</td><td>❤️ 心脏控制身体</td></tr>
+<tr><td>限定</td><td>🎯 镜头不断缩放</td></tr>
+<tr><td>程度评价</td><td>⭐ 五星评分</td></tr>
+<tr><td>阅读连接词</td><td>🧭 GPS导航</td></tr>
+</table>
+</div>
+
+<!-- ================================================= -->
+<div class="gene">
+<h3>🧬 Gene 基因总表（词根一句话）</h3>
+<table>
+<tr><td>はず</td><td>= 应有状态。所有变化都围绕"按理应该如何"展开。</td></tr>
+<tr><td>わけ</td><td>= 理由。不是"意思"，而是事情背后的那个道理。</td></tr>
+<tr><td>こと</td><td>= 事情（Event）。不是动作，不是状态，而是一件"事情"。</td></tr>
+<tr><td>よう</td><td>= 样子 / 状态 / 目标状态。所有よう家族都围绕"样子"演化。</td></tr>
+<tr><td>もの</td><td>= 事物本质。说话人把一件事拿出来，指向它"理应如此"的样子（15 作者态度宇宙）。</td></tr>
+<tr><td>ところ</td><td>= 时间切片。把一个连续动作切成"正要发生 / 正在进行 / 刚刚结束"三张快照（06 时间宇宙）。</td></tr>
+<tr><td>限り</td><td>= 界限。先画一个圈，圈内的结果才成立（20 限定宇宙）。</td></tr>
+<tr><td>次第</td><td>= 顺序推进。前一件事怎样，直接决定后一件事怎样（18 起点×终点宇宙）。</td></tr>
+<tr><td>まま</td><td>= 原状保持。该发生的变化没有发生，状态被原样冻结（04 结果宇宙）。</td></tr>
+<tr><td>べき</td><td>= 待补（べき家族 Family DNA 收录中）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🚀 Grammar 3.0 Ultimate 终极口诀</h3>
+<div class="memory">
+<strong>不要背语法。要背作者的大脑。</strong>
+<br><br>
+作者为什么这样说？↓ 进入对应宇宙。↓ 找到对应思维。↓ 锁定语法。↓ 完成理解。
+<br><br>
+这就是：<strong>Grammar Mind Map 3.0 Ultimate</strong>
+</div>
+</div>
+
+</section>
+
+<footer class="ultimate-end" style="background:white;border-radius:16px;padding:50px;margin-top:60px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.08);">
+<h2>🎉 Congratulations！</h2>
+<p>
+你学完的，不是 JLPT Grammar。而是：
+<strong>Japanese Thinking System（日语思维系统）</strong>
+</p>
+<p>
+以后看到任何一个语法，你不会再问："它是什么意思？"
+而会问：<strong>"作者为什么会选择它？"</strong>
+</p>
+<p>这就是 Grammar Mind Map 3.0 Ultimate 的最终目标。</p>
+</footer>
+
+</main>
+
+
+<script>
+function toggleSidebar(){
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// 点击目录里的链接后，在手机上自动收起侧边栏
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#sidebar nav a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth <= 900) closeSidebar();
+    });
+  });
+});
+let currentUtterance = null;
+let jaVoice = null;
+
+function pickVoice(){
+  const voices = window.speechSynthesis.getVoices();
+  jaVoice = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang && v.lang.startsWith('ja')) || null;
+}
+
+if ('speechSynthesis' in window){
+  pickVoice();
+  window.speechSynthesis.onvoiceschanged = pickVoice;
+}
+
+function speakJP(btn){
+  if (!('speechSynthesis' in window)){
+    alert('当前浏览器不支持语音朗读功能。');
+    return;
+  }
+
+  const wrapper = btn.closest('.example');
+  const textEl = wrapper.querySelector('.tts-text');
+  const text = textEl.innerText.trim();
+
+  // 如果正在朗读同一句，点击则停止
+  if (currentUtterance && btn.classList.contains('speaking')){
+    window.speechSynthesis.cancel();
+    btn.classList.remove('speaking');
+    currentUtterance = null;
+    return;
+  }
+
+  // 停止其它正在播放的按钮
+  document.querySelectorAll('.tts-btn.speaking').forEach(b => b.classList.remove('speaking'));
+  window.speechSynthesis.cancel();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  if (jaVoice) utter.voice = jaVoice;
+  utter.rate = 0.9;
+
+  utter.onstart = () => btn.classList.add('speaking');
+  utter.onend = () => { btn.classList.remove('speaking'); currentUtterance = null; };
+  utter.onerror = () => { btn.classList.remove('speaking'); currentUtterance = null; };
+
+  currentUtterance = utter;
+  window.speechSynthesis.speak(utter);
+}
+</script>
+
+</body>
+</html>
