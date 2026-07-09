@@ -150,8 +150,13 @@ header{
 .word-extra{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .word-card.expanded .word-extra{display:block}
 .word-example{font-size:13px;line-height:1.7;padding:9px 12px;background:var(--bg3);border-radius:9px;margin-bottom:8px}
-.word-example .ja{display:block;color:var(--text);margin-bottom:3px}
-.word-example .cn{display:block;font-size:12px;color:var(--text3)}
+.word-example .ja{display:inline;color:var(--text)}
+.word-example .cn{display:block;font-size:12px;color:var(--text3);margin-top:3px}
+.tts-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-left:6px;border:none;background:var(--bg4);color:var(--c-teal);border-radius:50%;font-size:12px;cursor:pointer;vertical-align:middle;flex-shrink:0;transition:transform .12s,background .12s}
+.tts-btn:hover{background:var(--c-teal-mid)}
+.tts-btn:active{transform:scale(.88)}
+.tts-btn.speaking{background:var(--c-teal-mid);animation:ttsPulse 1s ease-in-out infinite}
+@keyframes ttsPulse{0%,100%{opacity:1}50%{opacity:.55}}
 .mark-btn{width:100%;padding:8px;border-radius:8px;border:1.5px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s}
 .mark-btn.done{background:var(--c-green-bg);color:var(--c-green);border-color:var(--c-green-mid);font-weight:500}
 .mark-btn:active{transform:scale(.97)}
@@ -175,8 +180,8 @@ header{
 .flashcard.flipped .fc-answer{display:block}
 .fc-cn{font-size:22px;font-weight:500;color:var(--c-purple);margin-bottom:12px}
 .fc-example{font-size:12px;color:var(--text2);line-height:1.7;background:var(--bg3);padding:10px 14px;border-radius:10px;text-align:left}
-.fc-example .ja{display:block;color:var(--text);margin-bottom:3px}
-.fc-example .cn{display:block;color:var(--text3)}
+.fc-example .ja{display:inline;color:var(--text)}
+.fc-example .cn{display:block;color:var(--text3);margin-top:3px}
 .fc-controls{display:none;gap:10px;margin-bottom:12px}
 .fc-controls.visible{display:flex}
 .fc-btn{flex:1;padding:12px;border-radius:11px;border:1.5px solid;font-size:13px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .18s;font-weight:500}
@@ -734,6 +739,28 @@ const SCENES = [
 let curScene=0, isFlash=false, fcIdx=0, fcArr=[], fcShown=false;
 let learned={}, correct=0, totalFc=0, query='';
 
+function speakJa(text){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='ja-JP';
+  u.rate=0.85;
+  window.speechSynthesis.speak(u);
+}
+function speakEx(btn){
+  const jaEl=btn.parentElement.querySelector('.ja');
+  if(!jaEl)return;
+  document.querySelectorAll('.tts-btn.speaking').forEach(b=>b.classList.remove('speaking'));
+  btn.classList.add('speaking');
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(jaEl.textContent);
+  u.lang='ja-JP';
+  u.rate=0.85;
+  u.onend=()=>btn.classList.remove('speaking');
+  u.onerror=()=>btn.classList.remove('speaking');
+  window.speechSynthesis.speak(u);
+}
 function save(){try{localStorage.setItem('jv2_l',JSON.stringify(learned));localStorage.setItem('jv2_c',correct);localStorage.setItem('jv2_t',totalFc);}catch(e){}}
 function load(){try{const l=localStorage.getItem('jv2_l');if(l)learned=JSON.parse(l);correct=+localStorage.getItem('jv2_c')||0;totalFc=+localStorage.getItem('jv2_t')||0;}catch(e){}}
 
@@ -816,7 +843,7 @@ function render(){
           <div class="word-cn">${w.cn}</div>
           <div class="expand-hint">タップで例文 ▼</div>
           <div class="word-extra">
-            <div class="word-example"><span class="ja">${w.ex.ja}</span><span class="cn">${w.ex.cn}</span></div>
+            <div class="word-example"><span class="ja">${w.ex.ja}</span><button type="button" class="tts-btn" onclick="event.stopPropagation();speakEx(this)" aria-label="発音を聞く">🔊</button><span class="cn">${w.ex.cn}</span></div>
             <button class="mark-btn ${done?'done':''}" onclick="event.stopPropagation();toggleLearned('${id}')">
               ${done?'✅ 習得済み':'○ 習得済みにする'}
             </button>
@@ -840,7 +867,7 @@ function render(){
           <div class="fc-read">${cur.read}</div>
           <div class="fc-answer" id="fca">
             <div class="fc-cn">${cur.cn}</div>
-            <div class="fc-example"><span class="ja">${cur.ex.ja}</span><span class="cn">${cur.ex.cn}</span></div>
+            <div class="fc-example"><span class="ja">${cur.ex.ja}</span><button type="button" class="tts-btn" onclick="event.stopPropagation();speakEx(this)" aria-label="発音を聞く">🔊</button><span class="cn">${cur.ex.cn}</span></div>
           </div>
         </div>
         <div class="fc-controls" id="fcc">
