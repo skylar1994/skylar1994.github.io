@@ -136,11 +136,72 @@ border-radius:14px;
 padding:28px;
 margin-bottom:25px;
 box-shadow:0 8px 20px rgba(0,0,0,.35);
+position:relative;
 }
 
 .card h3{
 font-size:24px;
 margin-bottom:20px;
+padding-right:40px;
+}
+
+.fav-btn{
+position:absolute;
+top:22px;
+right:22px;
+width:36px;
+height:36px;
+border:none;
+border-radius:50%;
+background:rgba(255,255,255,.06);
+color:#6b7280;
+font-size:18px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:transform .15s ease, background .15s ease, color .15s ease;
+}
+
+.fav-btn:hover{
+background:rgba(255,255,255,.12);
+transform:scale(1.1);
+}
+
+.fav-btn.favorited{
+color:#facc15;
+}
+
+.card.favorited{
+box-shadow:0 0 0 2px #facc15, 0 8px 20px rgba(0,0,0,.35);
+}
+
+.fav-filter-btn{
+position:fixed;
+right:24px;
+bottom:24px;
+z-index:60;
+display:flex;
+align-items:center;
+gap:8px;
+padding:12px 18px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:50px;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,.4);
+}
+
+.fav-filter-btn.active{
+background:#facc15;
+color:#111827;
+}
+
+body.show-favorites-only .card:not(.favorited){
+display:none;
 }
 
 .badge{
@@ -483,6 +544,22 @@ margin-bottom:16px;
 .card h3{
 font-size:18px;
 margin-bottom:12px;
+padding-right:34px;
+}
+
+.fav-btn{
+top:14px;
+right:14px;
+width:30px;
+height:30px;
+font-size:15px;
+}
+
+.fav-filter-btn{
+right:16px;
+bottom:16px;
+padding:10px 14px;
+font-size:13px;
 }
 
 .logic, .memory, .dna, .link-ref, .warning{
@@ -564,6 +641,11 @@ line-height:1.8;
 </div>
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<button class="fav-filter-btn" id="favFilterBtn" onclick="toggleFavoritesFilter()">
+<span id="favFilterIcon">⭐</span>
+<span id="favFilterText">只看收藏 (0)</span>
+</button>
 
 <aside id="sidebar">
 
@@ -4995,6 +5077,87 @@ function speakJP(btn){
   currentUtterance = utter;
   window.speechSynthesis.speak(utter);
 }
+
+/* ===== 收藏功能 ===== */
+const FAV_STORAGE_KEY = 'jlptGrammarFavorites';
+
+function loadFavorites(){
+  try{
+    const raw = localStorage.getItem(FAV_STORAGE_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  }catch(e){
+    return new Set();
+  }
+}
+
+function saveFavorites(favSet){
+  localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(Array.from(favSet)));
+}
+
+let favorites = loadFavorites();
+
+function updateFavFilterBtn(){
+  const text = document.getElementById('favFilterText');
+  if (text) text.textContent = `只看收藏 (${favorites.size})`;
+}
+
+function toggleFavorite(id, btn){
+  if (favorites.has(id)){
+    favorites.delete(id);
+    btn.classList.remove('favorited');
+    btn.closest('.card').classList.remove('favorited');
+  } else {
+    favorites.add(id);
+    btn.classList.add('favorited');
+    btn.closest('.card').classList.add('favorited');
+  }
+  saveFavorites(favorites);
+  updateFavFilterBtn();
+
+  // 如果正在筛选模式下取消收藏，直接隐藏该卡片
+  if (document.body.classList.contains('show-favorites-only') && !favorites.has(id)){
+    btn.closest('.card').style.display = 'none';
+  }
+}
+
+function toggleFavoritesFilter(){
+  const isActive = document.body.classList.toggle('show-favorites-only');
+  document.getElementById('favFilterBtn').classList.toggle('active', isActive);
+  // 恢复所有卡片的 inline display（交由 CSS 类控制）
+  document.querySelectorAll('.card').forEach(c => c.style.display = '');
+}
+
+function initFavorites(){
+  const cards = document.querySelectorAll('main .card');
+  cards.forEach((card, index) => {
+    const h3 = card.querySelector('h3');
+    if (!h3) return; // 跳过没有标题的卡片
+
+    const id = 'card-' + index;
+    card.dataset.favId = id;
+
+    const btn = document.createElement('button');
+    btn.className = 'fav-btn';
+    btn.setAttribute('aria-label', '收藏');
+    btn.setAttribute('title', '收藏此语法点');
+    btn.textContent = '☆';
+    btn.onclick = () => {
+      toggleFavorite(id, btn);
+      btn.textContent = favorites.has(id) ? '★' : '☆';
+    };
+
+    if (favorites.has(id)){
+      btn.classList.add('favorited');
+      btn.textContent = '★';
+      card.classList.add('favorited');
+    }
+
+    card.insertBefore(btn, card.firstChild);
+  });
+  updateFavFilterBtn();
+}
+
+document.addEventListener('DOMContentLoaded', initFavorites);
 </script>
 
 </body>
