@@ -26,12 +26,33 @@
     }
     .toc a:hover{border-color:rgba(125,211,252,.6)}
 
-    .nav-toolbar{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:14px 0 10px}
+    .nav-toolbar{display:flex;flex-wrap:nowrap;justify-content:flex-end;gap:6px;margin:14px 0 10px;overflow-x:auto;padding-bottom:2px}
     .nav-toolbar button{
-      font:inherit;font-size:12px;padding:5px 10px;border-radius:999px;cursor:pointer;
+      font:inherit;font-size:12px;padding:5px 9px;border-radius:999px;cursor:pointer;white-space:nowrap;flex-shrink:0;
       border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)
     }
     .nav-toolbar button:hover{color:var(--text);border-color:rgba(125,211,252,.6)}
+
+    /* 🔍 关键词搜索 */
+    .search-bar{display:flex;align-items:center;gap:8px;margin:6px 0 14px;position:relative}
+    .search-bar input{
+      flex:1;font:inherit;font-size:14px;padding:9px 36px 9px 14px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);outline:none
+    }
+    .search-bar input:focus{border-color:rgba(125,211,252,.6)}
+    .search-bar input::placeholder{color:var(--muted)}
+    .search-clear{
+      position:absolute;right:96px;top:50%;transform:translateY(-50%);border:none;background:none;
+      color:var(--muted);cursor:pointer;font-size:16px;padding:2px 6px;line-height:1;display:none
+    }
+    .search-clear:hover{color:var(--text)}
+    .search-count{font-size:12px;color:var(--muted);white-space:nowrap;min-width:64px}
+    .search-hidden{display:none !important}
+    section.search-hidden{display:none !important}
+    mark.search-hit{background:rgba(125,211,252,.35);color:var(--text);border-radius:3px;padding:0 1px}
+    .item.search-match{border-color:rgba(125,211,252,.6);box-shadow:0 0 0 1px rgba(125,211,252,.35)}
+    .search-noresult{display:none;color:var(--muted);font-size:14px;text-align:center;padding:30px 10px}
+    .search-noresult.show{display:block}
     .nav{display:grid;grid-template-columns:1fr;gap:10px}
     @media (min-width:720px){.nav{grid-template-columns:repeat(2,1fr)}}
     @media (min-width:1100px){.nav{grid-template-columns:repeat(3,1fr)}}
@@ -120,7 +141,7 @@
       position:fixed;top:16px;right:16px;z-index:80;width:46px;height:46px;border-radius:12px;
       background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.35);
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-      cursor:pointer;opacity:0;transform:translateY(-10px);pointer-events:none;
+      cursor:pointer;opacity:1;transform:translateY(0);pointer-events:auto;
       transition:opacity .25s ease, transform .25s ease
     }
     .hamburger-btn.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -159,18 +180,21 @@
   <div class="wrap">
     <header>
       <h1>JLPT Grammar Mind Map 2.0</h1>
-      <div class="sub">PART 1 N3 生活宇宙 ＋ N3+ 剩余语法 ＋ PART 2-3 N2 逻辑宇宙（上/下）＋ N2+ 剩余语法 ＋ PART 4-5 N1 书面宇宙（上/下）＋ PART 5.5 N1 补完计划 ＋ PART 5.75 N1 语法拾遗 ＋ PART 6 终极易混表＋索引。</div>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 搜索语法点、假名、中文释义或例句关键词……" autocomplete="off">
+        <button type="button" id="searchClear" class="search-clear" aria-label="清除搜索">✕</button>
+        <span class="search-count" id="searchCount"></span>
+      </div>
 
       <div class="nav-toolbar">
-        <button type="button" id="navExpand">展开全部</button>
-        <button type="button" id="navCollapse">收起全部</button>
-        <button type="button" id="favOpenToolbar" class="fav-toolbar-btn">⭐ 收藏夹<span id="favBadge" class="fav-badge zero">0</span></button>
-        <button type="button" onclick="location.href='vocabulary.html'">📖 场景词汇集</button>
-        <button type="button" onclick="location.href='JLPT_Grammar_MindMap_3_0_Ultimate.html'">🗺️ 思维导图 3.0</button>
+        <button type="button" id="favOpenToolbar" class="fav-toolbar-btn">⭐收藏<span id="favBadge" class="fav-badge zero">0</span></button>
+        <button type="button" onclick="location.href='vocabulary.html'">📖词汇</button>
+        <button type="button" onclick="location.href='JLPT_Grammar_MindMap_3_0_Ultimate.html'">🗺️导图</button>
       </div>
 
 
-      <nav class="nav" id="mainNav">
+      <nav class="nav" id="mainNav" style="display:none">
         <details class="nav-group" open>
           <summary><span><span class="nav-part">PART 1</span>N3 生活宇宙</span><span class="arrow">▾</span></summary>
           <ul class="toc">
@@ -279,6 +303,7 @@
             <li><a href="#n1-timeline">⏳ 时间脉络</a></li>
             <li><a href="#n1-premise">🔗 前提唯一</a></li>
             <li><a href="#n1-eval-plus">📐 补充评价</a></li>
+            <li><a href="#n1-attitude">😤 借口态度</a></li>
           </ul>
         </details>
 
@@ -320,6 +345,8 @@
       <div id="favEmptyHint" class="fav-drawer-empty">还没有收藏任何语法点，快去挑几个容易记混的加个星标吧 ⭐</div>
       <div id="favList"></div>
     </aside>
+
+    <p id="searchNoResult" class="search-noresult">😶 没有找到匹配的语法点，换个关键词试试～</p>
 
     <!-- ===================== PART 1：N3（上） ===================== -->
     <section id="n3-part1a">
@@ -994,10 +1021,46 @@ A不代表B：からといって
       </div>
 
       <div class="item">
+        <div class="item-title"><span class="badge">④</span><span class="jp">～ないまでも</span><span class="cn">即使不能……至少也……</span></div>
+        <pre><code>毎日とは言わないまでも、週に一度は運動すべきだ。</code></pre>
+        <ul><li><b>🧠</b> 前项设定一个较高的标准并否定，退而求其次要求后项达到较低标准</li></ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title"><span class="badge">⑤</span><span class="jp">～ようが～まいが</span><span class="cn">不管……还是不……</span></div>
+        <pre><code>雨が降ろうが降るまいが、試合は予定通り行う。</code></pre>
+        <ul><li><b>🧠</b> 前接动词意向形＋が＋辞书形（或ない形）＋まいが，表示无论正反两种情况结果都不变</li></ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title"><span class="badge">⑥</span><span class="jp">たとえ～であれ</span><span class="cn">即使是……也……</span></div>
+        <pre><code>たとえ小さな失敗であれ、しっかり反省すべきだ。</code></pre>
+        <ul><li><b>🧠</b> 固定搭配，たとえ与であれ前后呼应，语气比「であれ」单用更强调假设的极端性</li></ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title"><span class="badge">⑦</span><span class="jp">～かと思いきや</span><span class="cn">原以为……没想到……</span></div>
+        <pre><code>合格したかと思いきや、実は名前を書き間違えていた。</code></pre>
+        <ul><li><b>🧠</b> 书面/略带戏剧性语气，前项是说话人一度的判断，后项是与预想相反的意外事实</li></ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title"><span class="badge">⑧</span><span class="jp">～まい</span><span class="cn">①大概不会…… ②绝不……/不打算……</span></div>
+        <pre><code>あの人がそんなことを言うまい。
+もう二度とここには来るまい。</code></pre>
+        <ul><li><b>🧠</b> ①推量否定：接近「ないだろう」，推测某事大概不会发生；②意志否定：接近「ないつもりだ」，说话人主观下决心绝不做某事，多为第一人称。动词接续：Ⅰ类用意向形（する→しまい／来る→来まい，也可辞书形＋まい）；Ⅱ・Ⅲ类可用辞书形或未然形＋まい</li></ul>
+      </div>
+
+      <div class="item">
         <div class="item-title"><span class="badge">⚔️</span><span class="jp">让步宇宙口诀</span><span class="cn">一行记忆</span></div>
         <pre><code>即使：にしても
 对于……来说：にしては
-虽说：とはいうものの</code></pre>
+虽说：とはいうものの
+退而求其次：ないまでも
+不管正反：ようが～まいが
+即使是：たとえ～であれ
+没想到：かと思いきや
+大概不会/绝不：まい</code></pre>
       </div>
     </section>
 
@@ -1020,9 +1083,16 @@ A不代表B：からといって
       </div>
 
       <div class="item">
+        <div class="item-title"><span class="badge">④</span><span class="jp">～以上（は）</span><span class="cn">既然……就（应该/必须）……</span></div>
+        <pre><code>約束した以上は、必ず守ります。</code></pre>
+        <ul><li><b>🧠</b> 前项是既定事实或已确定的立场，后项常接说话人的义务、决心或应尽的责任，语感比「うえは」更书面通用</li></ul>
+      </div>
+
+      <div class="item">
         <div class="item-title"><span class="badge">📈</span><span class="jp">うえ口诀</span><span class="cn">一行记忆</span></div>
         <pre><code>之后：うえで
 既然：うえは
+既然（更通用）：以上（は）
 而且：うえに</code></pre>
       </div>
     </section>
@@ -1471,6 +1541,18 @@ A不代表B：からといって
       <div class="item"><div class="item-title"><span class="badge">⑦</span><span class="jp">～ずにはいられない</span><span class="cn">忍不住要……</span></div><pre><code>誰もが拍手を送らずにはいられなかった。</code></pre><ul><li><b>🧠</b> 主观上因情感过于强烈而忍不住</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑧</span><span class="jp">～極まりない</span><span class="cn">极其……/ 无比……</span></div><pre><code>無責任極まりない。
 失礼極まりない。</code></pre><ul><li><b>🧠</b> 常接消极词汇，用于严厉的消极或批判性评价</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑨</span><span class="jp">～のあまり／～あまりに</span><span class="cn">因过于……以至于……（落得消极结果）</span></div><pre><code>彼女は心配のあまり、一晩中眠れなかった。
+本番では、緊張のあまり声が震えてしまった。
+そのニュースを聞いた彼女は、驚きのあまり言葉を失った。
+合格通知を見て、嬉しさのあまり飛び上がった。
+彼は悲しみのあまり、食事がのどを通らなくなった。</code></pre><ul>
+        <li><b>📎 接续</b>　名词＋の＋あまり（心配のあまり）／动词辞书形・た形＋あまり（驚くあまり／驚いたあまり）／な形容词词干＋な＋あまり（過度なあまり）</li>
+        <li><b>🧠</b> 前项多是心理／生理／情感类词（心配、緊張、驚き、怒り、悲しみ、嬉しさ等），程度达到极点</li>
+        <li><b>⚠️ 避坑</b> 后项必须是消极的、非意志性的意外结果（晕倒、哭出来、犯错、病倒等），不能接命令、劝诱等主观意志句型</li>
+        <li><b>💡 固定搭配</b> 心配のあまり／緊張のあまり／驚きのあまり（驚いたあまり）／嬉しさのあまり／悲しみのあまり</li>
+      </ul></div>
+
+      <div class="item"><div class="item-title"><span class="badge">⑩</span><span class="jp">～といったらありはしない</span><span class="cn">简直……到不行（更强调、口语可省为ありゃしない）</span></div><pre><code>この部屋の汚さといったらありはしない。</code></pre><ul><li><b>🧠</b> といったらない的加强版，多用于负面吐槽，口语中常说「ありゃしない」</li></ul></div>
 
       <div class="item">
         <div class="item-title"><span class="badge">💥</span><span class="jp">极致情感口诀</span><span class="cn">一行记忆</span></div>
@@ -1481,7 +1563,9 @@ A不代表B：からといって
 ……之极：の極み
 言语难表：といったらない
 忍不住：ずにはいられない
-极其……（贬义）：極まりない</code></pre>
+极其……（贬义）：極まりない
+过头出事：のあまり
+简直到不行：といったらありはしない</code></pre>
       </div>
     </section>
 
@@ -1515,6 +1599,7 @@ A不代表B：からといって
       <div class="item"><div class="item-title"><span class="badge">④</span><span class="jp">～をもって</span><span class="cn">以…… / 截止到……</span></div><pre><code>本日をもって、今年度の募集は締め切らせていただきます。</code></pre><ul><li><b>🧠</b> 郑重的手段（由），或宣告某一期限正式结束</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑤</span><span class="jp">～そびれる</span><span class="cn">错失良机</span></div><pre><code>言いそびれてしまった。</code></pre><ul><li><b>🧠</b> 接动词连用形，因犹豫或时机不对而没做成</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑥</span><span class="jp">～なりに</span><span class="cn">与……相应地</span></div><pre><code>子供は子供なりに一生懸命に考えている。</code></pre><ul><li><b>🧠</b> 承认客观局限性，在范围内尽可能做到最好</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑦</span><span class="jp">～に至るまで</span><span class="cn">直到…… / 甚至连……都</span></div><pre><code>服装から言葉遣いに至るまで、彼は完璧に日本人になりきっていた。</code></pre><ul><li><b>🧠</b> 表示范围延伸到极端、意外的程度，强调覆盖之广</li></ul></div>
 
       <div class="item">
         <div class="item-title"><span class="badge">⏳</span><span class="jp">时间脉络口诀</span><span class="cn">一行记忆</span></div>
@@ -1523,7 +1608,8 @@ A不代表B：からといって
 以此为限：を限りに
 截止到：をもって
 错失良机：そびれる
-与……相应：なりに</code></pre>
+与……相应：なりに
+甚至到：に至るまで</code></pre>
       </div>
     </section>
 
@@ -1575,6 +1661,28 @@ A不代表B：からといって
       </div>
     </section>
 
+    <section id="n1-attitude">
+      <h2>😤【借口态度宇宙】（N1/N2）</h2>
+      <p class="hint">趁机为所欲为？找借口？不顾一切？提起某个话题就想吐槽？</p>
+
+      <div class="item"><div class="item-title"><span class="badge">①</span><span class="jp">～のをいいことに</span><span class="cn">趁着……（为所欲为，贬义）</span></div><pre><code>親が留守なのをいいことに、子供たちは夜遅くまでゲームをしていた。</code></pre><ul><li><b>🧠</b> 利用某种有利条件做不该做的事，前项多为对自己有利的客观状况，语感偏贬义</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">②</span><span class="jp">～にかこつけて</span><span class="cn">以……为借口 / 借……之名</span></div><pre><code>出張にかこつけて、観光を楽しんできた。</code></pre><ul><li><b>🧠</b> 把一件不相关或勉强的事当作幌子，去做真正想做的事</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">③</span><span class="jp">～を顧みない</span><span class="cn">不顾…… / 不理会……</span></div><pre><code>彼は自分の健康を顧みず、研究に没頭した。</code></pre><ul><li><b>🧠</b> 常见搭配：身の危険を顧みず、家庭を顧みない，強調完全無視某種本該重視的事</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">④</span><span class="jp">～ときたら</span><span class="cn">提到……真是（吐槽/抱怨）</span></div><pre><code>うちの息子ときたら、部屋の片付け一つできない。</code></pre><ul><li><b>🧠</b> 提出话题后紧接负面评价，多用于对身边熟悉的人或事物的抱怨</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑤</span><span class="jp">～までのことだ</span><span class="cn">大不了……而已 / 无非……罢了</span></div><pre><code>だめなら、もう一度やり直すまでのことだ。</code></pre><ul><li><b>🧠</b> 表示已做好心理准备，即使最坏情况发生也只是采取某个简单对策，语气从容不迫</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑥</span><span class="jp">やはり（やっぱり）</span><span class="cn">果然…… / 还是……</span></div><pre><code>色々考えたが、やはり彼女に謝るべきだと思う。</code></pre><ul><li><b>🧠</b> 基础副词，非固定句型：①验证预想成立的「果然」；②权衡后回归原判断的「还是」，口语常说成「やっぱり」</li></ul></div>
+
+      <div class="item">
+        <div class="item-title"><span class="badge">😤</span><span class="jp">借口态度口诀</span><span class="cn">一行记忆</span></div>
+        <pre><code>趁机为所欲为：のをいいことに
+借……之名：にかこつけて
+不顾：を顧みない
+提到就吐槽：ときたら
+大不了而已：までのことだ
+果然还是：やはり</code></pre>
+      </div>
+    </section>
+
     <!-- ✅ 追加区：以后继续补充 -->
     <!-- APPEND_HERE -->
 
@@ -1585,19 +1693,7 @@ A不代表B：からといって
 
   <script>
     (function(){
-      /* ---------- 1. 顶部目录：展开全部 / 收起全部 ---------- */
-      var groups = Array.prototype.slice.call(document.querySelectorAll('#mainNav .nav-group'));
-      var expandBtn = document.getElementById('navExpand');
-      var collapseBtn = document.getElementById('navCollapse');
-
-      expandBtn.addEventListener('click', function(){
-        groups.forEach(function(g){ g.open = true; });
-      });
-      collapseBtn.addEventListener('click', function(){
-        groups.forEach(function(g){ g.open = false; });
-      });
-
-      // 点击链接后自动打开对应分组（防止链接被折叠隐藏后无法跳转）
+      /* ---------- 1. 点击目录链接后自动打开对应分组（防止链接被折叠隐藏后无法跳转） ---------- */
       document.addEventListener('click', function(e){
         var a = e.target.closest && e.target.closest('.nav a[href^="#"]');
         if (!a) return;
@@ -1614,10 +1710,11 @@ A不代表B：からといって
       var navDrawerClose = document.getElementById('navDrawerClose');
       var navDrawerContent = document.getElementById('navDrawerContent');
 
-      // 把顶部目录复制一份放进抽屉，保持两处目录内容一致
+      // 把顶部目录复制一份放进抽屉，保持两处目录内容一致（原目录默认隐藏，克隆体需强制显示）
       if (mainNav && navDrawerContent) {
         var clone = mainNav.cloneNode(true);
         clone.removeAttribute('id');
+        clone.style.display = '';
         navDrawerContent.appendChild(clone);
       }
 
@@ -1906,6 +2003,118 @@ A不代表B：からといって
 
       injectFavButtons();
       updateFavCounters();
+
+      /* ---------- 5. 关键词搜索 ---------- */
+      var searchInput = document.getElementById('searchInput');
+      var searchClear = document.getElementById('searchClear');
+      var searchCount = document.getElementById('searchCount');
+      var searchNoResult = document.getElementById('searchNoResult');
+
+      // 收集所有正文语法卡片（排除收藏夹抽屉、目录抽屉里的克隆内容）
+      var allItems = Array.prototype.slice.call(document.querySelectorAll('main .item, .wrap > section .item'))
+        .filter(function(item){
+          return !item.closest('#favDrawer') && !item.closest('#navDrawer');
+        });
+      // 缓存每张卡片可搜索的原始文本节点，避免重复高亮时互相污染
+      allItems.forEach(function(item){
+        ['jp', 'cn'].forEach(function(cls){
+          var el = item.querySelector('.' + cls);
+          if (el && el.dataset.raw === undefined) el.dataset.raw = el.textContent;
+        });
+        var codeEl = item.querySelector('pre > code');
+        if (codeEl && codeEl.dataset.raw === undefined) codeEl.dataset.raw = codeEl.textContent;
+        var noteEls = item.querySelectorAll('ul li');
+        noteEls.forEach(function(li){
+          if (li.dataset.raw === undefined) li.dataset.raw = li.innerHTML;
+        });
+      });
+
+      function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+      function highlightInto(el, raw, query){
+        if (!el) return false;
+        if (!query) { el.textContent = raw; return false; }
+        var idx = raw.toLowerCase().indexOf(query.toLowerCase());
+        if (idx === -1) { el.textContent = raw; return false; }
+        var re = new RegExp(escapeRegExp(query), 'ig');
+        el.innerHTML = escapeHtml(raw).replace(re, function(m){ return '<mark class="search-hit">' + escapeHtml(m) + '</mark>'; });
+        return true;
+      }
+
+      function runSearch(){
+        var query = (searchInput.value || '').trim();
+        searchClear.style.display = query ? 'block' : 'none';
+        if (mainNav) mainNav.classList.toggle('search-hidden', !!query);
+
+        if (!query) {
+          allItems.forEach(function(item){
+            item.classList.remove('search-hidden', 'search-match');
+            var jpEl = item.querySelector('.jp'); if (jpEl && jpEl.dataset.raw !== undefined) jpEl.textContent = jpEl.dataset.raw;
+            var cnEl = item.querySelector('.cn'); if (cnEl && cnEl.dataset.raw !== undefined) cnEl.textContent = cnEl.dataset.raw;
+            var codeEl = item.querySelector('pre > code'); if (codeEl && codeEl.dataset.raw !== undefined) codeEl.textContent = codeEl.dataset.raw;
+            item.querySelectorAll('ul li').forEach(function(li){ if (li.dataset.raw !== undefined) li.innerHTML = li.dataset.raw; });
+          });
+          document.querySelectorAll('.wrap > section').forEach(function(sec){ sec.classList.remove('search-hidden'); });
+          searchCount.textContent = '';
+          searchNoResult.classList.remove('show');
+          return;
+        }
+
+        var visibleCount = 0;
+        var sectionsWithMatch = {};
+
+        allItems.forEach(function(item){
+          var jpEl = item.querySelector('.jp');
+          var cnEl = item.querySelector('.cn');
+          var codeEl = item.querySelector('pre > code');
+          var notes = item.querySelectorAll('ul li');
+
+          var hitJp = highlightInto(jpEl, jpEl ? jpEl.dataset.raw : '', query);
+          var hitCn = highlightInto(cnEl, cnEl ? cnEl.dataset.raw : '', query);
+          var hitCode = highlightInto(codeEl, codeEl ? codeEl.dataset.raw : '', query);
+          var hitNote = false;
+          notes.forEach(function(li){
+            var raw = li.dataset.raw || '';
+            var plain = li.textContent;
+            if (plain.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+              hitNote = true;
+              var re = new RegExp(escapeRegExp(query), 'ig');
+              // 只在文本部分做高亮，保留原有的 <b>🧠</b> 等标签结构
+              li.innerHTML = raw.replace(re, function(m){ return '<mark class="search-hit">' + m + '</mark>'; });
+            } else {
+              li.innerHTML = raw;
+            }
+          });
+
+          var isMatch = hitJp || hitCn || hitCode || hitNote;
+          item.classList.toggle('search-hidden', !isMatch);
+          item.classList.toggle('search-match', isMatch);
+          if (isMatch) {
+            visibleCount++;
+            var sec = item.closest('section');
+            if (sec) sectionsWithMatch[sec.id] = true;
+          }
+        });
+
+        document.querySelectorAll('.wrap > section').forEach(function(sec){
+          sec.classList.toggle('search-hidden', !sectionsWithMatch[sec.id]);
+        });
+
+        searchCount.textContent = visibleCount ? (visibleCount + ' 条结果') : '';
+        searchNoResult.classList.toggle('show', visibleCount === 0);
+      }
+
+      var searchDebounce;
+      searchInput.addEventListener('input', function(){
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(runSearch, 120);
+      });
+      searchClear.addEventListener('click', function(){
+        searchInput.value = '';
+        runSearch();
+        searchInput.focus();
+      });
+      // 命中卡片时朗读按钮可能是新插入的高亮内容覆盖，重新绑定一次不影响功能，无需额外处理
     })();
   </script>
 </body>
