@@ -33,8 +33,13 @@
     }
     .nav-toolbar button:hover{color:var(--text);border-color:rgba(125,211,252,.6)}
 
-    /* 🔍 关键词搜索 */
-    .search-bar{display:flex;align-items:center;gap:8px;margin:6px 0 14px;position:relative}
+    /* 🔍 关键词搜索（吸顶：滚动时始终可见，随时可点） */
+    .search-bar{
+      display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:70;
+      margin:0 -16px 14px;padding:10px 16px;background:rgba(7,16,33,.94);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line)
+    }
     .search-bar input{
       flex:1;font:inherit;font-size:14px;padding:9px 36px 9px 14px;border-radius:999px;
       border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);outline:none
@@ -74,11 +79,16 @@
     .badge{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid rgba(125,211,252,.45);color:var(--accent)}
     .jp{font-weight:700}
     .cn{color:var(--muted)}
-    pre{position:relative;margin:8px 0 0;padding:10px 44px 10px 12px;background:var(--codebg);border:1px solid rgba(255,255,255,.10);border-radius:12px;overflow:auto}
+    pre{margin:8px 0 0;padding:8px 8px 8px 12px;background:var(--codebg);border:1px solid rgba(255,255,255,.10);border-radius:12px;display:flex;align-items:flex-start;gap:6px}
+    /* 例句文本单独滚动，不再和🔊按钮共用同一层，横向滑动时不会被按钮挡住 */
+    .code-scroll{overflow-x:auto;min-width:0;flex:1;-webkit-overflow-scrolling:touch}
+    .code-scroll::-webkit-scrollbar{height:4px}
+    .code-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
+    .code-scroll code{white-space:pre;display:inline-block}
 
-    /* 🔊 例句朗读按钮 */
+    /* 🔊 例句朗读按钮：作为独立列固定在右侧，不随文字横向滚动，也不会盖住文字 */
     .speak-btn{
-      position:absolute;top:8px;right:8px;width:28px;height:28px;flex-shrink:0;
+      width:28px;height:28px;flex-shrink:0;margin-top:1px;
       border-radius:50%;border:1px solid rgba(125,211,252,.45);background:rgba(255,255,255,.06);
       color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;
       font-size:13px;line-height:1;padding:0;transition:background .15s, transform .15s
@@ -109,7 +119,7 @@
     .fav-badge.zero{background:rgba(255,255,255,.14);color:var(--muted)}
 
     .fav-toggle-btn{
-      position:fixed;top:16px;right:70px;z-index:80;height:46px;min-width:46px;padding:0 12px;
+      position:fixed;top:64px;right:70px;z-index:80;height:46px;min-width:46px;padding:0 12px;
       border-radius:12px;background:var(--card);border:1px solid var(--line);
       box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;gap:5px;
       cursor:pointer;color:#facc15;font-size:18px
@@ -138,7 +148,7 @@
 
     /* ☰ 滑动后出现的悬浮汉堡按钮 */
     .hamburger-btn{
-      position:fixed;top:16px;right:16px;z-index:80;width:46px;height:46px;border-radius:12px;
+      position:fixed;top:64px;right:16px;z-index:80;width:46px;height:46px;border-radius:12px;
       background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.35);
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
       cursor:pointer;opacity:1;transform:translateY(0);pointer-events:auto;
@@ -180,8 +190,9 @@
   <div class="wrap">
     <header>
       <h1>JLPT语法</h1>
+    </header>
 
-      <div class="search-bar">
+    <div class="search-bar">
         <input type="text" id="searchInput" placeholder="🔍 搜索语法点、假名、中文释义或例句关键词……" autocomplete="off">
         <button type="button" id="searchClear" class="search-clear" aria-label="清除搜索">✕</button>
         <span class="search-count" id="searchCount"></span>
@@ -310,15 +321,6 @@
         </details>
 
         <details class="nav-group">
-          <summary><span><span class="nav-part">PART 6</span>终极易混表＋索引</span><span class="arrow">▾</span></summary>
-          <ul class="toc">
-            <li><a href="#top15">🔥 N3 Top15</a></li>
-            <li><a href="#n2-top20">🔥 N2 Top20</a></li>
-            <li><a href="#n1-top20">🔥 N1 Top20</a></li>
-          </ul>
-        </details>
-
-        <details class="nav-group">
           <summary><span><span class="nav-part">PART 7</span>N1 补完计划二（新增宇宙）</span><span class="arrow">▾</span></summary>
           <ul class="toc">
             <li><a href="#n1-extreme-eval">🏆 极致评价</a></li>
@@ -337,7 +339,6 @@
           </ul>
         </details>
       </nav>
-    </header>
 
     <!-- 滑动后出现的悬浮目录入口 -->
     <button type="button" id="hamburgerBtn" class="hamburger-btn" aria-label="打开目录" aria-expanded="false">
@@ -526,7 +527,7 @@
     <!-- ===================== PART 1：N3（下） ===================== -->
     <section id="n3-part1b">
       <h2>PART 1：N3 生活宇宙（下）</h2>
-      <p class="hint">状态变化 / 解释说明 / 感情表达 / 禁止义务 / 敬语 / N3 终极易混表。</p>
+      <p class="hint">状态变化 / 解释说明 / 感情表达 / 禁止义务 / 敬语。</p>
     </section>
 
     <section id="state">
@@ -578,39 +579,6 @@
       <div class="item"><div class="item-title"><span class="badge">②</span><span class="jp">～られる（尊敬）</span><span class="cn">简易尊敬</span></div><pre><code>先生が来られます。</code></pre></div>
       <div class="item"><div class="item-title"><span class="badge">③</span><span class="jp">お～する</span><span class="cn">我帮您（谦逊）</span></div><pre><code>ご案内します。</code></pre></div>
       <div class="item"><div class="item-title"><span class="badge">④</span><span class="jp">～させていただく</span><span class="cn">得到允许（谦逊表达）</span></div><pre><code>説明させていただきます。</code></pre><ul><li><b>🧠</b> 商务高频 / N2继续强化</li></ul></div>
-    </section>
-
-    <section id="top15">
-      <h2>🔥【N3 最容易混 Top 15】</h2>
-
-      <div class="item">
-        <div class="item-title"><span class="badge">✅</span><span class="jp">速查表</span><span class="cn">场景 → 文法</span></div>
-        <table>
-          <thead><tr><th>分类</th><th>场景</th><th>文法</th></tr></thead>
-          <tbody>
-            <tr><td>🌱 习惯</td><td>努力培养</td><td><code>ようにする</code></td></tr>
-            <tr><td>🌱 习惯</td><td>自然形成</td><td><code>ようになる</code></td></tr>
-            <tr><td>🌱 习惯</td><td>自己决定</td><td><code>ことにする</code></td></tr>
-            <tr><td>🌱 习惯</td><td>别人决定</td><td><code>ことになる</code></td></tr>
-            <tr><td>🤔 推测</td><td>自己观察</td><td><code>ようだ</code></td></tr>
-            <tr><td>🤔 推测</td><td>听说</td><td><code>らしい</code></td></tr>
-            <tr><td>🤔 推测</td><td>看起来</td><td><code>そうだ</code></td></tr>
-            <tr><td>🤔 推测</td><td>按理</td><td><code>はずだ</code></td></tr>
-            <tr><td>🔀 条件</td><td>万能如果</td><td><code>たら</code></td></tr>
-            <tr><td>🔀 条件</td><td>逻辑条件</td><td><code>ば</code></td></tr>
-            <tr><td>🔀 条件</td><td>话题条件</td><td><code>なら</code></td></tr>
-            <tr><td>🔀 条件</td><td>自然规律</td><td><code>と</code></td></tr>
-            <tr><td>❤️ 授受</td><td>我 → 别人</td><td><code>あげる</code></td></tr>
-            <tr><td>❤️ 授受</td><td>别人 → 我（主动）</td><td><code>くれる</code></td></tr>
-            <tr><td>❤️ 授受</td><td>我 ← 别人</td><td><code>もらう</code></td></tr>
-            <tr><td>🚶 状态</td><td>越来越（未来）</td><td><code>ていく</code></td></tr>
-            <tr><td>🚶 状态</td><td>越来越（到现在）</td><td><code>てくる</code></td></tr>
-            <tr><td>🚶 状态</td><td>保持状态</td><td><code>たまま</code></td></tr>
-            <tr><td>🚶 状态</td><td>放着不管</td><td><code>っぱなし</code></td></tr>
-          </tbody>
-        </table>
-        <p class="hint" style="margin-top:10px"><b>🎉 N3 完结</b></p>
-      </div>
     </section>
 
     <div class="divider"></div>
@@ -827,7 +795,7 @@
     <!-- ===================== PART 3：N2（下） ===================== -->
     <section id="n2-part3">
       <h2>PART 3：N2 Logic Universe（下）</h2>
-      <p class="hint">逆接对比 / 梦想与条件 / 后悔结果 / 限定强调 / という系列 / 顺序前提 / 易混Top20。</p>
+      <p class="hint">逆接对比 / 梦想与条件 / 后悔结果 / 限定强调 / という系列 / 顺序前提。</p>
     </section>
 
     <section id="n2-contrast">
@@ -966,38 +934,6 @@ A不代表B：からといって
         <pre><code>不做不知道：ないことには
 做完再决定：うえで
 必须先做：てからでないと</code></pre>
-      </div>
-    </section>
-
-    <section id="n2-top20">
-      <h2>🔥【N2 最易混 Top 20】</h2>
-      <div class="item">
-        <div class="item-title"><span class="badge">TOP20</span><span class="jp">场景 → 文法</span><span class="cn">速查表</span></div>
-        <table>
-          <thead><tr><th>场景</th><th>文法</th></tr></thead>
-          <tbody>
-            <tr><td>忍不住行动</td><td><code>ずにはいられない</code></td></tr>
-            <tr><td>心里放不下</td><td><code>てならない</code></td></tr>
-            <tr><td>烦得受不了</td><td><code>てしかたがない</code></td></tr>
-            <tr><td>想得要命</td><td><code>てたまらない</code></td></tr>
-            <tr><td>老板逼你</td><td><code>ざるを得ない</code></td></tr>
-            <tr><td>责任逼你</td><td><code>わけにはいかない</code></td></tr>
-            <tr><td>现实逼你</td><td><code>よりほかない</code></td></tr>
-            <tr><td>逻辑逼你</td><td><code>ないわけにはいかない</code></td></tr>
-            <tr><td>难怪</td><td><code>わけだ</code></td></tr>
-            <tr><td>按理</td><td><code>はずだ</code></td></tr>
-            <tr><td>一定</td><td><code>に違いない</code></td></tr>
-            <tr><td>百分百</td><td><code>に決まっている</code></td></tr>
-            <tr><td>即使也没用</td><td><code>たところで</code></td></tr>
-            <tr><td>A不代表B</td><td><code>からといって</code></td></tr>
-            <tr><td>预想相反</td><td><code>に反して</code></td></tr>
-            <tr><td>双面性</td><td><code>反面</code></td></tr>
-            <tr><td>悲剧原因</td><td><code>ばかりに</code></td></tr>
-            <tr><td>长期努力后</td><td><code>末に</code></td></tr>
-            <tr><td>没做成遗憾</td><td><code>ずじまい</code></td></tr>
-            <tr><td>折腾半天</td><td><code>あげく</code></td></tr>
-          </tbody>
-        </table>
       </div>
     </section>
 
@@ -1341,7 +1277,7 @@ A不代表B：からといって
     <!-- ===================== PART 5：N1（下） ===================== -->
     <section id="n1-part5">
       <h2>PART 5：N1 Advanced Universe（下）</h2>
-      <p class="hint">极端表达 / 文学书面 / 政治经济 / 限定强化 / N1易混Top20。</p>
+      <p class="hint">极端表达 / 文学书面 / 政治经济 / 限定强化。</p>
     </section>
 
     <section id="n1-extreme">
@@ -1700,39 +1636,6 @@ A不代表B：からといって
 大不了：までだ
 不至于：ほどのことではない
 没有办法：術がない</code></pre>
-      </div>
-    </section>
-
-    <section id="n1-top20">
-      <h2>🔥【N1 最易混 Top 20】</h2>
-
-      <div class="item">
-        <div class="item-title"><span class="badge">TOP20</span><span class="jp">场景 → 文法</span><span class="cn">速查表</span></div>
-        <table>
-          <thead><tr><th>场景</th><th>文法</th></tr></thead>
-          <tbody>
-            <tr><td>值得</td><td><code>に値する</code></td></tr>
-            <tr><td>足以值得</td><td><code>に足る</code></td></tr>
-            <tr><td>不值得</td><td><code>に足りない</code></td></tr>
-            <tr><td>于心不忍</td><td><code>に忍びない</code></td></tr>
-            <tr><td>无法承受</td><td><code>にたえない</code></td></tr>
-            <tr><td>正是</td><td><code>にほかならない</code></td></tr>
-            <tr><td>不过是</td><td><code>にすぎない</code></td></tr>
-            <tr><td>独有</td><td><code>ならでは</code></td></tr>
-            <tr><td>满身都是</td><td><code>まみれ</code></td></tr>
-            <tr><td>清一色</td><td><code>ずくめ</code></td></tr>
-            <tr><td>根据</td><td><code>に基づいて</code></td></tr>
-            <tr><td>依据现实</td><td><code>に即して</code></td></tr>
-            <tr><td>按照标准</td><td><code>に照らして</code></td></tr>
-            <tr><td>围绕</td><td><code>をめぐって</code></td></tr>
-            <tr><td>更别说</td><td><code>はおろか</code></td></tr>
-            <tr><td>根本不是</td><td><code>どころか</code></td></tr>
-            <tr><td>本以为</td><td><code>と思いきや</code></td></tr>
-            <tr><td>不仅</td><td><code>のみならず</code></td></tr>
-            <tr><td>不限于</td><td><code>に限らず</code></td></tr>
-            <tr><td>如果A还好</td><td><code>ならまだしも</code></td></tr>
-          </tbody>
-        </table>
       </div>
     </section>
 
@@ -2194,15 +2097,17 @@ A不代表B：からといって
       <div class="item"><div class="item-title"><span class="badge">①</span><span class="jp">～をもってしても</span><span class="cn">即使凭借……也（不能/无法）</span></div><pre><code>彼の実力をもってしても、この試合に勝つのは難しかった。</code></pre><ul><li><b>🧠</b> 后接消极结果，强调即便具备很强的条件也无法达成，语气郑重书面</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">②</span><span class="jp">～であろうと</span><span class="cn">无论是……都（让步）</span></div><pre><code>どんな理由であろうと、暴力は許されない。</code></pre><ul><li><b>🧠</b>「であっても」的书面郑重说法，强调无论前提如何结论都不变</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">③</span><span class="jp">いくら～たところで</span><span class="cn">无论怎么……（也不会有结果）</span></div><pre><code>いくら後悔したところで、もう取り返しがつかない。</code></pre><ul><li><b>🧠</b> 后项多接消极、否定的结果，强调徒劳无功</li></ul></div>
-      <div class="item"><div class="item-title"><span class="badge">④</span><span class="jp">～にかかわらず</span><span class="cn">不管……都/与……无关</span></div><pre><code>天候にかかわらず、試合は予定通り行われる。</code></pre></div>
+      <div class="item"><div class="item-title"><span class="badge">④</span><span class="jp">～にかかわらず</span><span class="cn">不管……都/与……无关</span></div><pre><code>天候にかかわらず、試合は予定通り行われる。</code></pre><ul><li><b>🧠</b> 前接对立词组（晴れ/雨、賛成/反対）或「〜の有無」，强调结果不受该因素左右</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑤</span><span class="jp">～はずなのに</span><span class="cn">明明应该……可是（结果与预期相反）</span></div><pre><code>今日は休みのはずなのに、会社から電話がかかってきた。</code></pre><ul><li><b>🧠</b> 前项是本该成立的预期，后项接与预期相反的意外结果</li></ul></div>
-      <div class="item"><div class="item-title"><span class="badge">⑥</span><span class="jp">それでも</span><span class="cn">即便如此，尽管这样</span></div><pre><code>何度失敗しても、それでも彼はあきらめなかった。</code></pre></div>
+      <div class="item"><div class="item-title"><span class="badge">⑥</span><span class="jp">それでも</span><span class="cn">即便如此，尽管这样</span></div><pre><code>何度失敗しても、それでも彼はあきらめなかった。</code></pre><ul><li><b>🧠</b> 独立接续词，放句首承接前文的不利情况，后接不受影响、仍然坚持的结果</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑦</span><span class="jp">～ようと（～ようが）</span><span class="cn">无论……都（不管怎样也……）</span></div><pre><code>周りに何と言われようと、自分の信念を貫くつもりだ。</code></pre><ul><li><b>🧠</b> 常与「だれが」「なんと」「どんなに」等疑问词呼应，表示无论怎样结论都不变</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑧</span><span class="jp">～ものではない</span><span class="cn">不应该……（社会常理、道德上不该做）</span></div><pre><code>人の悪口を言うものではない。</code></pre><ul><li><b>🧠</b> 表达一般性的社会常识或道德劝诫，语气委婉但带有告诫意味</li></ul></div>
-      <div class="item"><div class="item-title"><span class="badge">⑨</span><span class="jp">～からには</span><span class="cn">既然……就（必然结果、决心）</span></div><pre><code>やると言ったからには、最後までやり遂げるつもりだ。</code></pre></div>
+      <div class="item"><div class="item-title"><span class="badge">⑨</span><span class="jp">～からには</span><span class="cn">既然……就（必然结果、决心）</span></div><pre><code>やると言ったからには、最後までやり遂げるつもりだ。</code></pre><ul><li><b>🧠</b> 后项常接「〜べきだ」「〜つもりだ」「〜なければならない」，带有说话人的决心或义务感</li></ul></div>
       <div class="item"><div class="item-title"><span class="badge">⑩</span><span class="jp">～わけなので</span><span class="cn">正因为……所以（承接前文得出结论）</span></div><pre><code>明日は試験があるわけなので、今日は早く寝ます。</code></pre><ul><li><b>🧠</b> 承接前面说明的情况，得出理所当然的结论，语气偏口语</li></ul></div>
-      <div class="item"><div class="item-title"><span class="badge">⑪</span><span class="jp">～べきなので</span><span class="cn">因为应该……所以</span></div><pre><code>健康は大切にするべきなので、無理なダイエットはやめた方がいい。</code></pre></div>
-      <div class="item"><div class="item-title"><span class="badge">⑫</span><span class="jp">それとも</span><span class="cn">或者，还是（二选一，多用于疑问句）</span></div><pre><code>コーヒーにしますか、それとも紅茶にしますか。</code></pre></div>
+      <div class="item"><div class="item-title"><span class="badge">⑪</span><span class="jp">～べきなので</span><span class="cn">因为应该……所以</span></div><pre><code>健康は大切にするべきなので、無理なダイエットはやめた方がいい。</code></pre><ul><li><b>🧠</b> 「べきだ」（应当）＋「なので」，比⑩「わけなので」多一层"义务/道理上应该"的语感</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑫</span><span class="jp">それとも</span><span class="cn">或者，还是（二选一，多用于疑问句）</span></div><pre><code>コーヒーにしますか、それとも紅茶にしますか。</code></pre><ul><li><b>🧠</b> 连接两个疑问句表示"二选一"，不能像「または」一样连接普通名词并列</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑬</span><span class="jp">～を(ものと)もせず（に）</span><span class="cn">不顾……，不把……当回事</span></div><pre><code>その選手は、怪我をものともせず、最後まで走りきった。</code></pre><ul><li><b>🧠</b> 「ものともせず」＝「と（当作）＋も（强调）＋せず（不做）」，「もの」可省略为「をともせず」，两者意思相同；后项多接不顾困难、伤痛依然坚持的褒义结果</li></ul></div>
+      <div class="item"><div class="item-title"><span class="badge">⑭</span><span class="jp">～を…とせず</span><span class="cn">不把……当作……</span></div><pre><code>彼は怪我を苦とせず、練習を続けた。</code></pre><ul><li><b>🧠</b>「とする」（当作/视为）的否定形，A・Bを自由代入，如「苦とせず」「良しとせず」「失敗とせず」等，比⑬更泛用</li></ul></div>
 
       <div class="item">
         <div class="item-title"><span class="badge">⚔️</span><span class="jp">让步逆接补完口诀</span><span class="cn">一行记忆</span></div>
@@ -2217,7 +2122,9 @@ A不代表B：からといって
 既然：からには
 正因为：わけなので
 应该所以：べきなので
-或者：それとも</code></pre>
+或者：それとも
+不顾：をものともせず
+不当回事：を…とせず</code></pre>
       </div>
     </section>
 
@@ -2346,6 +2253,17 @@ A不代表B：からといって
           if (pre.querySelector('.speak-btn')) return;
           var text = code.textContent.trim();
           if (!text) return;
+          // 多行口诀/汇总块不是单句例句，朗读会很混乱，跳过不加🔊
+          if (text.indexOf('\n') !== -1) return;
+
+          // 把例句单独包一层可横向滚动的容器，和🔊按钮分开，
+          // 这样例句向左滑动查看时不会被按钮遮住文字
+          if (!code.parentElement.classList.contains('code-scroll')) {
+            var scrollWrap = document.createElement('span');
+            scrollWrap.className = 'code-scroll';
+            pre.insertBefore(scrollWrap, code);
+            scrollWrap.appendChild(code);
+          }
 
           var btn = document.createElement('button');
           btn.type = 'button';
