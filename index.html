@@ -2253,17 +2253,19 @@ A不代表B：からといって
           if (pre.querySelector('.speak-btn')) return;
           var text = code.textContent.trim();
           if (!text) return;
-          // 多行口诀/汇总块不是单句例句，朗读会很混乱，跳过不加🔊
-          if (text.indexOf('\n') !== -1) return;
 
-          // 把例句单独包一层可横向滚动的容器，和🔊按钮分开，
-          // 这样例句向左滑动查看时不会被按钮遮住文字
+          // 把例句单独包一层可横向滚动的容器，防止长句/多行内容把 <pre>（display:flex）撑爆，
+          // 导致手机端页面整体超宽。不管是单句例句还是多行口诀都需要这层，
+          // 否则没有🔊按钮的多行块就会因为缺少这层滚动容器而溢出。
           if (!code.parentElement.classList.contains('code-scroll')) {
             var scrollWrap = document.createElement('span');
             scrollWrap.className = 'code-scroll';
             pre.insertBefore(scrollWrap, code);
             scrollWrap.appendChild(code);
           }
+
+          // 多行口诀/汇总块不是单句例句，朗读会很混乱，跳过不加🔊（但上面的滚动容器仍然保留）
+          if (text.indexOf('\n') !== -1) return;
 
           var btn = document.createElement('button');
           btn.type = 'button';
