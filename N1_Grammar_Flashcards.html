@@ -82,7 +82,13 @@ save();
 let mode='daily',justCI=false,xs=new Set(),last=null,view='home',Q=[],total=0,done=0,flipped=false,again=new Set();
 const dueList=()=>Object.keys(S.c).map(Number).filter(i=>S.c[i].due<=T).sort((a,b)=>pos[a]-pos[b]);
 const newList=()=>S.plan.ids.filter(i=>!S.c[i]);
-function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ja-JP';u.rate=S.cfg.rate;const v=speechSynthesis.getVoices().find(v=>(v.lang||'').replace('_','-').startsWith('ja'));if(v)u.voice=v;speechSynthesis.speak(u)}
+let voices=[];const TTS='speechSynthesis' in window;
+const BAD=/Eddy|Flo\b|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Wobble|Zarvox|Trinoids|Whisper|Organ|Superstar|Jester|Albert|Fred|Junior|Kathy|Ralph/i,GOOD=/Kyoko|Otoya|O-Ren|Hattori|Nanami|Haruka|Ayumi|Sayaka|Ichiro|Google|Premium|Enhanced|Siri|Natural|Neural/i;
+const vScore=v=>(GOOD.test(v.name)?10:0)+(/premium|enhanced|siri|natural|neural/i.test(v.name)?5:0)-(BAD.test(v.name)?20:0);
+function loadV(){voices=TTS?speechSynthesis.getVoices().filter(v=>(v.lang||'').replace('_','-').toLowerCase().startsWith('ja')):[]}
+loadV();if(TTS)speechSynthesis.onvoiceschanged=()=>{loadV();if(view==='home')render()};
+function pickVoice(){return voices.find(v=>v.name===S.cfg.voice)||[...voices].sort((a,b)=>vScore(b)-vScore(a))[0]}
+function speak(t){if(!TTS)return;t=String(t).replace(/[…⋯]+/g,'、').replace(/[～〜]/g,'').replace(/／/g,'、');speechSynthesis.cancel();setTimeout(()=>{const u=new SpeechSynthesisUtterance(t);u.lang='ja-JP';u.rate=S.cfg.rate;const v=pickVoice();if(v)u.voice=v;speechSynthesis.speak(u)},60)}
 const say=c=>c.tr.replace(/[～〜…（）()]/g,'').replace(/[・／]/g,'、');
 function streak(){let n=0,d=S.ci.includes(T)?T:addDays(T,-1);while(S.ci.includes(d)){n++;d=addDays(d,-1)}return n}
 function calendar(){const [y,m]=T.split('-').map(Number),first=new Date(y,m-1,1).getDay(),len=new Date(y,m,0).getDate();
@@ -122,6 +128,7 @@ ${due+nw===0&&canMore?`<button class="btn ghost" style="margin-top:8px" data-a="
 ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只练难点（${hc}）</button>`:''}
 <div class="box" style="margin-top:12px"><h3>⚙️ 设置</h3>
 <label>每日新学语法数<select data-s="n">${[5,10,15,20].map(n=>`<option ${n===S.cfg.n?'selected':''}>${n}</option>`).join('')}</select></label>
+<label>朗读声音<span><select data-s="voice" style="max-width:190px"><option value="">自动（推荐）</option>${voices.map(v=>`<option value="${esc(v.name)}" ${v.name===S.cfg.voice?'selected':''}>${esc(v.name)}</option>`).join('')}</select> <button class="btn sm ghost" data-a="test">试听</button></span></label>
 <label>显示注音<input type="checkbox" data-s="furi" ${S.cfg.furi?'checked':''}></label>
 <label>翻面后自动朗读第一个例句<input type="checkbox" data-s="auto" ${S.cfg.auto?'checked':''}></label>
 <label>语速 ${S.cfg.rate}<input type="range" min=".5" max="1.1" step=".05" value="${S.cfg.rate}" data-s="rate"></label>
@@ -145,6 +152,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
  if(a==='sp'){e.stopPropagation();const c=D.cards[Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
  if(a==='ci'){if(!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();render()}}
  else if(a==='go')begin();
+ else if(a==='test')speak('今日は、いい天気ですね。')
  else if(a==='gohard')begin('hard');
  else if(a==='skip')skip();
  else if(a==='hd'){const id=Q[0];if(S.hard[id])delete S.hard[id];else{S.hard[id]=1;const c=S.c[id];if(c){c.ok=0;if(c.due>addDays(T,1))c.due=addDays(T,1)}}save();render()}
@@ -162,7 +170,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
 document.addEventListener('change',e=>{if(e.target.id==='impf'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.c||!x.ci)throw 0;if(confirm('导入将覆盖当前进度，继续？')){S=Object.assign({cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T},x);S.last=T;S.plan={d:T,ids:pending().slice(0,S.cfg.n)};save();render()}}catch(_){alert('文件格式不正确')}};r.readAsText(f);return}
 const k=e.target.dataset.s;if(!k)return;
  if(/^lv[123]$/.test(k)){const l=+k[2],set=new Set(S.cfg.lv);e.target.checked?set.add(l):set.delete(l);if(!set.size){render();return}S.cfg.lv=[...set].sort();S.plan={d:T,ids:pending().slice(0,S.cfg.n)};save();render();return}
- S.cfg[k]=(k==='furi'||k==='auto')?e.target.checked:+e.target.value;save();render()});
+ S.cfg[k]=(k==='furi'||k==='auto')?e.target.checked:k==='voice'?e.target.value:+e.target.value;save();render()});
 document.addEventListener('keydown',e=>{if(view!=='study')return;if(e.key===' '){e.preventDefault();flipped=!flipped;render()}else if(e.key==='z'||e.key==='Z')undo();else if(flipped&&'123'.includes(e.key))rate(+e.key-1)});
 render();
 </script>
