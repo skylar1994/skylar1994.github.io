@@ -55,6 +55,12 @@ select,input[type=range]{font:inherit;background:rgba(255,255,255,.06);color:var
 .rate button{font:inherit;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;line-height:1.3}
 .rate small{display:block;color:var(--muted);font-size:11px}
 .r0{border-color:rgba(248,113,113,.6)!important}.r1{border-color:rgba(251,191,36,.6)!important}.r2{border-color:rgba(74,222,128,.6)!important}
+.stats .st{cursor:pointer}.stats .st:active{background:rgba(125,211,252,.12)}
+.stats small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.li{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:6px 0;background:rgba(15,27,51,.55);cursor:pointer}
+.li:active{background:rgba(125,211,252,.12)}
+.li .lt{display:flex;flex-direction:column;min-width:0}.li .cn{font-size:12px}
+.meta{font-size:12px;color:var(--accent);white-space:nowrap;text-align:right}
 </style>
 </head>
 <body>
@@ -79,7 +85,7 @@ const on=i=>D.cards[i].lv===1;
 const pending=()=>D.seq.filter(i=>!S.c[i]&&on(i));
 if(!S.plan||S.plan.d!==T){S.plan={d:T,ids:pending().slice(0,S.cfg.n)}}
 save();
-let mode='daily',justCI=false,xs=new Set(),last=null,view='home',Q=[],total=0,done=0,flipped=false,again=new Set();
+let listKey='',listIds=[],det=null,hist=[],mode='daily',justCI=false,xs=new Set(),last=null,view='home',Q=[],total=0,done=0,flipped=false,again=new Set();
 const dueList=()=>Object.keys(S.c).map(Number).filter(i=>S.c[i].due<=T).sort((a,b)=>pos[a]-pos[b]);
 const newList=()=>S.plan.ids.filter(i=>!S.c[i]);
 let voices=[];const TTS='speechSynthesis' in window;
@@ -112,8 +118,8 @@ function rate(q){snap();const id=Q.shift(),r=calc(id,q),c=S.c[id]||{lap:0};
  if(r.rq){again.add(id);Q.splice(Math.min(3,Q.length),0,id)}else{again.delete(id);done++}
  next()}
 function skip(){snap();Q.shift();total--;next()}
-function render(){const A=document.getElementById('app');A.className='wrap'+(S.cfg.furi?'':' nofuri');A.innerHTML=view==='home'?home():study()}
-function home(){const due=dueList().length,nw=newList().length,tom=Object.values(S.c).filter(c=>c.due===addDays(T,1)).length,learned=Object.keys(S.c).filter(i=>on(+i)).length,totalOn=D.seq.filter(on).length,mast=Object.values(S.c).filter(c=>c.st>=6).length,hc=Object.keys(S.hard).length;let ci=S.ci.includes(T);
+function render(){const A=document.getElementById('app');A.className='wrap'+(S.cfg.furi?'':' nofuri');A.innerHTML=view==='home'?home():view==='list'?listView():view==='detail'?detail():study()}
+function home(){const due=dueList().length,nw=newList().length,tom=Object.values(S.c).filter(c=>c.due===addDays(T,1)).length,learned=Object.keys(S.c).filter(i=>on(+i)).length,totalOn=D.seq.filter(on).length,mast=Object.values(S.c).filter(c=>c.st>=6).length,hc=Object.keys(S.hard).length,pool=Object.keys(S.c).length,pt=S.plan.ids.length,dt=S.plan.ids.filter(i=>S.c[i]).length;let ci=S.ci.includes(T);
  if(!ci&&!clockBack&&Object.keys(S.c).length&&due+nw===0){S.ci.push(T);save();ci=true}
  const canMore=pending().length>0;
  return `<div class="top"><h1>🃏 N1语法闪卡</h1><a href="index.html">← 语法总览</a></div>
@@ -121,8 +127,8 @@ function home(){const due=dueList().length,nw=newList().length,tom=Object.values
 <span class="tag ${ci?'':'rv'}">${ci?'今日已签到 ✓':'学完自动签到'}</span></div>
 <div class="cal">${calendar()}</div>
 <div class="muted" style="margin-top:8px">${clockBack?'⚠️ 检测到系统时间被回调，暂不可签到。':'学完今日全部卡片（复习+新学，跳过也算过完一遍）后自动签到；过期不可补签。'}</div></div>
-${justCI?'<div class="box center">🎉 今日任务完成，已自动签到！</div>':''}<div class="stats" style="grid-template-columns:repeat(4,1fr)"><div><b>${due}</b>待复习</div><div><b>${nw}</b>今日新学</div><div><b>${hc}</b>🚩难点</div><div><b>${learned}</b>已学/${totalOn}</div></div>
-<div class="muted" style="margin:-4px 0 10px;text-align:center">明日复习 ${tom} 张 · 已掌握 ${mast} 张</div>
+${justCI?'<div class="box center">🎉 今日任务完成，已自动签到！</div>':''}<div class="stats" style="grid-template-columns:repeat(4,1fr)"><div class="st" data-a="list" data-k="due"><b>${due}</b>待复习<small>计划中 ${pool}</small></div><div class="st" data-a="list" data-k="new"><b>${nw}</b>今日新学<small>已学 ${dt}/${pt}</small></div><div class="st" data-a="list" data-k="hard"><b>${hc}</b>🚩难点<small>点击查看</small></div><div class="st" data-a="list" data-k="learned"><b>${learned}</b>已学<small>共 ${totalOn}</small></div></div>
+<div class="muted" style="margin:-4px 0 10px;text-align:center">明日复习 ${tom} 张 · 已掌握 ${mast} 张 · 点上面的数字可查看列表</div>
 <button class="btn" data-a="go" ${due+nw?'':'disabled'}>${due+nw?'开始学习（复习 '+due+' + 新学 '+nw+'）':'🎉 今日任务已完成'}</button>
 ${due+nw===0&&canMore?`<button class="btn ghost" style="margin-top:8px" data-a="more">再学一组新语法（${Math.min(S.cfg.n,pending().length)}个）</button>`:''}
 ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只练难点（${hc}）</button>`:''}
@@ -134,28 +140,61 @@ ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只�
 <label>语速 ${S.cfg.rate}<input type="range" min=".5" max="1.1" step=".05" value="${S.cfg.rate}" data-s="rate"></label>
 <div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。改动“每日数量”从明天起生效。相似的语法排在同一天学习。</div>
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" data-a="exp">导出进度</button><button class="btn sm ghost" data-a="imp">导入进度</button><button class="btn sm ghost" data-a="reset">重置全部进度</button></div><input type="file" id="impf" accept=".json" hidden></div>`}
+const ctrlHtml=id=>`<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button><button class="btn sm ghost" data-a="skip">⏭ 跳过，下次再学</button></div>`;
+function backHtml(c,canOpen){let h=`<div class="center muted">${esc(c.tr)}</div><hr style="border:0;border-top:1px solid var(--line)"><div class="mean center">${esc(c.cn)}</div>`;
+ c.ex.forEach((e,k)=>{h+=`<div class="ex"><div class="j"><span>${esc(e.j).replace(/\n/g,'<br>')}</span><button class="spk" data-a="sp" data-e="${k}">🔊</button></div><div class="z">${esc(e.z)}</div></div>`});
+ c.tip.forEach(t=>h+=`<div class="tip">🧠 ${esc(t)}</div>`);
+ if(c.sim.length)h+=`<div class="tip" style="margin-top:12px">🔍 易混对比</div>`+c.sim.map(j=>{const o=D.cards[j],op=xs.has(j);return `<div class="smr" data-a="xs" data-j="${j}"><span class="tag" style="margin-right:4px">N${o.lv}</span><span class="jp">${o.t}</span> <span class="cn">${esc(o.cn)}</span><span class="arr">${op?'▲':'▼'}</span>${op?`<div class="ex" data-a="nop"><div class="j"><span>${esc(o.ex[0].j).replace(/\n/g,'<br>')}</span><button class="spk" data-a="sp2" data-j="${j}">🔊</button></div><div class="z">${esc(o.ex[0].z)}</div>${canOpen&&o.lv===1?`<button class="link" data-a="det" data-id="${j}" data-from="sim" style="margin-top:4px">打开这张卡 →</button>`:''}</div>`:''}</div>`}).join('');
+ return h}
 function study(){const id=Q[0],c=D.cards[id],isNew=!S.c[id],pct=total?Math.round(done/total*100):0;
  let h=`<div class="top"><button class="link" data-a="home">← 返回</button>${last?'<button class="link" data-a="undo">↩ 撤销</button>':''}<div class="bar"><i style="width:${pct}%"></i></div><span class="muted">${done}/${total}</span></div>
 <div class="fc" data-a="flip"><div class="row"><span><span class="tag ${isNew?'':'rv'}">${isNew?'新学':'复习'}</span>${S.hard[id]?' <span class="tag rv">🚩难点 '+((S.c[id]&&S.c[id].ok)||0)+'/5</span>':''}</span><button class="spk" data-a="sp" data-e="t">🔊</button></div>
 <div class="ft">${c.t}</div>`;
- const ctrl=`<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button><button class="btn sm ghost" data-a="skip">⏭ 跳过，下次再学</button></div>`;
+ const ctrl=ctrlHtml(id);
  if(!flipped)return h+`<div class="center muted">点击卡片查看释义与例句</div></div>`+ctrl;
- h+=`<div class="center muted">${esc(c.tr)}</div><hr style="border:0;border-top:1px solid var(--line)"><div class="mean center">${esc(c.cn)}</div>`;
- c.ex.forEach((e,k)=>{h+=`<div class="ex"><div class="j"><span>${esc(e.j).replace(/\n/g,'<br>')}</span><button class="spk" data-a="sp" data-e="${k}">🔊</button></div><div class="z">${esc(e.z)}</div></div>`});
- c.tip.forEach(t=>h+=`<div class="tip">🧠 ${esc(t)}</div>`);
- if(c.sim.length)h+=`<div class="tip" style="margin-top:12px">🔍 易混对比</div>`+c.sim.map(j=>{const o=D.cards[j],op=xs.has(j);return `<div class="smr" data-a="xs" data-j="${j}"><span class="tag" style="margin-right:4px">N${o.lv}</span><span class="jp">${o.t}</span> <span class="cn">${esc(o.cn)}</span><span class="arr">${op?'▲':'▼'}</span>${op?`<div class="ex" data-a="nop"><div class="j"><span>${esc(o.ex[0].j).replace(/\n/g,'<br>')}</span><button class="spk" data-a="sp2" data-j="${j}">🔊</button></div><div class="z">${esc(o.ex[0].z)}</div></div>`:''}</div>`}).join('');
+ h+=backHtml(c,false);
  h+=`</div><div class="rate">`+[['忘了','r0'],['模糊','r1'],['记得','r2']].map((x,q)=>`<button class="${x[1]}" data-a="r" data-q="${q}">${x[0]}<small>${label(id,q)}</small></button>`).join('')+'</div>'+ctrl;
  return h}
+const dueLbl=i=>{const c=S.c[i];if(!c)return '';const n=Math.round((new Date(c.due)-new Date(T))/864e5);return n<=0?'今天复习':n===1?'明天复习':n+'天后复习'};
+const okOf=i=>(S.c[i]&&S.c[i].ok)||0;
+function items(k){
+ if(k==='due')return Object.keys(S.c).map(Number).sort((a,b)=>S.c[a].due.localeCompare(S.c[b].due)||pos[a]-pos[b]);
+ if(k==='new')return [...S.plan.ids];
+ if(k==='hard')return Object.keys(S.hard).map(Number).sort((a,b)=>pos[a]-pos[b]);
+ return Object.keys(S.c).map(Number).sort((a,b)=>pos[a]-pos[b])}
+const LT={due:'待复习',new:'今日新学',hard:'🚩难点',learned:'已学语法'};
+function meta(k,i){const s=S.c[i];
+ if(k==='new')return s?'✓ 已学':'待学';
+ if(k==='hard')return '🚩'+okOf(i)+'/5'+(s?'<br>'+dueLbl(i):'');
+ if(k==='learned')return (S.hard[i]?'🚩 ':'')+'<br>'+dueLbl(i);
+ return (S.hard[i]?'🚩'+okOf(i)+'/5<br>':'')+dueLbl(i)}
+function listView(){const ids=listIds;let h=`<div class="top"><button class="link" data-a="home">← 返回</button><h1 style="font-size:18px">${LT[listKey]}（${ids.length}）</h1><span></span></div>`;
+ if(listKey==='due'){const tm=addDays(T,1);const nd=ids.filter(i=>S.c[i].due<=T).length;h+=`<div class="muted" style="margin-bottom:6px">今天需复习 ${nd} 张；其余是已排期的语法（包括今天刚学完的），到期后自动进入复习。</div>`}
+ if(listKey==='new')h+=`<div class="muted" style="margin-bottom:6px">今天的语法列表，已学完的会自动进入「待复习」排期。</div>`;
+ if(!ids.length)return h+'<div class="box center muted">还没有内容</div>';
+ let g=-1;const tm=addDays(T,1);
+ ids.forEach(i=>{if(listKey==='due'){const d=S.c[i].due,n=d<=T?0:d===tm?1:2;if(n!==g){g=n;h+=`<div class="tip" style="margin-top:10px">${['今天需复习','明天复习','之后'][n]}</div>`}}
+  const c=D.cards[i];h+=`<div class="li" data-a="det" data-id="${i}"><div class="lt"><span class="jp">${c.t}</span><span class="cn">${esc(c.cn)}</span></div><span class="meta">${meta(listKey,i)}</span></div>`});
+ return h}
+function detail(){const id=det,c=D.cards[id],s=S.c[id],idx=listIds.indexOf(id),nav=idx>=0&&!hist.length;
+ return `<div class="top"><button class="link" data-a="lst">← 返回${hist.length?'上一张':'列表'}</button><span class="muted">${nav?(idx+1)+' / '+listIds.length:''}</span></div>
+<div class="fc" style="cursor:default"><div class="row"><span>${s?'<span class="tag rv">'+dueLbl(id)+'</span>':'<span class="tag">未学</span>'}${S.hard[id]?' <span class="tag rv">🚩难点 '+okOf(id)+'/5</span>':''}</span><button class="spk" data-a="sp" data-e="t">🔊</button></div>
+<div class="ft">${c.t}</div>${backHtml(c,true)}</div>
+<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button>${nav?`<span><button class="btn sm ghost" data-a="prev" ${idx<=0?'disabled':''}>← 上一个</button> <button class="btn sm ghost" data-a="next" ${idx>=listIds.length-1?'disabled':''}>下一个 →</button></span>`:''}</div>`}
 function undo(){if(!last)return;const id=last.id;if(last.prev)S.c[id]=last.prev;else delete S.c[id];if(last.hard)S.hard[id]=1;else delete S.hard[id];Q=last.Q;done=last.done;total=last.total;again=new Set(last.again);last=null;save();flipped=false;view='study';render()}
 function begin(m){mode=m||'daily';justCI=false;last=null;xs.clear();Q=mode==='hard'?Object.keys(S.hard).map(Number):[...dueList(),...newList()];const hs=i=>S.hard[i]?0:1;Q.sort((a,b)=>hs(a)-hs(b)||pos[a]-pos[b]);total=Q.length;done=0;again.clear();flipped=false;view=Q.length?'study':'home';render()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
- if(a==='sp'){e.stopPropagation();const c=D.cards[Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
+ if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
  if(a==='ci'){if(!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();render()}}
  else if(a==='go')begin();
  else if(a==='test')speak('今日は、いい天気ですね。')
  else if(a==='gohard')begin('hard');
  else if(a==='skip')skip();
- else if(a==='hd'){const id=Q[0];if(S.hard[id])delete S.hard[id];else{S.hard[id]=1;const c=S.c[id];if(c){c.ok=0;if(c.due>addDays(T,1))c.due=addDays(T,1)}}save();render()}
+ else if(a==='list'){listKey=b.dataset.k;listIds=items(listKey);view='list';window.scrollTo(0,0);render()}
+ else if(a==='det'){if(b.dataset.from==='sim')hist.push(det);else hist=[];det=+b.dataset.id;xs.clear();view='detail';window.scrollTo(0,0);render()}
+ else if(a==='lst'){xs.clear();if(hist.length)det=hist.pop();else view='list';window.scrollTo(0,0);render()}
+ else if(a==='prev'||a==='next'){const k=listIds.indexOf(det)+(a==='next'?1:-1);if(k>=0&&k<listIds.length){det=listIds[k];xs.clear();window.scrollTo(0,0);render()}}
+ else if(a==='hd'){const id=view==='detail'?det:Q[0];if(S.hard[id])delete S.hard[id];else{S.hard[id]=1;const c=S.c[id];if(c){c.ok=0;if(c.due>addDays(T,1))c.due=addDays(T,1)}}save();render()}
  else if(a==='more'){S.plan.ids=S.plan.ids.concat(pending().slice(0,S.cfg.n));save();begin()}
  else if(a==='home'){view='home';render()}
  else if(a==='flip'){if(!flipped){flipped=true;render();if(S.cfg.auto)speak(D.cards[Q[0]].ex[0].j.split('\n')[0])}}
