@@ -61,6 +61,13 @@ select,input[type=range]{font:inherit;background:rgba(255,255,255,.06);color:var
 .li:active{background:rgba(125,211,252,.12)}
 .li .lt{display:flex;flex-direction:column;min-width:0}.li .cn{font-size:12px}
 .meta{font-size:12px;color:var(--accent);white-space:nowrap;text-align:right}
+.opt{display:block;width:100%;text-align:left;font:inherit;padding:11px 12px;margin:8px 0;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer}
+.opt:disabled{cursor:default;color:var(--text)}
+.opt.ok{border-color:var(--ok);background:rgba(74,222,128,.16)}.opt.bad{border-color:var(--bad);background:rgba(248,113,113,.16)}
+.fb{margin:10px 0;padding:8px 10px;border-radius:10px;font-weight:600}.fb.ok{background:rgba(74,222,128,.14);color:var(--ok)}.fb.bad{background:rgba(248,113,113,.14);color:var(--bad)}
+@keyframes inR{from{transform:translateX(36px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inL{from{transform:translateX(-36px);opacity:0}to{transform:none;opacity:1}}
+.fc.inR{animation:inR .22s ease}.fc.inL{animation:inL .22s ease}
 </style>
 </head>
 <body>
@@ -83,11 +90,13 @@ const T=clockBack?S.last:real;
 const pos={};D.seq.forEach((id,i)=>pos[id]=i);
 const on=i=>D.cards[i].lv===1;
 const pending=()=>D.seq.filter(i=>!S.c[i]&&on(i));
-if(!S.plan||S.plan.d!==T){S.plan={d:T,ids:pending().slice(0,S.cfg.n)}}
+if(!S.plan||S.plan.d!==T){S.plan={d:T,ids:pending().slice(0,S.cfg.n),seen:[]}}
+S.plan.seen=S.plan.seen||[];
 save();
-let listKey='',listIds=[],det=null,hist=[],mode='daily',justCI=false,xs=new Set(),last=null,view='home',Q=[],total=0,done=0,flipped=false,again=new Set();
+let swDir=0,qopts=[],qsel=null,qcur=null,listKey='',listIds=[],det=null,hist=[],mode='daily',justCI=false,xs=new Set(),last=null,view='home',Q=[],total=0,done=0,flipped=false,again=new Set();
 const dueList=()=>Object.keys(S.c).map(Number).filter(i=>S.c[i].due<=T).sort((a,b)=>pos[a]-pos[b]);
-const newList=()=>S.plan.ids.filter(i=>!S.c[i]);
+const newList=()=>S.plan.ids.filter(i=>!S.c[i]&&!S.plan.seen.includes(i));
+const quizList=()=>S.plan.seen.filter(i=>!S.c[i]);
 let voices=[];const TTS='speechSynthesis' in window;
 const BAD=/Eddy|Flo\b|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Wobble|Zarvox|Trinoids|Whisper|Organ|Superstar|Jester|Albert|Fred|Junior|Kathy|Ralph/i,GOOD=/Kyoko|Otoya|O-Ren|Hattori|Nanami|Haruka|Ayumi|Sayaka|Ichiro|Google|Premium|Enhanced|Siri|Natural|Neural/i;
 const vScore=v=>(GOOD.test(v.name)?10:0)+(/premium|enhanced|siri|natural|neural/i.test(v.name)?5:0)-(BAD.test(v.name)?20:0);
@@ -109,8 +118,33 @@ function calc(id,q){const o=S.c[id]||{st:0,ok:0};let st=o.st,ok=o.ok||0,hard=!!S
  else{st=q===1?Math.max(1,st):Math.min(7,st+1);due=addDays(T,INT[st-1])}
  return {st,ok,hard,rq,due}}
 function label(id,q){const r=calc(id,q);const n=Math.round((new Date(r.due)-new Date(T))/864e5);return (r.rq?'本轮再现 · ':'')+(n===1?'明天':n+'天后')+(r.hard&&!r.rq?' 🚩'+r.ok+'/5':'')+(S.hard[id]&&!r.hard?' 🎓毕业':'')}
-function snap(){const id=Q[0];last={id,prev:S.c[id]?JSON.parse(JSON.stringify(S.c[id])):null,hard:!!S.hard[id],Q:[...Q],done,total,again:[...again]};xs.clear()}
-function next(){save();flipped=false;if(!Q.length){if(mode==='daily'&&!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();justCI=true}view='home'}render()}
+function snap(){const id=Q[0];last={id,prev:S.c[id]?JSON.parse(JSON.stringify(S.c[id])):null,hard:!!S.hard[id],Q:[...Q],done,total,again:[...again],seen:[...S.plan.seen]};xs.clear()}
+function tryCI(){if(!clockBack&&S.plan.sessDone&&!quizList().length&&!S.ci.includes(T)){S.ci.push(T);save();justCI=true}}
+function next(){save();flipped=false;if(!Q.length){if(mode==='daily'){S.plan.sessDone=true;save();if(quizList().length){startQuiz();return}}tryCI();view='home'}render()}
+function seen(){snap();const id=Q.shift();if(!S.plan.seen.includes(id))S.plan.seen.push(id);done++;next()}
+function startQuiz(){last=null;xs.clear();qopts=[];qsel=null;qcur=null;view='quiz';window.scrollTo(0,0);render()}
+function makeOpts(id){const c=D.cards[id],nz=s=>s.replace(/[…～〜\s（）()]/g,''),used=new Set([nz(c.cn)]),out=[];
+ const add=j=>{if(out.length>=3||j===id)return;const n=nz(D.cards[j].cn);if(!n||used.has(n))return;used.add(n);out.push(j)};
+ c.sim.forEach(add);const p=pos[id];
+ for(let k=1;k<=12&&out.length<3;k++)[p-k,p+k].forEach(q=>{if(q>=0&&q<D.seq.length)add(D.seq[q])});
+ let g=0;while(out.length<3&&g++<500)add(D.seq[Math.floor(Math.random()*D.seq.length)]);
+ const a=[id,...out];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function answer(o){if(qsel!==null||qcur===null)return;qsel=o;const id=qcur;
+ if(o===id)S.c[id]={st:1,ok:0,due:addDays(T,1),lap:0};
+ else{S.hard[id]=1;S.c[id]={st:0,ok:0,due:addDays(T,1),lap:1}}
+ save();render()}
+function qnext(){qopts=[];qsel=null;qcur=null;if(!quizList().length){tryCI();view='home'}render()}
+function quizView(){const ql=quizList(),tot=S.plan.seen.length;
+ if(qcur===null){if(!ql.length){tryCI();view='home';return home()}qcur=ql[0];qopts=makeOpts(qcur);qsel=null}
+ const id=qcur,c=D.cards[id],dn=tot-quizList().length+(qsel===null?0:0),pct=tot?Math.round(dn/tot*100):0,ans=qsel!==null;
+ let h=`<div class="top"><button class="link" data-a="home">← 返回</button><div class="bar"><i style="width:${pct}%"></i></div><span class="muted">${dn}/${tot}</span></div>
+<div class="fc" style="cursor:default"><div class="row"><span class="tag">📝 练习 · 看词选意</span><button class="spk" data-a="sp" data-e="t">🔊</button></div><div class="ft">${c.t}</div><div class="center muted">选出正确的意思</div>`;
+ qopts.forEach((o,k)=>{const cls=!ans?'':o===id?' ok':o===qsel?' bad':'';h+=`<button class="opt${cls}" data-a="ans" data-id="${o}" ${ans?'disabled':''}>${k+1}. ${esc(D.cards[o].cn)}</button>`});
+ if(ans){const ok=qsel===id;h+=`<div class="fb ${ok?'ok':'bad'}">${ok?'✅ 答对了，已进入待复习（明天复习）':'❌ 答错了，已标为难点（明天复习）'}</div>`;
+  c.ex.forEach((e,k)=>{h+=`<div class="ex"><div class="j"><span>${esc(e.j).replace(/\n/g,'<br>')}</span><button class="spk" data-a="sp" data-e="${k}">🔊</button></div><div class="z">${esc(e.z)}</div></div>`});
+  c.tip.forEach(x=>h+=`<div class="tip">🧠 ${esc(x)}</div>`)}
+ h+='</div>';if(ans)h+=`<button class="btn" style="margin-top:12px" data-a="qnext">${quizList().length?'下一题 →':'完成练习'}</button>`;
+ return h}
 function rate(q){snap();const id=Q.shift(),r=calc(id,q),c=S.c[id]||{lap:0};
  if(q===0)c.lap=(c.lap||0)+1;
  c.st=r.st;c.due=r.due;c.ok=r.ok;S.c[id]=c;
@@ -118,19 +152,21 @@ function rate(q){snap();const id=Q.shift(),r=calc(id,q),c=S.c[id]||{lap:0};
  if(r.rq){again.add(id);Q.splice(Math.min(3,Q.length),0,id)}else{again.delete(id);done++}
  next()}
 function skip(){snap();Q.shift();total--;next()}
-function render(){const A=document.getElementById('app');A.className='wrap'+(S.cfg.furi?'':' nofuri');A.innerHTML=view==='home'?home():view==='list'?listView():view==='detail'?detail():study()}
+function render(){const A=document.getElementById('app');A.className='wrap'+(S.cfg.furi?'':' nofuri');A.innerHTML=view==='home'?home():view==='list'?listView():view==='detail'?detail():view==='quiz'?quizView():study()}
 function home(){const due=dueList().length,nw=newList().length,tom=Object.values(S.c).filter(c=>c.due===addDays(T,1)).length,learned=Object.keys(S.c).filter(i=>on(+i)).length,totalOn=D.seq.filter(on).length,mast=Object.values(S.c).filter(c=>c.st>=6).length,hc=Object.keys(S.hard).length,pool=Object.keys(S.c).length,pt=S.plan.ids.length,dt=S.plan.ids.filter(i=>S.c[i]).length;let ci=S.ci.includes(T);
- if(!ci&&!clockBack&&Object.keys(S.c).length&&due+nw===0){S.ci.push(T);save();ci=true}
+ const qn=quizList().length;
+ if(!ci&&!clockBack&&Object.keys(S.c).length&&due+nw+qn===0){S.ci.push(T);save();ci=true}
  const canMore=pending().length>0;
  return `<div class="top"><h1>🃏 N1语法闪卡</h1><a href="index.html">← 语法总览</a></div>
 <div class="box"><div class="row"><div><h3>📅 每日签到</h3><div class="muted">🔥 连续 ${streak()} 天 · 累计 ${S.ci.length} 天</div></div>
 <span class="tag ${ci?'':'rv'}">${ci?'今日已签到 ✓':'学完自动签到'}</span></div>
 <div class="cal">${calendar()}</div>
 <div class="muted" style="margin-top:8px">${clockBack?'⚠️ 检测到系统时间被回调，暂不可签到。':'学完今日全部卡片（复习+新学，跳过也算过完一遍）后自动签到；过期不可补签。'}</div></div>
-${justCI?'<div class="box center">🎉 今日任务完成，已自动签到！</div>':''}<div class="stats" style="grid-template-columns:repeat(4,1fr)"><div class="st" data-a="list" data-k="due"><b>${due}</b>待复习<small>计划中 ${pool}</small></div><div class="st" data-a="list" data-k="new"><b>${nw}</b>今日新学<small>已学 ${dt}/${pt}</small></div><div class="st" data-a="list" data-k="hard"><b>${hc}</b>🚩难点<small>点击查看</small></div><div class="st" data-a="list" data-k="learned"><b>${learned}</b>已学<small>共 ${totalOn}</small></div></div>
+${justCI?'<div class="box center">🎉 今日任务完成，已自动签到！</div>':''}<div class="stats" style="grid-template-columns:repeat(4,1fr)"><div class="st" data-a="list" data-k="due"><b>${due}</b>待复习<small>计划中 ${pool}</small></div><div class="st" data-a="list" data-k="new"><b>${nw}</b>今日新学<small>已练习 ${dt}/${pt}</small></div><div class="st" data-a="list" data-k="hard"><b>${hc}</b>🚩难点<small>点击查看</small></div><div class="st" data-a="list" data-k="learned"><b>${learned}</b>已学<small>共 ${totalOn}</small></div></div>
 <div class="muted" style="margin:-4px 0 10px;text-align:center">明日复习 ${tom} 张 · 已掌握 ${mast} 张 · 点上面的数字可查看列表</div>
-<button class="btn" data-a="go" ${due+nw?'':'disabled'}>${due+nw?'开始学习（复习 '+due+' + 新学 '+nw+'）':'🎉 今日任务已完成'}</button>
-${due+nw===0&&canMore?`<button class="btn ghost" style="margin-top:8px" data-a="more">再学一组新语法（${Math.min(S.cfg.n,pending().length)}个）</button>`:''}
+${due+nw?`<button class="btn" data-a="go">开始学习（复习 ${due} + 新学 ${nw}）</button>`:qn?'':'<button class="btn" data-a="go" disabled>🎉 今日任务已完成</button>'}
+${qn?`<button class="btn ${due+nw?'ghost':''}" style="margin-top:8px" data-a="quiz">📝 今日练习（${qn} 题：看词选意）</button>`:''}
+${due+nw+qn===0&&canMore?`<button class="btn ghost" style="margin-top:8px" data-a="more">再学一组新语法（${Math.min(S.cfg.n,pending().length)}个）</button>`:''}
 ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只练难点（${hc}）</button>`:''}
 <div class="box" style="margin-top:12px"><h3>⚙️ 设置</h3>
 <label>每日新学语法数<select data-s="n">${[5,10,15,20].map(n=>`<option ${n===S.cfg.n?'selected':''}>${n}</option>`).join('')}</select></label>
@@ -138,7 +174,7 @@ ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只�
 <label>显示注音<input type="checkbox" data-s="furi" ${S.cfg.furi?'checked':''}></label>
 <label>翻面后自动朗读第一个例句<input type="checkbox" data-s="auto" ${S.cfg.auto?'checked':''}></label>
 <label>语速 ${S.cfg.rate}<input type="range" min=".5" max="1.1" step=".05" value="${S.cfg.rate}" data-s="rate"></label>
-<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。改动“每日数量”从明天起生效。相似的语法排在同一天学习。</div>
+<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。新语法先逐张看完，再做「看词选意」练习：选对进入待复习（明天复习），选错自动标为难点。改动“每日数量”从明天起生效。相似的语法排在同一天学习。</div>
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" data-a="exp">导出进度</button><button class="btn sm ghost" data-a="imp">导入进度</button><button class="btn sm ghost" data-a="reset">重置全部进度</button></div><input type="file" id="impf" accept=".json" hidden></div>`}
 const ctrlHtml=id=>`<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button><button class="btn sm ghost" data-a="skip">⏭ 跳过，下次再学</button></div>`;
 function backHtml(c,canOpen){let h=`<div class="center muted">${esc(c.tr)}</div><hr style="border:0;border-top:1px solid var(--line)"><div class="mean center">${esc(c.cn)}</div>`;
@@ -153,7 +189,7 @@ function study(){const id=Q[0],c=D.cards[id],isNew=!S.c[id],pct=total?Math.round
  const ctrl=ctrlHtml(id);
  if(!flipped)return h+`<div class="center muted">点击卡片查看释义与例句</div></div>`+ctrl;
  h+=backHtml(c,false);
- h+=`</div><div class="rate">`+[['忘了','r0'],['模糊','r1'],['记得','r2']].map((x,q)=>`<button class="${x[1]}" data-a="r" data-q="${q}">${x[0]}<small>${label(id,q)}</small></button>`).join('')+'</div>'+ctrl;
+ h+=isNew?`</div><div class="rate" style="grid-template-columns:1fr"><button class="r2" data-a="seen">✅ 看完了，下一个<small>全部看完后统一做选择题练习</small></button></div>`+ctrl:`</div><div class="rate">`+[['忘了','r0'],['模糊','r1'],['记得','r2']].map((x,q)=>`<button class="${x[1]}" data-a="r" data-q="${q}">${x[0]}<small>${label(id,q)}</small></button>`).join('')+'</div>'+ctrl;
  return h}
 const dueLbl=i=>{const c=S.c[i];if(!c)return '';const n=Math.round((new Date(c.due)-new Date(T))/864e5);return n<=0?'今天复习':n===1?'明天复习':n+'天后复习'};
 const okOf=i=>(S.c[i]&&S.c[i].ok)||0;
@@ -164,7 +200,7 @@ function items(k){
  return Object.keys(S.c).map(Number).sort((a,b)=>pos[a]-pos[b])}
 const LT={due:'待复习',new:'今日新学',hard:'🚩难点',learned:'已学语法'};
 function meta(k,i){const s=S.c[i];
- if(k==='new')return s?'✓ 已学':'待学';
+ if(k==='new')return s?'✓ 已学':S.plan.seen.includes(i)?'待练习':'待学';
  if(k==='hard')return '🚩'+okOf(i)+'/5'+(s?'<br>'+dueLbl(i):'');
  if(k==='learned')return (S.hard[i]?'🚩 ':'')+'<br>'+dueLbl(i);
  return (S.hard[i]?'🚩'+okOf(i)+'/5<br>':'')+dueLbl(i)}
@@ -176,24 +212,29 @@ function listView(){const ids=listIds;let h=`<div class="top"><button class="lin
  ids.forEach(i=>{if(listKey==='due'){const d=S.c[i].due,n=d<=T?0:d===tm?1:2;if(n!==g){g=n;h+=`<div class="tip" style="margin-top:10px">${['今天需复习','明天复习','之后'][n]}</div>`}}
   const c=D.cards[i];h+=`<div class="li" data-a="det" data-id="${i}"><div class="lt"><span class="jp">${c.t}</span><span class="cn">${esc(c.cn)}</span></div><span class="meta">${meta(listKey,i)}</span></div>`});
  return h}
-function detail(){const id=det,c=D.cards[id],s=S.c[id],idx=listIds.indexOf(id),nav=idx>=0&&!hist.length;
- return `<div class="top"><button class="link" data-a="lst">← 返回${hist.length?'上一张':'列表'}</button><span class="muted">${nav?(idx+1)+' / '+listIds.length:''}</span></div>
-<div class="fc" style="cursor:default"><div class="row"><span>${s?'<span class="tag rv">'+dueLbl(id)+'</span>':'<span class="tag">未学</span>'}${S.hard[id]?' <span class="tag rv">🚩难点 '+okOf(id)+'/5</span>':''}</span><button class="spk" data-a="sp" data-e="t">🔊</button></div>
+function goCard(d){if(view!=='detail'||hist.length)return;const k=listIds.indexOf(det)+d;if(k>=0&&k<listIds.length){det=listIds[k];swDir=d;xs.clear();window.scrollTo(0,0);render()}}
+function detail(){const id=det,c=D.cards[id],s=S.c[id],idx=listIds.indexOf(id),nav=idx>=0&&!hist.length,anim=swDir>0?'inR':swDir<0?'inL':'';swDir=0;
+ return `<div class="top"><button class="link" data-a="lst">← 返回${hist.length?'上一张':'列表'}</button><span class="muted">${nav?'← 左右滑动切换 → '+(idx+1)+' / '+listIds.length:''}</span></div>
+<div class="fc ${anim}" style="cursor:default"><div class="row"><span>${s?'<span class="tag rv">'+dueLbl(id)+'</span>':'<span class="tag">未学</span>'}${S.hard[id]?' <span class="tag rv">🚩难点 '+okOf(id)+'/5</span>':''}</span><button class="spk" data-a="sp" data-e="t">🔊</button></div>
 <div class="ft">${c.t}</div>${backHtml(c,true)}</div>
 <div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button>${nav?`<span><button class="btn sm ghost" data-a="prev" ${idx<=0?'disabled':''}>← 上一个</button> <button class="btn sm ghost" data-a="next" ${idx>=listIds.length-1?'disabled':''}>下一个 →</button></span>`:''}</div>`}
-function undo(){if(!last)return;const id=last.id;if(last.prev)S.c[id]=last.prev;else delete S.c[id];if(last.hard)S.hard[id]=1;else delete S.hard[id];Q=last.Q;done=last.done;total=last.total;again=new Set(last.again);last=null;save();flipped=false;view='study';render()}
+function undo(){if(!last)return;const id=last.id;if(last.prev)S.c[id]=last.prev;else delete S.c[id];if(last.hard)S.hard[id]=1;else delete S.hard[id];S.plan.seen=last.seen;Q=last.Q;done=last.done;total=last.total;again=new Set(last.again);last=null;save();flipped=false;view='study';render()}
 function begin(m){mode=m||'daily';justCI=false;last=null;xs.clear();Q=mode==='hard'?Object.keys(S.hard).map(Number):[...dueList(),...newList()];const hs=i=>S.hard[i]?0:1;Q.sort((a,b)=>hs(a)-hs(b)||pos[a]-pos[b]);total=Q.length;done=0;again.clear();flipped=false;view=Q.length?'study':'home';render()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
- if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
+ if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:view==='quiz'?qcur:Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
  if(a==='ci'){if(!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();render()}}
  else if(a==='go')begin();
  else if(a==='test')speak('今日は、いい天気ですね。')
  else if(a==='gohard')begin('hard');
+ else if(a==='seen')seen();
+ else if(a==='quiz')startQuiz();
+ else if(a==='ans')answer(+b.dataset.id);
+ else if(a==='qnext')qnext();
  else if(a==='skip')skip();
  else if(a==='list'){listKey=b.dataset.k;listIds=items(listKey);view='list';window.scrollTo(0,0);render()}
  else if(a==='det'){if(b.dataset.from==='sim')hist.push(det);else hist=[];det=+b.dataset.id;xs.clear();view='detail';window.scrollTo(0,0);render()}
  else if(a==='lst'){xs.clear();if(hist.length)det=hist.pop();else view='list';window.scrollTo(0,0);render()}
- else if(a==='prev'||a==='next'){const k=listIds.indexOf(det)+(a==='next'?1:-1);if(k>=0&&k<listIds.length){det=listIds[k];xs.clear();window.scrollTo(0,0);render()}}
+ else if(a==='prev'||a==='next')goCard(a==='next'?1:-1);
  else if(a==='hd'){const id=view==='detail'?det:Q[0];if(S.hard[id])delete S.hard[id];else{S.hard[id]=1;const c=S.c[id];if(c){c.ok=0;if(c.due>addDays(T,1))c.due=addDays(T,1)}}save();render()}
  else if(a==='more'){S.plan.ids=S.plan.ids.concat(pending().slice(0,S.cfg.n));save();begin()}
  else if(a==='home'){view='home';render()}
@@ -205,12 +246,16 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
  else if(a==='imp')document.getElementById('impf').click();
  else if(a==='nop'){}
  else if(a==='r')rate(+b.dataset.q);
- else if(a==='reset'&&confirm('确定清空全部学习进度和签到记录？')){S={cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T};S.plan={d:T,ids:pending().slice(0,S.cfg.n)};save();render()}});
-document.addEventListener('change',e=>{if(e.target.id==='impf'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.c||!x.ci)throw 0;if(confirm('导入将覆盖当前进度，继续？')){S=Object.assign({cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T},x);S.last=T;S.plan={d:T,ids:pending().slice(0,S.cfg.n)};save();render()}}catch(_){alert('文件格式不正确')}};r.readAsText(f);return}
+ else if(a==='reset'&&confirm('确定清空全部学习进度和签到记录？')){S={cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T};S.plan={d:T,ids:pending().slice(0,S.cfg.n),seen:[]};save();render()}});
+document.addEventListener('change',e=>{if(e.target.id==='impf'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.c||!x.ci)throw 0;if(confirm('导入将覆盖当前进度，继续？')){S=Object.assign({cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T},x);S.last=T;S.plan={d:T,ids:pending().slice(0,S.cfg.n),seen:[]};save();render()}}catch(_){alert('文件格式不正确')}};r.readAsText(f);return}
 const k=e.target.dataset.s;if(!k)return;
- if(/^lv[123]$/.test(k)){const l=+k[2],set=new Set(S.cfg.lv);e.target.checked?set.add(l):set.delete(l);if(!set.size){render();return}S.cfg.lv=[...set].sort();S.plan={d:T,ids:pending().slice(0,S.cfg.n)};save();render();return}
+ if(/^lv[123]$/.test(k)){const l=+k[2],set=new Set(S.cfg.lv);e.target.checked?set.add(l):set.delete(l);if(!set.size){render();return}S.cfg.lv=[...set].sort();S.plan={d:T,ids:pending().slice(0,S.cfg.n),seen:[]};save();render();return}
  S.cfg[k]=(k==='furi'||k==='auto')?e.target.checked:k==='voice'?e.target.value:+e.target.value;save();render()});
-document.addEventListener('keydown',e=>{if(view!=='study')return;if(e.key===' '){e.preventDefault();flipped=!flipped;render()}else if(e.key==='z'||e.key==='Z')undo();else if(flipped&&'123'.includes(e.key))rate(+e.key-1)});
+let tx=0,ty=0,tt=0;
+document.addEventListener('touchstart',e=>{const p=e.touches[0];tx=p.clientX;ty=p.clientY;tt=Date.now()},{passive:true});
+document.addEventListener('touchend',e=>{if(view!=='detail')return;const p=e.changedTouches[0],dx=p.clientX-tx,dy=p.clientY-ty;
+ if(Math.abs(dx)>60&&Math.abs(dx)>1.6*Math.abs(dy)&&Date.now()-tt<800)goCard(dx<0?1:-1)},{passive:true});
+document.addEventListener('keydown',e=>{if(view==='detail'){if(e.key==='ArrowRight')goCard(1);else if(e.key==='ArrowLeft')goCard(-1);return}if(view==='quiz'){if(qsel===null&&'1234'.includes(e.key)&&qopts[+e.key-1]!==undefined)answer(qopts[+e.key-1]);else if(qsel!==null&&(e.key==='Enter'||e.key===' ')){e.preventDefault();qnext()}return}if(view!=='study')return;if(e.key===' '){e.preventDefault();flipped=!flipped;render()}else if(e.key==='z'||e.key==='Z')undo();else if(flipped&&'123'.includes(e.key))rate(+e.key-1)});
 render();
 </script>
 </body>
