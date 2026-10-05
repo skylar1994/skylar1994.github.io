@@ -104,6 +104,7 @@ const vScore=v=>(GOOD.test(v.name)?10:0)+(/premium|enhanced|siri|natural|neural/
 function loadV(){voices=TTS?speechSynthesis.getVoices().filter(v=>(v.lang||'').replace('_','-').toLowerCase().startsWith('ja')):[]}
 loadV();if(TTS)speechSynthesis.onvoiceschanged=()=>{loadV();if(view==='home')render()};
 function pickVoice(){return voices.find(v=>v.name===S.cfg.voice)||[...voices].sort((a,b)=>vScore(b)-vScore(a))[0]}
+function exSay(c,s){const re=/<ruby>([^<]+)<rt>([^<]+)<\/rt><\/ruby>([ぁ-ゟ゠-ヿ])?/g;let m;while((m=re.exec(c.t))){if(m[3])s=s.split(m[1]+m[3]).join(m[2]+m[3])}return s}
 function speak(t){if(!TTS)return;t=String(t).replace(/[…⋯]+/g,'、').replace(/[～〜]/g,'').replace(/／/g,'、');speechSynthesis.cancel();setTimeout(()=>{const u=new SpeechSynthesisUtterance(t);u.lang='ja-JP';u.rate=S.cfg.rate;const v=pickVoice();if(v)u.voice=v;speechSynthesis.speak(u)},60)}
 const say=c=>c.tr.replace(/[～〜…（）()]/g,'').replace(/[・／]/g,'、');
 function streak(){let n=0,d=S.ci.includes(T)?T:addDays(T,-1);while(S.ci.includes(d)){n++;d=addDays(d,-1)}return n}
@@ -223,7 +224,7 @@ function detail(){const id=det,c=D.cards[id],s=S.c[id],idx=listIds.indexOf(id),n
 function undo(){if(!last)return;const id=last.id;if(last.prev)S.c[id]=last.prev;else delete S.c[id];if(last.hard)S.hard[id]=1;else delete S.hard[id];S.plan.seen=last.seen;Q=last.Q;done=last.done;total=last.total;again=new Set(last.again);last=null;save();flipped=false;view='study';render()}
 function begin(m){mode=m||'daily';justCI=false;last=null;xs.clear();Q=mode==='hard'?Object.keys(S.hard).map(Number):[...dueList(),...newList()];const hs=i=>S.hard[i]?0:1;Q.sort((a,b)=>hs(a)-hs(b)||pos[a]-pos[b]);total=Q.length;done=0;again.clear();flipped=false;view=Q.length?'study':'home';render()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
- if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:view==='quiz'?qcur:Q[0]];speak(b.dataset.e==='t'?say(c):c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,''));return}
+ if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:view==='quiz'?qcur:Q[0]];speak(b.dataset.e==='t'?say(c):exSay(c,c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,'')));return}
  if(a==='ci'){if(!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();render()}}
  else if(a==='go')begin();
  else if(a==='test')speak('今日は、いい天気ですね。')
@@ -240,9 +241,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
  else if(a==='hd'){const id=view==='detail'?det:Q[0];if(S.hard[id])delete S.hard[id];else{S.hard[id]=1;const c=S.c[id];if(c){c.ok=0;if(c.due>addDays(T,1))c.due=addDays(T,1)}}save();render()}
  else if(a==='more'){S.plan.ids=S.plan.ids.concat(pending().slice(0,S.cfg.n));save();begin()}
  else if(a==='home'){view='home';render()}
- else if(a==='flip'){if(!flipped){flipped=true;render();if(S.cfg.auto)speak(D.cards[Q[0]].ex[0].j.split('\n')[0])}}
+ else if(a==='flip'){if(!flipped){flipped=true;render();if(S.cfg.auto){const o=D.cards[Q[0]];speak(exSay(o,o.ex[0].j.split('\n')[0]))}}}
  else if(a==='xs'){const j=+b.dataset.j;xs.has(j)?xs.delete(j):xs.add(j);render()}
- else if(a==='sp2'){e.stopPropagation();speak(D.cards[+b.dataset.j].ex[0].j.split('\n')[0])}
+ else if(a==='sp2'){e.stopPropagation();{const o=D.cards[+b.dataset.j];speak(exSay(o,o.ex[0].j.split('\n')[0]))}}
  else if(a==='undo')undo();
  else if(a==='exp'){const u=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));const l=document.createElement('a');l.href=u;l.download='n1-flashcards-'+T+'.json';l.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
  else if(a==='imp')document.getElementById('impf').click();
