@@ -84,7 +84,7 @@ const addDays=(s,n)=>{const [y,m,d]=s.split('-').map(Number);return ds(new Date(
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let S=null;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 S=Object.assign({cfg:{n:10,furi:true,rate:.85},c:{},hard:{},plan:null,ci:[],last:''},S||{});
-S.cfg.lv=S.cfg.lv||[1];S.cfg.lvs=S.cfg.lvs||[1,2];
+S.cfg.lv=S.cfg.lv||[1];S.cfg.lvs=S.cfg.lvs||[1,2];S.cfg.rv=S.cfg.rv||0;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const real=ds(new Date());
 const clockBack=!!S.last&&real<S.last;   // 系统时间被往回调：禁止签到
@@ -101,6 +101,8 @@ const addedSet=new Set(D.added||[]);
 const addedLeft=()=>(D.added||[]).filter(i=>!S.c[i]);
 const unlList=()=>[...addedLeft(),...D.seq.filter(i=>!S.c[i]&&!addedSet.has(i))];
 const dueList=()=>Object.keys(S.c).map(Number).filter(i=>S.c[i].due<=T).sort((a,b)=>pos[a]-pos[b]);
+const dueToday=()=>{const all=dueList(),cap=S.cfg.rv;if(!cap||all.length<=cap)return all;
+ return [...all].sort((a,b)=>(S.hard[b]?1:0)-(S.hard[a]?1:0)||S.c[a].due.localeCompare(S.c[b].due)||pos[a]-pos[b]).slice(0,cap).sort((a,b)=>pos[a]-pos[b])};
 const newList=()=>S.plan.ids.filter(i=>!S.c[i]&&!S.plan.seen.includes(i));
 const quizList=()=>S.plan.seen.filter(i=>!S.c[i]);
 let voices=[];const TTS='speechSynthesis' in window;
@@ -176,18 +178,19 @@ function home(){const due=dueList().length,nw=newList().length,tom=Object.values
 ${justCI?'<div class="box center">🎉 今日任务完成，已自动签到！</div>':''}${addedLeft().length&&S.snz!==T?`<div class="box nw"><h3>🆕 新增 ${addedLeft().length} 条语法还没学</h3><div class="muted">来自「${esc(D.addedLabel||'新增')}」，已放进「未学习」。点「马上学习」会把它们放进今天的新学，学完做练习，选对就进入待复习。</div><div class="row" style="margin-top:8px;gap:8px"><button class="btn sm" data-a="learnadded">▶ 马上学习（${Math.min(addedLeft().length,S.cfg.n)} 个）</button><button class="btn sm ghost" data-a="list" data-k="unl">查看未学习</button><button class="link" data-a="snz">今天不再提醒</button></div></div>`:''}<div class="stats" style="grid-template-columns:repeat(5,1fr)"><div class="st" data-a="list" data-k="due"><b>${due}</b>待复习<small>计划中 ${pool}</small></div><div class="st" data-a="list" data-k="new"><b>${nw}</b>今日新学<small>已练习 ${dt}/${pt}</small></div><div class="st" data-a="list" data-k="hard"><b>${hc}</b>🚩难点<small>点击查看</small></div><div class="st" data-a="list" data-k="learned"><b>${learned}</b>已学<small>共 ${totalOn}</small></div><div class="st" data-a="list" data-k="unl"><b>${unlList().length}</b>未学习<small>${addedLeft().length?'🆕 '+addedLeft().length+' 条新增':'点击查看'}</small></div></div>
 <div class="muted" style="margin:-4px 0 10px;text-align:center">明日复习 ${tom} 张 · 已掌握 ${mast} 张 · 点上面的数字可查看列表</div>
 ${(D.groups||[]).map((g,i)=>`<button class="btn ghost" style="margin-bottom:8px" data-a="grp" data-g="${i}">🧩 易混对比组：${esc(g.name)}（${g.rows.length}）</button>`).join('')}
-${due+nw?`<button class="btn" data-a="go">开始学习（复习 ${due} + 新学 ${nw}）</button>`:qn?'':'<button class="btn" data-a="go" disabled>🎉 今日任务已完成</button>'}
+${due+nw?`<button class="btn" data-a="go">开始学习（复习 ${dueToday().length}${S.cfg.rv&&due>S.cfg.rv?'／共'+due:''} + 新学 ${nw}）</button>`:qn?'':'<button class="btn" data-a="go" disabled>🎉 今日任务已完成</button>'}
 ${qn?`<button class="btn ${due+nw?'ghost':''}" style="margin-top:8px" data-a="quiz">📝 今日练习（${qn} 题：看词选意）</button>`:''}
 ${due+nw+qn===0&&canMore?`<button class="btn ghost" style="margin-top:8px" data-a="more">再学一组新语法（${Math.min(S.cfg.n,pending().length)}个）</button>`:''}
 ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只练难点（${hc}）</button>`:''}
 <div class="box" style="margin-top:12px"><h3>⚙️ 设置</h3>
-<label>每日新学语法数<select data-s="n">${[5,10,15,20].map(n=>`<option ${n===S.cfg.n?'selected':''}>${n}</option>`).join('')}</select></label>
+<label>每日新学语法数<select data-s="n">${[5,10,15,20,30,50,100].map(n=>`<option ${n===S.cfg.n?'selected':''}>${n}</option>`).join('')}</select></label>
+<label>每日复习上限<select data-s="rv">${[[0,'不限'],[20,'20'],[50,'50'],[100,'100'],[200,'200']].map(([v,l])=>`<option value="${v}" ${v===(S.cfg.rv||0)?'selected':''}>${l}</option>`).join('')}</select></label>
 <label>朗读声音<span><select data-s="voice" style="max-width:190px"><option value="">自动（推荐）</option>${voices.map(v=>`<option value="${esc(v.name)}" ${v.name===S.cfg.voice?'selected':''}>${esc(v.name)}</option>`).join('')}</select> <button class="btn sm ghost" data-a="test">试听</button></span></label>
 <label>学习范围<span>${[1,2].map(l=>`<label style="display:inline;margin-left:10px"><input type="checkbox" data-s="lv${l}" ${S.cfg.lvs.includes(l)?'checked':''}> N${l}</label>`).join('')}</span></label>
 <label>显示注音<input type="checkbox" data-s="furi" ${S.cfg.furi?'checked':''}></label>
 <label>翻面后自动朗读第一个例句<input type="checkbox" data-s="auto" ${S.cfg.auto?'checked':''}></label>
 <label>语速 ${S.cfg.rate}<input type="range" min=".5" max="1.1" step=".05" value="${S.cfg.rate}" data-s="rate"></label>
-<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。新语法先逐张看完，再做「看词选意」练习：选对进入待复习（明天复习），选错自动标为难点。学习范围可选 N1 / N2，已学的卡不受影响；N2 中与 N1 重复的语法只在易混对比里出现，不另做卡。改动“每日数量”从明天起生效。相似的语法排在同一天学习。</div>
+<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。新语法先逐张看完，再做「看词选意」练习：选对进入待复习（明天复习），选错自动标为难点。学习范围可选 N1 / N2，已学的卡不受影响；N2 中与 N1 重复的语法只在易混对比里出现，不另做卡。每日新学数量改动当天就生效（已学的不受影响）；每日复习上限：到期的卡超过上限时，难点和到期最久的先复习，其余顺延到明天，选「不限」则全部复习。改动“每日数量”从明天起生效。相似的语法排在同一天学习。</div>
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" data-a="exp">导出进度</button><button class="btn sm ghost" data-a="imp">导入进度</button><button class="btn sm ghost" data-a="reset">重置全部进度</button></div><input type="file" id="impf" accept=".json" hidden></div>`}
 const ctrlHtml=id=>`<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button><button class="btn sm ghost" data-a="skip">⏭ 跳过，下次再学</button></div>`;
 const kjHtml=k=>{const [f,r]=k.split('｜');return `<div class="center kj">汉字写法：<b>${esc(f)}</b>${r?` <span class="tag">${r}</span>`:''}</div>`};
@@ -254,7 +257,7 @@ function detail(){const id=det,c=D.cards[id],s=S.c[id],idx=listIds.indexOf(id),n
 <div class="ft">${c.t}</div>${backHtml(c,true)}</div>
 <div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button>${nav?`<span><button class="btn sm ghost" data-a="prev" ${idx<=0?'disabled':''}>← 上一个</button> <button class="btn sm ghost" data-a="next" ${idx>=listIds.length-1?'disabled':''}>下一个 →</button></span>`:''}</div>`}
 function undo(){if(!last)return;const id=last.id;if(last.prev)S.c[id]=last.prev;else delete S.c[id];if(last.hard)S.hard[id]=1;else delete S.hard[id];S.plan.seen=last.seen;Q=last.Q;done=last.done;total=last.total;again=new Set(last.again);last=null;save();flipped=false;view='study';render()}
-function begin(m){mode=m||'daily';justCI=false;last=null;xs.clear();Q=mode==='hard'?Object.keys(S.hard).map(Number):[...dueList(),...newList()];const hs=i=>S.hard[i]?0:1;Q.sort((a,b)=>hs(a)-hs(b)||pos[a]-pos[b]);total=Q.length;done=0;again.clear();flipped=false;view=Q.length?'study':'home';render()}
+function begin(m){mode=m||'daily';justCI=false;last=null;xs.clear();Q=mode==='hard'?Object.keys(S.hard).map(Number):[...dueToday(),...newList()];const hs=i=>S.hard[i]?0:1;Q.sort((a,b)=>hs(a)-hs(b)||pos[a]-pos[b]);total=Q.length;done=0;again.clear();flipped=false;view=Q.length?'study':'home';render()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
  if(a==='sp'){e.stopPropagation();const c=D.cards[view==='detail'?det:view==='quiz'?qcur:Q[0]];speak(b.dataset.e==='t'?say(c):exSay(c,c.ex[+b.dataset.e].j.replace(/^[A-ZＡ-Ｚa-z]：/,'')));return}
  if(a==='ci'){if(!clockBack&&!S.ci.includes(T)){S.ci.push(T);save();render()}}
@@ -292,7 +295,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
 document.addEventListener('change',e=>{if(e.target.id==='impf'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.c||!x.ci)throw 0;if(confirm('导入将覆盖当前进度，继续？')){S=Object.assign({cfg:S.cfg,c:{},hard:{},plan:null,ci:[],last:T},x);S.last=T;S.plan={d:T,ids:pending().slice(0,S.cfg.n),seen:[]};save();render()}}catch(_){alert('文件格式不正确')}};r.readAsText(f);return}
 const k=e.target.dataset.s;if(!k)return;
  if(/^lv[12]$/.test(k)){const l=+k[2],set=new Set(S.cfg.lvs);e.target.checked?set.add(l):set.delete(l);if(!set.size){render();return}S.cfg.lvs=[...set].sort();const keep=S.plan.ids.filter(i=>S.c[i]||S.plan.seen.includes(i));S.plan.ids=[...keep,...pending().filter(i=>!keep.includes(i)&&!S.plan.seen.includes(i)).slice(0,Math.max(0,S.cfg.n-keep.length))];save();render();return}
- S.cfg[k]=(k==='furi'||k==='auto')?e.target.checked:k==='voice'?e.target.value:+e.target.value;save();render()});
+ S.cfg[k]=(k==='furi'||k==='auto')?e.target.checked:k==='voice'?e.target.value:+e.target.value;
+ if(k==='n'){const keep=S.plan.ids.filter(i=>S.c[i]||S.plan.seen.includes(i));S.plan.ids=[...keep,...pending().filter(i=>!keep.includes(i)&&!S.plan.seen.includes(i)).slice(0,Math.max(0,S.cfg.n-keep.length))]}save();render()});
 let tx=0,ty=0,tt=0;
 document.addEventListener('touchstart',e=>{const p=e.touches[0];tx=p.clientX;ty=p.clientY;tt=Date.now()},{passive:true});
 document.addEventListener('touchend',e=>{if(view!=='detail')return;const p=e.changedTouches[0],dx=p.clientX-tx,dy=p.clientY-ty;
