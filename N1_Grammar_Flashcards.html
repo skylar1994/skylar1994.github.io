@@ -107,8 +107,10 @@ const revQueue=()=>{const rs=rvState(),N=S.cfg.rv,due=dueList().filter(i=>!rs.id
  if(!N)return due;                                   // 0 = 只复习到期的
  const left=Math.max(0,N-rs.n);let out=rvPri(due).slice(0,left);
  if(out.length<left){const skip=new Set([...rs.ids,...S.plan.ids,...S.plan.seen,...due]);
-  const up=Object.keys(S.c).map(Number).filter(i=>!skip.has(i)&&S.c[i].due>T);      // 到期的不够：用最快到期的补满
-  out=out.concat(rvPri(up).slice(0,left-out.length))}
+  const lim=addDays(T,-2),hs=s=>{let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))|0;return h>>>0};
+  const up=Object.keys(S.c).map(Number).filter(i=>!skip.has(i)&&S.c[i].due>T&&(!S.c[i].rd||S.c[i].rd<lim));   // 到期的不够：从没复习过/最久没复习的里轮换补满（3 天内复习过的不再补）
+  up.sort((x,y)=>(S.c[x].rd||'').localeCompare(S.c[y].rd||'')||hs(x+T)-hs(y+T));       // 同样久没复习的，每天换一种洗牌顺序
+  out=out.concat(up.slice(0,left-out.length))}
  return out.sort((a,b)=>pos[a]-pos[b])};
 const dueToday=revQueue;
 const newList=()=>S.plan.ids.filter(i=>!S.c[i]&&!S.plan.seen.includes(i));
@@ -128,13 +130,14 @@ function calendar(){const [y,m]=T.split('-').map(Number),first=new Date(y,m-1,1)
  for(let d=1;d<=len;d++){const k=y+'-'+pad(m)+'-'+pad(d);const cl=S.ci.includes(k)?'on':k===T?'td':k<T?'miss':'fu';h+=`<span class="${cl}${k===T&&S.ci.includes(k)?' td':''}">${S.ci.includes(k)?'✓':d}</span>`}
  return h}
 const G=[0,2,4,7,14],F=[0,1,2,4,7];
-function calc(id,q){const o=S.c[id]||{st:0,ok:0};let st=o.st,ok=o.ok||0,hard=!!S.hard[id],rq=false,due;
+function calc(id,q){const o=S.c[id]||{st:0,ok:0};
+ if(S.c[id]&&S.c[id].due>T&&q>0&&!again.has(id))return {st:o.st,ok:o.ok||0,hard:!!S.hard[id],rq:false,due:o.due,early:true};let st=o.st,ok=o.ok||0,hard=!!S.hard[id],rq=false,due;
  if(q===0){st=0;ok=0;hard=true;rq=true;due=addDays(T,1)}
  else if(again.has(id)){st=1;ok=0;due=addDays(T,1)}
  else if(hard){st=Math.max(1,st);ok++;if(ok>=5){hard=false;ok=0;st=Math.max(5,st);due=addDays(T,INT[st-1])}else due=addDays(T,(q===2?G:F)[ok])}
  else{st=q===1?Math.max(1,st):Math.min(7,st+1);due=addDays(T,INT[st-1])}
  return {st,ok,hard,rq,due}}
-function label(id,q){const r=calc(id,q);const n=Math.round((new Date(r.due)-new Date(T))/864e5);return (r.rq?'本轮再现 · ':'')+(n===1?'明天':n+'天后')+(r.hard&&!r.rq?' 🚩'+r.ok+'/5':'')+(S.hard[id]&&!r.hard?' 🎓毕业':'')}
+function label(id,q){const r=calc(id,q);if(r.early)return '提前练习，计划不变';const n=Math.round((new Date(r.due)-new Date(T))/864e5);return (r.rq?'本轮再现 · ':'')+(n===1?'明天':n+'天后')+(r.hard&&!r.rq?' 🚩'+r.ok+'/5':'')+(S.hard[id]&&!r.hard?' 🎓毕业':'')}
 function snap(){const id=Q[0];last={id,prev:S.c[id]?JSON.parse(JSON.stringify(S.c[id])):null,hard:!!S.hard[id],Q:[...Q],done,total,again:[...again],seen:[...S.plan.seen],rv:JSON.stringify(rvState())};xs.clear()}
 function tryCI(){if(!clockBack&&S.plan.sessDone&&!quizList().length&&!S.ci.includes(T)){S.ci.push(T);save();justCI=true}}
 function next(){save();flipped=false;if(!Q.length){if(mode==='daily'){S.plan.sessDone=true;save();if(quizList().length){startQuiz();return}}tryCI();view='home'}render()}
@@ -151,8 +154,8 @@ function makeOpts(id){const c=D.cards[id],nz=s=>s.replace(/[…～〜\s（）()]
  let g=0;while(out.length<3&&g++<500)add(D.seq[Math.floor(Math.random()*D.seq.length)]);
  const a=[id,...out];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function answer(o){if(qsel!==null||qcur===null)return;qsel=o;const id=qcur;
- if(o===id)S.c[id]={st:1,ok:0,due:addDays(T,1),lap:0};
- else{S.hard[id]=1;S.c[id]={st:0,ok:0,due:addDays(T,1),lap:1}}
+ if(o===id)S.c[id]={st:1,ok:0,due:addDays(T,1),lap:0,rd:T};
+ else{S.hard[id]=1;S.c[id]={st:0,ok:0,due:addDays(T,1),lap:1,rd:T}}
  save();render()}
 function qnext(){qopts=[];qsel=null;qcur=null;if(!quizList().length){tryCI();view='home'}render()}
 function quizView(){const ql=quizList(),tot=S.plan.seen.length;
@@ -168,7 +171,7 @@ function quizView(){const ql=quizList(),tot=S.plan.seen.length;
  return h}
 function rate(q){snap();const id=Q.shift(),r=calc(id,q),c=S.c[id]||{lap:0};{const rs=rvState();if(!again.has(id)&&!rs.ids.includes(id)){rs.n++;rs.ids.push(id)}}
  if(q===0)c.lap=(c.lap||0)+1;
- c.st=r.st;c.due=r.due;c.ok=r.ok;S.c[id]=c;
+ c.st=r.st;c.due=r.due;c.ok=r.ok;c.rd=T;S.c[id]=c;
  if(r.hard)S.hard[id]=1;else delete S.hard[id];
  if(r.rq){again.add(id);Q.splice(Math.min(3,Q.length),0,id)}else{again.delete(id);done++}
  next()}
@@ -199,7 +202,7 @@ ${hc?`<button class="btn ghost" style="margin-top:8px" data-a="gohard">🚩 只�
 <label>显示注音<input type="checkbox" data-s="furi" ${S.cfg.furi?'checked':''}></label>
 <label>翻面后自动朗读第一个例句<input type="checkbox" data-s="auto" ${S.cfg.auto?'checked':''}></label>
 <label>语速 ${S.cfg.rate}<input type="range" min=".5" max="1.1" step=".05" value="${S.cfg.rate}" data-s="rate"></label>
-<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。新语法先逐张看完，再做「看词选意」练习：选对进入待复习（明天复习），选错自动标为难点。学习范围可选 N1 / N2，已学的卡不受影响；N2 中与 N1 重复的语法只在易混对比里出现，不另做卡。每日新学数量改动当天就生效（已学的不受影响）；每日复习数量：设成 100，今天就复习 100 张——到期的先复习（难点、到期最久的优先），到期的不够 100 张，就用最快到期的补满；到期的超过 100 张，其余顺延到明天。选「只复习到期的」则不补。已经复习过的张数会自动累计，也可以在「今日已复习」里手动改。</div>
+<div class="muted">复习间隔（记忆曲线）：1 → 2 → 4 → 7 → 15 → 30 → 60 天；忘记则回到 1 天。🚩难点：选“忘了”或手动标记后，次日必出现；之后“记得”“模糊”都算 1 次复习，累计 5 次才毕业，间隔逐步拉长（记得 2→4→7→14 天，模糊更短 1→2→4→7 天），中途“忘了”则重新计数。学不动的卡点“跳过”，下次还会再出现。新语法先逐张看完，再做「看词选意」练习：选对进入待复习（明天复习），选错自动标为难点。学习范围可选 N1 / N2，已学的卡不受影响；N2 中与 N1 重复的语法只在易混对比里出现，不另做卡。每日新学数量改动当天就生效（已学的不受影响）；每日复习数量：设成 100，今天就复习 100 张——到期的先复习（难点、到期最久的优先），到期的不够 100 张，就用最快到期的补满；到期的超过 100 张，其余顺延到明天。选「只复习到期的」则不补。补的卡会在整个池子里轮换：优先选最久没复习的，3 天内复习过的不会再补；补的是还没到期的卡，“模糊／记得”不会改变它的复习计划（只有“忘了”会重新排）。已经复习过的张数会自动累计，也可以在「今日已复习」里手动改。</div>
 <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm ghost" data-a="exp">导出进度</button><button class="btn sm ghost" data-a="imp">导入进度</button><button class="btn sm ghost" data-a="reset">重置全部进度</button></div><input type="file" id="impf" accept=".json" hidden></div>`}
 const ctrlHtml=id=>`<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="hd">${S.hard[id]?'🚩 已标难点（点击取消）':'⚑ 标为难点'}</button><button class="btn sm ghost" data-a="skip">⏭ 跳过，下次再学</button></div>`;
 const kjHtml=k=>{const [f,r]=k.split('｜');return `<div class="center kj">汉字写法：<b>${esc(f)}</b>${r?` <span class="tag">${r}</span>`:''}</div>`};
